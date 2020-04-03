@@ -1,0 +1,27 @@
+{
+    "name": "evrinoma/utils-bundle",
+    "description": "Utils pack",
+    "keywords": [
+        "Utils", "Core"
+    ],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nikolay Nikolaev",
+            "email": "evrinoma@gmail.com"
+        }
+    ],
+    "version": "1.0.0",
+    "require": {
+        "php": "^7.1.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Evrinoma\\UtilsBundle\\": "src/"
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}
