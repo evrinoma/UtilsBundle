@@ -7,7 +7,7 @@ use Evrinoma\UtilsBundle\Model\RestModel;
 /**
  * Trait RestTrait
  *
- * @package Evrinoma\UtilsBundle\Voter\Rest
+ * @package Evrinoma\UtilsBundle\Voiter\Rest
  */
 trait RestTrait
 {

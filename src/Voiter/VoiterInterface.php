@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Evrinoma\UtilsBundle\Voter;
+namespace Evrinoma\UtilsBundle\Voiter;
 
 
-interface VoterInterface
+interface VoiterInterface
 {
     public function checkPermission(array $roles): bool;
 }

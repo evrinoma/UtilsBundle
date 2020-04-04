@@ -1,16 +1,16 @@
 <?php
 
-namespace Evrinoma\UtilsBundle\Voter;
+namespace Evrinoma\UtilsBundle\Voiter;
 
 
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class AbstractVoter
+ * Class AbstractVoiter
  *
- * @package Evrinoma\UtilsBundle\Voter
+ * @package Evrinoma\UtilsBundle\Voiter
  */
-abstract class AbstractVoter
+abstract class AbstractVoiter
 {
 //region SECTION: Fields
     /**
@@ -21,7 +21,7 @@ abstract class AbstractVoter
 
 //region SECTION: Constructor
     /**
-     * VoterManager constructor.
+     * VoiterManager constructor.
      *
      * @param AuthorizationCheckerInterface $security
      */
