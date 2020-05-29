@@ -39,7 +39,7 @@ abstract class AbstractVoiter
      */
     public function checkPermission(array $roles): bool
     {
-        return ($this->security->isGranted($roles) || $this->isSuperAdmin());
+        return ($this->security->isGranted($roles) || ($this->isSuperAdmin() && $this->isDevAdmin($roles)));
     }
 //endregion Public
 
@@ -47,6 +47,11 @@ abstract class AbstractVoiter
     private function isSuperAdmin(): bool
     {
         return $this->security->isGranted([RoleInterface::ROLE_SUPER_ADMIN]) ? true : false;
+    }
+
+    private function isDevAdmin(array $roles): bool
+    {
+        return !in_array(RoleInterface::ROLE_DEV_USER, $roles);
     }
 //endregion Private
 }
