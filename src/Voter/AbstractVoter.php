@@ -40,14 +40,25 @@ abstract class AbstractVoter implements VoterInterface
      */
     public function checkPermission(array $roles): bool
     {
-        return ($this->security->isGranted($roles) || ($this->isSuperAdmin() && $this->isDevAdmin($roles)));
+        return ($this->isGranted($roles) || ($this->isSuperAdmin() && $this->isDevAdmin($roles)));
     }
 //endregion Public
 
 //region SECTION: Private
+    private function isGranted($roles): bool
+    {
+        foreach ($roles as $role) {
+            if ($this->security->isGranted($role)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private function isSuperAdmin(): bool
     {
-        return $this->security->isGranted([RoleInterface::ROLE_SUPER_ADMIN]) ? true : false;
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN) ? true : false;
     }
 
     private function isDevAdmin(array $roles): bool
