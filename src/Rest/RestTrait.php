@@ -3,6 +3,7 @@
 namespace Evrinoma\UtilsBundle\Rest;
 
 use Evrinoma\UtilsBundle\Model\RestModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Trait RestTrait
@@ -12,7 +13,7 @@ use Evrinoma\UtilsBundle\Model\RestModel;
 trait RestTrait
 {
 //region SECTION: Fields
-    private $status = RestModel::SUCCESS_OK;
+    private $status = Response::HTTP_OK;
 //endregion Fields
 
 //region SECTION: Public
@@ -21,7 +22,7 @@ trait RestTrait
      */
     public function isRestStatusOk()
     {
-        return $this->getRestStatus() === RestModel::SUCCESS_OK;
+        return $this->getRestStatus() === Response::HTTP_OK;
     }
 //endregion Public
 
@@ -33,7 +34,7 @@ trait RestTrait
      */
     public function setRestSuccessOk(): self
     {
-        $this->status = RestModel::SUCCESS_OK;
+        $this->status = Response::HTTP_OK;
 
         return $this;
     }
@@ -43,7 +44,7 @@ trait RestTrait
      */
     public function setRestClientErrorBadRequest(): self
     {
-        $this->status = RestModel::CLIENT_ERROR_BAD_REQUEST;
+        $this->status = Response::HTTP_BAD_REQUEST;
 
         return $this;
     }
@@ -53,7 +54,7 @@ trait RestTrait
      */
     public function setRestClientErrorConflict(): self
     {
-        $this->status = RestModel::CLIENT_ERROR_CONFLICT;
+        $this->status = Response::HTTP_CONFLICT;
 
         return $this;
     }
@@ -63,7 +64,7 @@ trait RestTrait
      */
     public function setRestClientErrorGone(): self
     {
-        $this->status = RestModel::CLIENT_ERROR_GONE;
+        $this->status = Response::HTTP_GONE;
 
         return $this;
     }
@@ -73,7 +74,7 @@ trait RestTrait
      */
     public function setRestServerErrorInternalServerError(): self
     {
-        $this->status = RestModel::SERVER_ERROR_INTERNAL_ERROR;
+        $this->status = Response::HTTP_INTERNAL_SERVER_ERROR;
 
         return $this;
     }
@@ -83,7 +84,7 @@ trait RestTrait
      */
     public function setRestServerErrorServiceUnavailable(): self
     {
-        $this->status = RestModel::SERVER_ERROR_SERVICE_UNAVAILABLE;
+        $this->status = Response::HTTP_SERVICE_UNAVAILABLE;
 
         return $this;
     }
