@@ -13,7 +13,7 @@ use Evrinoma\UtilsBundle\Entity\ActiveTrait;
  *
  * @package Evrinoma\UtilsBundle\Manager
  */
-abstract class AbstractEntityManager implements BaseEntityInterface
+abstract class AbstractEntityManager implements EntityInterface
 {
 
 //region SECTION: Fields
