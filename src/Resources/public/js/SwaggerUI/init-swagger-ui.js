@@ -1,10 +1,3 @@
-// This file is part of the API Platform project.
-//
-// (c) Kévin Dunglas <dunglas@gmail.com>
-//
-// For the full copyright and license information, please view the LICENSE
-// file that was distributed with this source code.
-
 window.onload = () => {
     let swagger = document.getElementById('swagger-data');
     if (swagger!= undefined) {
@@ -16,12 +9,13 @@ window.onload = () => {
                     if (valueParameters.parameters !== undefined) {
                         $.each(valueParameters.parameters, function (keyItems, valueItems) {
                             if (valueItems.items !== undefined) {
-                                if (valueItems.items.items !== undefined && valueItems.items.items.$ref !== undefined) {
-                                    let formTypeName = valueItems.items.items.$ref.replace('#/definitions/', '');
+                                if (valueItems.items !== undefined && valueItems.items.$ref !== undefined) {
+                                    let formTypeName = valueItems.items.$ref.replace('#/definitions/', '');
                                     if (load.spec.definitions[formTypeName].properties !== undefined) {
                                         $.each(load.spec.definitions[formTypeName].properties, function (key, value) {
                                             if (value.enum !== undefined) {
-                                                $.extend(load.spec.paths[keyPath][keyParameters].parameters[keyItems].items, {enum: value.enum});
+                                                $.extend(load.spec.paths[keyPath][keyParameters].parameters[keyItems], {enum: value.enum});
+                                                load.spec.paths[keyPath][keyParameters].parameters[keyItems].type = "string";
                                             }
                                         });
                                     } else {
@@ -41,6 +35,26 @@ window.onload = () => {
         }
         const data = load;
 
+        // const myPlugin = {
+        //     components: {
+        //         TryItOutButton: () => {
+        //             // NOTE: We're not handling the click event for brevity.
+        //             return
+        //                '<div className="try-out"><button className="btn try-out__btn">Just do it!</button></div>';
+        //
+        //         }
+        //     }
+        // }
+
+        // const HideTopbarPlugin = {
+        //     // this plugin overrides the Topbar component to return nothing
+        //     components: {
+        //         Topbar: () => {
+        //             return null
+        //         }
+        //     }
+        // }
+
         const ui = SwaggerUIBundle({
             spec: data.spec,
             dom_id: '#swagger-ui',
@@ -49,8 +63,15 @@ window.onload = () => {
                 SwaggerUIBundle.presets.apis,
                 SwaggerUIStandalonePreset
             ],
+            presets_config: {
+                SwaggerUIStandalonePreset: {
+                    TopbarPlugin: false
+                }
+            },
             plugins: [
                 SwaggerUIBundle.plugins.DownloadUrl
+                // myPlugin,
+                // HideTopbarPlugin
             ],
             layout: 'StandaloneLayout'
         });
