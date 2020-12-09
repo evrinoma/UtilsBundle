@@ -27,7 +27,7 @@ trait ActiveTrait
      *
      * @return bool
      */
-    public function isActive()
+    public function isActive():bool
     {
         return $this->active === ActiveModel::ACTIVE;
     }
@@ -36,7 +36,7 @@ trait ActiveTrait
      * @VirtualProperty
      * @return bool
      */
-    public function isBlocked()
+    public function isBlocked():bool
     {
         return $this->active === ActiveModel::BLOCKED;
     }
@@ -45,7 +45,7 @@ trait ActiveTrait
      * @VirtualProperty
      * @return bool
      */
-    public function isDeleted()
+    public function isDeleted():bool
     {
         return $this->active === ActiveModel::DELETED;
     }

@@ -2,6 +2,8 @@
 
 namespace Evrinoma\UtilsBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Trait RoleTrait
  *
@@ -23,7 +25,6 @@ trait RoleTrait
         return $this->role;
     }
 
-
     /**
      * @param array $role
      *
@@ -41,7 +42,7 @@ trait RoleTrait
      *
      * @return self
      */
-    public function addRole($role): self
+    public function addRole(string $role): self
     {
         $this->role[] = $role;
 
