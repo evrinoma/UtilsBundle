@@ -87,6 +87,19 @@ abstract class AbstractEntityManager implements EntityInterface
     }
 
     /**
+     * @param string $entity
+     *
+     * @return object|null
+     */
+    protected function find(string $entity)
+    {
+        if (!$entity) {
+            return null;
+        }
+        return $this->repository->find($entity);
+    }
+
+    /**
      * @param AbstractDto $dto
      * @param             $entity
      *
