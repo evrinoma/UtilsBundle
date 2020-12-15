@@ -2,6 +2,7 @@
 
 namespace Evrinoma\UtilsBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
 use JMS\Serializer\Annotation\VirtualProperty;
@@ -110,6 +111,19 @@ trait ActiveTrait
         $this->active = ActiveModel::BLOCKED;
 
         return $this;
+    }
+
+    /**
+     * @return Criteria
+     */
+    public static function getCriteria():Criteria
+    {
+        $criteria = new Criteria();
+        $criteria->where(
+            $criteria->expr()->eq('active', ActiveModel::ACTIVE)
+        );
+
+        return $criteria;
     }
 //endregion Getters/Setters
 }

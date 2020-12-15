@@ -64,12 +64,7 @@ abstract class AbstractEntityManager implements EntityInterface
      */
     protected function getCriteria()
     {
-        $criteria = new Criteria();
-        $criteria->where(
-            $criteria->expr()->eq('active', 'a')
-        );
-
-        return $criteria;
+        return ActiveTrait::getCriteria();
     }
 
     /**
@@ -96,6 +91,7 @@ abstract class AbstractEntityManager implements EntityInterface
         if (!$entity) {
             return null;
         }
+
         return $this->repository->find($entity);
     }
 
@@ -185,11 +181,7 @@ abstract class AbstractEntityManager implements EntityInterface
      */
     public function getCount($criteria = null)
     {
-        if (!$criteria) {
-            $criteria = $this->getCriteria();
-        }
-
-        return $this->repository->matching($criteria)->count();
+        return $this->repository->matching((!$criteria) ? $this->getCriteria() : $criteria)->count();
     }
 
     public function setClassModel($class)
