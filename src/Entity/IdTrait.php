@@ -29,7 +29,7 @@ trait IdTrait
      */
     public function getId(): int
     {
-        return$this->id;
+        return $this->id;
     }
 //endregion Getters/Setters
 }
