@@ -1,0 +1,25 @@
+services:
+  Evrinoma\UtilsBundle\Security\Guard\Login\AuthenticatorGuard:
+    alias:  evrinoma.security.guard.login
+    public: true
+
+  evrinoma.security.guard.login:
+    class: Evrinoma\UtilsBundle\Security\Guard\Login\AuthenticatorGuard
+    autowire: true
+
+  Evrinoma\UtilsBundle\Security\Guard\Ldap\AuthenticatorGuard:
+    alias:  evrinoma.security.guard.ldap
+    public: true
+
+  evrinoma.security.guard.ldap:
+    class: Evrinoma\UtilsBundle\Security\Guard\Ldap\AuthenticatorGuard
+    autowire: true
+
+  Evrinoma\UtilsBundle\Security\Provider\Ldap\LdapProviderInterface:
+    alias:  evrinoma.security.provider.ldap
+    public: true
+
+  evrinoma.security.provider.ldap:
+    class: Evrinoma\UtilsBundle\Security\Provider\Ldap\LdapProvider
+    autowire: true
+
