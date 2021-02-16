@@ -4,6 +4,7 @@ namespace Evrinoma\UtilsBundle\Security\Guard\JWT;
 
 use Evrinoma\UtilsBundle\Security\Model\SecurityModelInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\InvalidTokenException;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\MissingTokenException;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authentication\Token\PreAuthenticationJWTUserToken;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -46,7 +47,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return $request->request->has(SecurityModelInterface::BEARER);
+        return $request->headers->has(SecurityModelInterface::BEARER);
     }
 
     /**
@@ -70,7 +71,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return null;
+        return null;//new JsonResponse([], Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -125,14 +126,18 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
         $jwtAccessToken = $extractor->getJwtAccessToken();
 
         if ($jwtAccessToken === null) {
-            throw new MissingTokenException('Missing JWT Access Token');
+            throw new AuthenticationException('Missing JWT Access Token');
         } else {
             $preAccessToken = new PreAuthenticationJWTUserToken($jwtAccessToken);
         }
-
-        if (!$payload = $this->jwtManager->decode($preAccessToken)) {
-            throw new InvalidTokenException('Invalid JWT Decode Access Token');
+        try {
+            if (!$payload = $this->jwtManager->decode($preAccessToken)) {
+                throw new AuthenticationException('Invalid JWT Decode Access Token');
+            }
+        } catch (JWTDecodeFailureException $e) {
+            throw new AuthenticationException($e->getMessage());
         }
+
         $extractor->setUsername($payload['username']);
 
         return $extractor;

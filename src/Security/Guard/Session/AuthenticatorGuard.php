@@ -48,7 +48,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return true;
+        return $request->hasPreviousSession() && $request->hasSession();
     }
 
     /**

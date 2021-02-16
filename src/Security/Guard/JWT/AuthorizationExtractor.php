@@ -37,8 +37,8 @@ final class AuthorizationExtractor implements ExtractorInterface
 //region SECTION: Public
     public function extract(Request $request): void
     {
-        if ($request->request->has($this->jwtAccessTokenKey)) {
-            $this->setJwtAccessToken(trim($request->request->get($this->jwtAccessTokenKey)));
+        if ($request->headers->has($this->jwtAccessTokenKey)) {
+            $this->setJwtAccessToken(trim($request->headers->get($this->jwtAccessTokenKey)));
         }
     }
 //endregion Public
@@ -84,6 +84,4 @@ final class AuthorizationExtractor implements ExtractorInterface
         return $this;
     }
 //endregion Getters/Setters
-
-
 }

@@ -90,7 +90,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return ($this->httpUtils->checkRequestPath($request, '/'.SecurityModelInterface::LOGIN_CHECK)) ? $this->httpUtils->createRedirectResponse($request, SecurityModelInterface::HOMEPAGE) : null;
+        return ($this->httpUtils->checkRequestPath($request, '/'.SecurityModelInterface::LOGIN)) ? $this->httpUtils->createRedirectResponse($request, SecurityModelInterface::HOMEPAGE) : null;
     }
 
     /**
