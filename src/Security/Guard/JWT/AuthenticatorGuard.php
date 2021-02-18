@@ -71,7 +71,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return null;//new JsonResponse([], Response::HTTP_ACCEPTED);
+        return null;
     }
 
     /**
