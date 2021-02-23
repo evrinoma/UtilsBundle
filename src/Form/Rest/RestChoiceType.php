@@ -20,6 +20,7 @@ class RestChoiceType extends AbstractType
     public const REST_DESCRIPTION    = 'rest_description';
     public const REST_CHOICES        = 'rest_choices';
     public const REST_COMPONENT_NAME = 'rest_component_name';
+    public const REST_DEFAULT        = 'rest_default';
 //endregion Fields
 
 //region SECTION: Public
@@ -31,7 +32,8 @@ class RestChoiceType extends AbstractType
             [
                 'documentation' => [
                     'description' => $options[self::REST_DESCRIPTION],
-                    'in'          => 'body',
+                    'default'     => $options[self::REST_DEFAULT],
+                    'format'      => self::REST_CHOICES,
                 ],
                 'choices'       => $options[self::REST_CHOICES],
             ]
@@ -52,6 +54,7 @@ class RestChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([self::REST_COMPONENT_NAME, self::REST_CHOICES, self::REST_DESCRIPTION]);
+        $resolver->setDefault(self::REST_DEFAULT, '--');
         $resolver->setDefault('compound', true);
     }
 //endregion Public

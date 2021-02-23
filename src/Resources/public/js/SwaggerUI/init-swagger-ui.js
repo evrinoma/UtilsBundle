@@ -1,21 +1,22 @@
 window.onload = () => {
     let swagger = document.getElementById('swagger-data');
-    if (swagger!= undefined) {
+    if (swagger != undefined) {
         let load = JSON.parse(document.getElementById('swagger-data').innerText);
 
-        if (load.spec !== undefined && load.spec.definitions !== undefined) {
+        if (load.spec !== undefined && load.spec.components !== undefined) {
             $.each(load.spec.paths, function (keyPath, valueREST) {
                 $.each(valueREST, function (keyParameters, valueParameters) {
                     if (valueParameters.parameters !== undefined) {
                         $.each(valueParameters.parameters, function (keyItems, valueItems) {
-                            if (valueItems.items !== undefined) {
-                                if (valueItems.items !== undefined && valueItems.items.$ref !== undefined) {
-                                    let formTypeName = valueItems.items.$ref.replace('#/definitions/', '');
-                                    if (load.spec.definitions[formTypeName].properties !== undefined) {
-                                        $.each(load.spec.definitions[formTypeName].properties, function (key, value) {
+                            if (valueItems.style === 'form' && valueItems.schema !== undefined && valueItems.schema.items !== undefined) {
+                                let items = valueItems.schema.items;
+                                if (items !== undefined && items.$ref !== undefined) {
+                                    let formTypeName = items.$ref.replace('#/components/schemas/', '');
+                                    if (load.spec.components.schemas[formTypeName].properties !== undefined) {
+                                        $.each(load.spec.components.schemas[formTypeName].properties, function (key, value) {
                                             if (value.enum !== undefined) {
-                                                $.extend(load.spec.paths[keyPath][keyParameters].parameters[keyItems], {enum: value.enum});
-                                                load.spec.paths[keyPath][keyParameters].parameters[keyItems].type = "string";
+                                                let items = {default: value.default !== undefined ? value.default : '', enum: value.enum, type: "string"};
+                                                load.spec.paths[keyPath][keyParameters].parameters[keyItems].schema.items = items;
                                             }
                                         });
                                     } else {
