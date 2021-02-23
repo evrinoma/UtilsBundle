@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.4",
         "jms/serializer-bundle": "^3.1",
-        "lexik/jwt-authentication-bundle": "^2.*"
+        "lexik/jwt-authentication-bundle": "^2"
     },
     "autoload": {
         "psr-4": {
