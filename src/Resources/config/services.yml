@@ -15,13 +15,13 @@ services:
     class: Evrinoma\UtilsBundle\Security\Guard\Ldap\AuthenticatorGuard
     autowire: true
 
-  Evrinoma\UtilsBundle\Security\Guard\JWT\AuthenticatorGuard:
-    alias:  evrinoma.security.guard.jwt
-    public: true
-
-  evrinoma.security.guard.jwt:
-    class: Evrinoma\UtilsBundle\Security\Guard\JWT\AuthenticatorGuard
-    autowire: true
+#  Evrinoma\UtilsBundle\Security\Guard\JWT\AuthenticatorGuard:
+#    alias:  evrinoma.security.guard.jwt
+#    public: true
+#
+#  evrinoma.security.guard.jwt:
+#    class: Evrinoma\UtilsBundle\Security\Guard\JWT\AuthenticatorGuard
+#    autowire: true
 
   Evrinoma\UtilsBundle\Security\Guard\Session\AuthenticatorGuard:
     alias: evrinoma.security.guard.session
