@@ -50,7 +50,7 @@ trait RelationTrait
      */
     public function hasChildren(): bool
     {
-        return ($this->children->count() !== 0);
+        return ($this->children && $this->children->count() !== 0);
     }
 //endregion Public
 
