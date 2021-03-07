@@ -5,6 +5,7 @@ namespace Evrinoma\UtilsBundle\Manager;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Evrinoma\DtoBundle\Adaptor\EntityAdaptorInterface;
 use Evrinoma\DtoBundle\Dto\AbstractDto;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 
@@ -96,16 +97,16 @@ abstract class AbstractEntityManager implements EntityInterface
     }
 
     /**
-     * @param AbstractDto $dto
+     * @param EntityAdaptorInterface $dto
      * @param             $entity
      *
      * @return mixed
      */
-    protected function save(AbstractDto $dto, $entity)
+    protected function save(EntityAdaptorInterface $dto, $entity)
     {
         $dto->fillEntity($entity);
         $this->entityManager->persist($entity);
-        $this->entityManager->flush();
+//        $this->entityManager->flush();
 
         return $entity;
     }
