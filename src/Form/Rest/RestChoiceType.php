@@ -33,7 +33,7 @@ class RestChoiceType extends AbstractType
                 'documentation' => [
                     'description' => $options[self::REST_DESCRIPTION],
                     'default'     => $options[self::REST_DEFAULT],
-                    'format'      => self::REST_CHOICES,
+                  ///  'format'      => self::REST_CHOICES,
                 ],
                 'choices'       => $options[self::REST_CHOICES],
             ]

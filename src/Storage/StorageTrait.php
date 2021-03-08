@@ -7,7 +7,7 @@ namespace Evrinoma\UtilsBundle\Storage;
 trait StorageTrait
 {
 //region SECTION: Fields
-    private $entities;
+    private $entities = [];
 //endregion Fields
 
 //region SECTION: Getters/Setters
@@ -32,6 +32,14 @@ trait StorageTrait
     public function countEntity():int
     {
         return count($this->entities);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEntities():bool
+    {
+        return $this->countEntity() !== 0;
     }
 
     /**

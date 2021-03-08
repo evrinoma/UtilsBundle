@@ -106,7 +106,7 @@ abstract class AbstractEntityManager implements EntityInterface
     {
         $dto->fillEntity($entity);
         $this->entityManager->persist($entity);
-//        $this->entityManager->flush();
+        $this->entityManager->flush();
 
         return $entity;
     }
