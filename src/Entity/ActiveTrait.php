@@ -64,9 +64,9 @@ trait ActiveTrait
     /**
      * @param string $active
      *
-     * @return self
+     * @return ActiveInterface
      */
-    public function setActive(string $active = ActiveModel::ACTIVE):self
+    public function setActive(string $active = ActiveModel::ACTIVE):ActiveInterface
     {
         switch ($active) {
             case ActiveModel::ACTIVE:
@@ -84,9 +84,9 @@ trait ActiveTrait
     }
 
     /**
-     * @return self
+     * @return ActiveInterface
      */
-    public function setActiveToDelete():self
+    public function setActiveToDelete():ActiveInterface
     {
         $this->active = ActiveModel::DELETED;
 
@@ -94,9 +94,9 @@ trait ActiveTrait
     }
 
     /**
-     * @return self
+     * @return ActiveInterface
      */
-    public function setActiveToActive():self
+    public function setActiveToActive():ActiveInterface
     {
         $this->active = ActiveModel::ACTIVE;
 
@@ -104,9 +104,9 @@ trait ActiveTrait
     }
 
     /**
-     * @return self
+     * @return ActiveInterface
      */
-    public function setActiveToBlocked():self
+    public function setActiveToBlocked():ActiveInterface
     {
         $this->active = ActiveModel::BLOCKED;
 
