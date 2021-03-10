@@ -2,12 +2,6 @@
 
 namespace Evrinoma\UtilsBundle\Manager;
 
-use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use Evrinoma\DtoBundle\Dto\AbstractDto;
-use Evrinoma\UtilsBundle\Entity\ActiveTrait;
-
 /**
  * Class AbstractBaseManager
  *

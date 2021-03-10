@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Evrinoma\DtoBundle\Adaptor\EntityAdaptorInterface;
-use Evrinoma\DtoBundle\Dto\AbstractDto;
+use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 
 /**
@@ -114,33 +114,31 @@ abstract class AbstractEntityManager implements EntityInterface
 
 //region SECTION: Public
     /**
-     * @return self
+     * @return EntityInterface
      */
-    public function removeEntitys()
+    public function removeEntitys():EntityInterface
     {
         foreach ($this->getData() as $entity) {
             $this->entityManager->remove($entity);
         }
-        $this->entityManager->flush();
 
         return $this;
     }
 
     /**
-     * @return self
+     * @return EntityInterface
      */
-    public function lockEntitys()
+    public function lockEntities():EntityInterface
     {
-        /** @var ActiveTrait $entity */
+        /** @var ActiveInterface $entity */
         foreach ($this->getData() as $entity) {
             $entity->setActiveToDelete();
         }
-        $this->entityManager->flush();
 
         return $this;
     }
 
-    public function toModel()
+    public function toModel():array
     {
         return ['class' => $this->getClassModel(), 'model' => $this->getData()];
     }
@@ -162,7 +160,7 @@ abstract class AbstractEntityManager implements EntityInterface
 //endregion Private
 
 //region SECTION: Find Filters Repository
-    public function getRepositoryClass()
+    public function getRepositoryClass():string
     {
         return $this->repositoryClass;
     }
@@ -185,7 +183,7 @@ abstract class AbstractEntityManager implements EntityInterface
         return $this->repository->matching((!$criteria) ? $this->getCriteria() : $criteria)->count();
     }
 
-    public function setClassModel($class)
+    public function setClassModel($class):EntityInterface
     {
         $this->classModel = $class;
 
