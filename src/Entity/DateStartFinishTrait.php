@@ -43,7 +43,7 @@ trait DateStartFinishTrait
     /**
      * @param \DateTime $dateStart
      *
-     * @return DateStartFinishTrait
+     * @return $this
      */
     public function setDateStart(\DateTime $dateStart): self
     {
@@ -55,7 +55,7 @@ trait DateStartFinishTrait
     /**
      * @param \DateTime $dateFinish
      *
-     * @return DateStartFinishTrait
+     * @return $this
      */
     public function setDateFinish(\DateTime $dateFinish): self
     {
