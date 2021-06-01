@@ -18,14 +18,14 @@ trait CreateUpdateAtTrait
      * @Type("DateTime<'d-m-Y'>")
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @var \DateTime
      * @Type("DateTime<'d-m-Y'>")
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt;
+    protected $updatedAt;
 
 
     /**

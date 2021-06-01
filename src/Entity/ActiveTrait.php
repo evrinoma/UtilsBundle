@@ -20,7 +20,7 @@ trait ActiveTrait
      *
      * @ORM\Column(name="active", type="string", length=255, nullable=false)
      */
-    private $active = ActiveModel::ACTIVE;
+    protected $active = ActiveModel::ACTIVE;
 //endregion Fields
 
 //region SECTION: Public
