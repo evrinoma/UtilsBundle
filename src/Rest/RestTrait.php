@@ -42,6 +42,46 @@ trait RestTrait
     /**
      * @return self
      */
+    public function setRestCreated(): self
+    {
+        $this->status = Response::HTTP_CREATED;
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    public function setRestAccepted(): self
+    {
+        $this->status = Response::HTTP_ACCEPTED;
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    public function setRestNotFound(): self
+    {
+        $this->status = Response::HTTP_NOT_FOUND;
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    public function setRestNonAuthoritativeInformation(): self
+    {
+        $this->status = Response::HTTP_NON_AUTHORITATIVE_INFORMATION;
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
     public function setRestClientErrorBadRequest(): self
     {
         $this->status = Response::HTTP_BAD_REQUEST;
