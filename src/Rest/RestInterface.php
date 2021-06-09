@@ -38,5 +38,7 @@ interface RestInterface
     public function setRestNoContent();
 
     public function setRestUnprocessableEntity();
+
+    public function setRestNotImplemented();
 //endregion Getters/Setters
 }

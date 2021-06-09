@@ -120,6 +120,15 @@ trait RestTrait
         return $this;
     }
 
+    /**
+     * @return self
+     */
+    public function setRestNotImplemented(): self
+    {
+        $this->status = Response::HTTP_NOT_IMPLEMENTED;
+
+        return $this;
+    }
 
     /**
      * @return self
