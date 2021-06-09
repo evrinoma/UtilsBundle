@@ -32,7 +32,7 @@ trait RestTrait
     /**
      * @return self
      */
-    public function setRestSuccessOk(): self
+    public function setRestOk(): self
     {
         $this->status = Response::HTTP_OK;
 
@@ -93,7 +93,7 @@ trait RestTrait
     /**
      * @return self
      */
-    public function setRestClientErrorBadRequest(): self
+    public function setRestBadRequest(): self
     {
         $this->status = Response::HTTP_BAD_REQUEST;
 
@@ -103,7 +103,7 @@ trait RestTrait
     /**
      * @return self
      */
-    public function setRestClientErrorConflict(): self
+    public function setRestConflict(): self
     {
         $this->status = Response::HTTP_CONFLICT;
 
@@ -113,9 +113,20 @@ trait RestTrait
     /**
      * @return self
      */
-    public function setRestClientErrorGone(): self
+    public function setRestGone(): self
     {
         $this->status = Response::HTTP_GONE;
+
+        return $this;
+    }
+
+
+    /**
+     * @return self
+     */
+    public function setRestUnprocessableEntity(): self
+    {
+        $this->status = Response::HTTP_UNPROCESSABLE_ENTITY;
 
         return $this;
     }
@@ -123,7 +134,7 @@ trait RestTrait
     /**
      * @return self
      */
-    public function setRestServerErrorInternalServerError(): self
+    public function setRestInternalServerError(): self
     {
         $this->status = Response::HTTP_INTERNAL_SERVER_ERROR;
 
@@ -133,7 +144,7 @@ trait RestTrait
     /**
      * @return self
      */
-    public function setRestServerErrorServiceUnavailable(): self
+    public function setRestServiceUnavailable(): self
     {
         $this->status = Response::HTTP_SERVICE_UNAVAILABLE;
 
@@ -143,9 +154,9 @@ trait RestTrait
     /**
      * @return self
      */
-    public function setRestServerErrorUnknownError(): self
+    public function setRestUnknownError(): self
     {
-        $this->status = RestModel::SERVER_ERROR_UNKNOWN_ERROR;
+        $this->status = RestModel::UNKNOWN_ERROR;
 
         return $this;
     }

@@ -13,19 +13,19 @@ interface RestInterface
 //region SECTION: Getters/Setters
     public function getRestStatus(): int;
 
-    public function setRestSuccessOk();
+    public function setRestOk();
 
-    public function setRestClientErrorBadRequest();
+    public function setRestBadRequest();
 
-    public function setRestClientErrorConflict();
+    public function setRestConflict();
 
-    public function setRestClientErrorGone();
+    public function setRestGone();
 
-    public function setRestServerErrorInternalServerError();
+    public function setRestInternalServerError();
 
-    public function setRestServerErrorServiceUnavailable();
+    public function setRestServiceUnavailable();
 
-    public function setRestServerErrorUnknownError();
+    public function setRestUnknownError();
 
     public function setRestCreated();
 
@@ -36,5 +36,7 @@ interface RestInterface
     public function setRestNonAuthoritativeInformation();
 
     public function setRestNoContent();
+
+    public function setRestUnprocessableEntity();
 //endregion Getters/Setters
 }
