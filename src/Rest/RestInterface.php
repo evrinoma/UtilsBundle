@@ -34,5 +34,7 @@ interface RestInterface
     public function setRestNotFound();
 
     public function setRestNonAuthoritativeInformation();
+
+    public function setRestNoContent();
 //endregion Getters/Setters
 }

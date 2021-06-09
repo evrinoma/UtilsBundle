@@ -59,6 +59,17 @@ trait RestTrait
         return $this;
     }
 
+
+    /**
+     * @return self
+     */
+    public function setRestNoContent(): self
+    {
+        $this->status = Response::HTTP_NO_CONTENT;
+
+        return $this;
+    }
+
     /**
      * @return self
      */
