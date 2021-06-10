@@ -7,26 +7,26 @@ namespace Evrinoma\UtilsBundle\Entity;
 interface CreateUpdateAtInterface
 {
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function getCreatedAt(): ?\DateTime;
+    public function getCreatedAt(): ?\DateTimeImmutable;
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable|null
      */
-    public function getUpdatedAt(): \DateTime;
+    public function getUpdatedAt(): \DateTimeImmutable;
 
     /**
-     * @param \DateTime $createdAt
+     * @param \DateTimeImmutable $createdAt
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt): self;
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self;
 
     /**
-     * @param \DateTime $updatedAt
+     * @param \DateTimeImmutable $updatedAt
      *
      * @return $this
      */
-    public function setUpdatedAt(\DateTime $updatedAt): self;
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self;
 }

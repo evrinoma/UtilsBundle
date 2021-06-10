@@ -14,42 +14,42 @@ use JMS\Serializer\Annotation\Type;
 trait CreateUpdateAtTrait
 {
     /**
-     * @var \DateTime
-     * @Type("DateTime<'d-m-Y'>")
+     * @var \DateTimeImmutable
+     * @Type("DateTimeImmutable<'d-m-Y'>")
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
-    protected $createdAt;
+    protected \DateTimeImmutable $createdAt;
 
     /**
-     * @var \DateTime
-     * @Type("DateTime<'d-m-Y'>")
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @var \DateTimeImmutable
+     * @Type("DateTimeImmutable<'d-m-Y'>")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
-    protected $updatedAt;
+    protected \DateTimeImmutable $updatedAt;
 
 
     /**
-     * @return \DateTime|null
+     * @return \DateTimeImmutable
      */
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable|null
      */
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param \DateTimeImmutable $createdAt
      *
      * @return $this
      */
-    public function setCreatedAt(\DateTime $createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -57,11 +57,11 @@ trait CreateUpdateAtTrait
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param \DateTimeImmutable $updatedAt
      *
      * @return $this
      */
-    public function setUpdatedAt(\DateTime $updatedAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
