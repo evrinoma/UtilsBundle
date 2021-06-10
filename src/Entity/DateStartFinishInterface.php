@@ -7,26 +7,26 @@ namespace Evrinoma\UtilsBundle\Entity;
 interface DateStartFinishInterface
 {
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    public function getDateStart(): \DateTime;
+    public function getDateStart(): \DateTimeImmutable;
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    public function getDateFinish(): \DateTime;
+    public function getDateFinish(): \DateTimeImmutable;
 
     /**
-     * @param \DateTime $dateStart
+     * @param \DateTimeImmutable $dateStart
      *
      * @return $this
      */
-    public function setDateStart(\DateTime $dateStart): self;
+    public function setDateStart(\DateTimeImmutable $dateStart): self;
 
     /**
-     * @param \DateTime $dateFinish
+     * @param \DateTimeImmutable $dateFinish
      *
      * @return $this
      */
-    public function setDateFinish(\DateTime $dateFinish): self;
+    public function setDateFinish(\DateTimeImmutable $dateFinish): self;
 }

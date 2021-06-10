@@ -21,9 +21,9 @@ trait CreateUpdateAtTrait
     protected \DateTimeImmutable $createdAt;
 
     /**
-     * @var \DateTimeImmutable
+     * @var \DateTimeImmutable|null
      * @Type("DateTimeImmutable<'d-m-Y'>")
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     protected \DateTimeImmutable $updatedAt;
 

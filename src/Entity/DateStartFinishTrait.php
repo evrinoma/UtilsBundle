@@ -10,13 +10,13 @@ trait DateStartFinishTrait
 {
 //region SECTION: Fields
     /**
-     * @var \DateTime
+     * @var \DateTimeImmutable
      *
      * @ORM\Column(name="dateStart", type="date", nullable=true)
      */
     private $dateStart;
     /**
-     * @var \DateTime
+     * @var \DateTimeImmutable
      *
      * @ORM\Column(name="dateFinish", type="date", nullable=true)
      */
@@ -25,27 +25,27 @@ trait DateStartFinishTrait
 
 //region SECTION: Getters/Setters
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    public function getDateStart(): \DateTime
+    public function getDateStart(): \DateTimeImmutable
     {
         return $this->dateStart;
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    public function getDateFinish(): \DateTime
+    public function getDateFinish(): \DateTimeImmutable
     {
         return $this->dateFinish;
     }
 
     /**
-     * @param \DateTime $dateStart
+     * @param \DateTimeImmutable $dateStart
      *
      * @return $this
      */
-    public function setDateStart(\DateTime $dateStart): self
+    public function setDateStart(\DateTimeImmutable $dateStart): self
     {
         $this->dateStart = $dateStart;
 
@@ -53,11 +53,11 @@ trait DateStartFinishTrait
     }
 
     /**
-     * @param \DateTime $dateFinish
+     * @param \DateTimeImmutable $dateFinish
      *
      * @return $this
      */
-    public function setDateFinish(\DateTime $dateFinish): self
+    public function setDateFinish(\DateTimeImmutable $dateFinish): self
     {
         $this->dateFinish = $dateFinish;
 

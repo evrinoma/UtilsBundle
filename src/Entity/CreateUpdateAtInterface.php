@@ -7,14 +7,14 @@ namespace Evrinoma\UtilsBundle\Entity;
 interface CreateUpdateAtInterface
 {
     /**
-     * @return \DateTimeImmutable|null
+     * @return \DateTimeImmutable
      */
-    public function getCreatedAt(): ?\DateTimeImmutable;
+    public function getCreatedAt(): \DateTimeImmutable;
 
     /**
      * @return \DateTimeImmutable|null
      */
-    public function getUpdatedAt(): \DateTimeImmutable;
+    public function getUpdatedAt(): ?\DateTimeImmutable;
 
     /**
      * @param \DateTimeImmutable $createdAt
