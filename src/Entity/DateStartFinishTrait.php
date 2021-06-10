@@ -23,6 +23,24 @@ trait DateStartFinishTrait
     private $dateFinish;
 //endregion Fields
 
+//region SECTION: Public
+    /**
+     * @return bool
+     */
+    public function hasDateStart(): bool
+    {
+        return $this->dateStart !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDateFinish(): bool
+    {
+        $this->dateFinish !== null;
+    }
+//endregion Public
+
 //region SECTION: Getters/Setters
     /**
      * @return \DateTimeImmutable

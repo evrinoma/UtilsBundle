@@ -6,6 +6,19 @@ namespace Evrinoma\UtilsBundle\Entity;
 
 interface DateStartFinishInterface
 {
+//region SECTION: Public
+    /**
+     * @return bool
+     */
+    public function hasDateStart(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasDateFinish(): bool;
+//endregion Public
+
+//region SECTION: Getters/Setters
     /**
      * @return \DateTimeImmutable
      */
@@ -29,4 +42,5 @@ interface DateStartFinishInterface
      * @return $this
      */
     public function setDateFinish(\DateTimeImmutable $dateFinish): self;
+//endregion Getters/Setters
 }

@@ -7,6 +7,16 @@ namespace Evrinoma\UtilsBundle\Entity;
 interface CreateUpdateAtInterface
 {
     /**
+     * @return bool
+     */
+    public function hasCreatedAt(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasUpdatedAt(): bool;
+
+    /**
      * @return \DateTimeImmutable
      */
     public function getCreatedAt(): \DateTimeImmutable;

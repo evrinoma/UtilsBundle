@@ -70,5 +70,21 @@ trait CreateUpdateAtTrait
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasCreatedAt(): bool
+    {
+        return $this->createdAt !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUpdatedAt(): bool
+    {
+        return $this->updatedAt !== null;
+    }
 //endregion Getters/Setters
 }
