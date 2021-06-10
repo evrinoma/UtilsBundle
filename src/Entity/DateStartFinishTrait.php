@@ -12,13 +12,13 @@ trait DateStartFinishTrait
     /**
      * @var \DateTimeImmutable
      *
-     * @ORM\Column(name="dateStart", type="date", nullable=true)
+     * @ORM\Column(name="dateStart", type="date_immutable", nullable=true)
      */
     private $dateStart;
     /**
      * @var \DateTimeImmutable
      *
-     * @ORM\Column(name="dateFinish", type="date", nullable=true)
+     * @ORM\Column(name="dateFinish", type="date_immutable", nullable=true)
      */
     private $dateFinish;
 //endregion Fields

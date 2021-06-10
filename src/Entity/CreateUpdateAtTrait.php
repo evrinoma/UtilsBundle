@@ -16,14 +16,14 @@ trait CreateUpdateAtTrait
     /**
      * @var \DateTimeImmutable
      * @Type("DateTimeImmutable<'d-m-Y'>")
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(name="created_at", type="datetime_immutable", nullable=false)
      */
     protected \DateTimeImmutable $createdAt;
 
     /**
      * @var \DateTimeImmutable|null
      * @Type("DateTimeImmutable<'d-m-Y'>")
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      */
     protected \DateTimeImmutable $updatedAt;
 
