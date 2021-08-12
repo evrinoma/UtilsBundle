@@ -19,6 +19,11 @@ interface ActiveInterface
      * @return bool
      */
     public function isDeleted(): bool;
+
+    /**
+     * @return bool
+     */
+    public function isModerated(): bool;
 //endregion Public
 
 //region SECTION: Getters/Setters
@@ -51,4 +56,9 @@ interface ActiveInterface
      * @return ActiveInterface
      */
     public function setActiveToActive(): ActiveInterface;
+
+    /**
+     * @return ActiveInterface
+     */
+    public function setActiveToModerated(): ActiveInterface;
 }

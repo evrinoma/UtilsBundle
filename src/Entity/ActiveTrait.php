@@ -28,7 +28,7 @@ trait ActiveTrait
      *
      * @return bool
      */
-    public function isActive():bool
+    public function isActive(): bool
     {
         return $this->active === ActiveModel::ACTIVE;
     }
@@ -37,7 +37,7 @@ trait ActiveTrait
      * @VirtualProperty
      * @return bool
      */
-    public function isBlocked():bool
+    public function isBlocked(): bool
     {
         return $this->active === ActiveModel::BLOCKED;
     }
@@ -46,9 +46,18 @@ trait ActiveTrait
      * @VirtualProperty
      * @return bool
      */
-    public function isDeleted():bool
+    public function isDeleted(): bool
     {
         return $this->active === ActiveModel::DELETED;
+    }
+
+    /**
+     * @VirtualProperty
+     * @return bool
+     */
+    public function isModerated(): bool
+    {
+        return $this->active === ActiveModel::MODERATED;
     }
 //endregion Public
 
@@ -62,11 +71,24 @@ trait ActiveTrait
     }
 
     /**
+     * @return Criteria
+     */
+    public static function getCriteria(): Criteria
+    {
+        $criteria = new Criteria();
+        $criteria->where(
+            $criteria->expr()->eq('active', ActiveModel::ACTIVE)
+        );
+
+        return $criteria;
+    }
+
+    /**
      * @param string $active
      *
      * @return ActiveInterface
      */
-    public function setActive(string $active = ActiveModel::ACTIVE):ActiveInterface
+    public function setActive(string $active = ActiveModel::ACTIVE): ActiveInterface
     {
         switch ($active) {
             case ActiveModel::ACTIVE:
@@ -78,6 +100,9 @@ trait ActiveTrait
             case ActiveModel::DELETED:
                 $this->setActiveToDelete();
                 break;
+            case ActiveModel::MODERATED :
+                $this->setActiveToModerated();
+                break;
         }
 
         return $this;
@@ -86,7 +111,17 @@ trait ActiveTrait
     /**
      * @return ActiveInterface
      */
-    public function setActiveToDelete():ActiveInterface
+    public function setActiveToModerated(): ActiveInterface
+    {
+        $this->active = ActiveModel::MODERATED;
+
+        return $this;
+    }
+
+    /**
+     * @return ActiveInterface
+     */
+    public function setActiveToDelete(): ActiveInterface
     {
         $this->active = ActiveModel::DELETED;
 
@@ -96,7 +131,7 @@ trait ActiveTrait
     /**
      * @return ActiveInterface
      */
-    public function setActiveToActive():ActiveInterface
+    public function setActiveToActive(): ActiveInterface
     {
         $this->active = ActiveModel::ACTIVE;
 
@@ -106,24 +141,11 @@ trait ActiveTrait
     /**
      * @return ActiveInterface
      */
-    public function setActiveToBlocked():ActiveInterface
+    public function setActiveToBlocked(): ActiveInterface
     {
         $this->active = ActiveModel::BLOCKED;
 
         return $this;
-    }
-
-    /**
-     * @return Criteria
-     */
-    public static function getCriteria():Criteria
-    {
-        $criteria = new Criteria();
-        $criteria->where(
-            $criteria->expr()->eq('active', ActiveModel::ACTIVE)
-        );
-
-        return $criteria;
     }
 //endregion Getters/Setters
 }

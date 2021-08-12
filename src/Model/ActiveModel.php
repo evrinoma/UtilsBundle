@@ -9,7 +9,10 @@ namespace Evrinoma\UtilsBundle\Model;
  */
 final class ActiveModel
 {
-    public const ACTIVE     = 'a';
-    public const BLOCKED    = 'b';
-    public const DELETED    = 'd';
+//region SECTION: Fields
+    public const ACTIVE    = 'a';
+    public const BLOCKED   = 'b';
+    public const DELETED   = 'd';
+    public const MODERATED = 'm';
+//endregion Fields
 }
