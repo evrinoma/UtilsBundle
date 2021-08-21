@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class EvrinomaUtilsExtension extends Extension
 {
+    private $container;
+
 //region SECTION: Public
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -24,10 +26,12 @@ class EvrinomaUtilsExtension extends Extension
         $configuration   = $this->getConfiguration($configs, $container);
         $config          = $this->processConfiguration($configuration, $configs);
         $this->container = $container;
-        $ldapServers     = $config['ldap_servers'];
-        if ($ldapServers) {
-            $definition = $this->container->getDefinition('evrinoma.security.provider.ldap');
-            $definition->addMethodCall('setServers', [$ldapServers]);
+
+        if (array_key_exists('security', $config)) {
+            if (array_key_exists('ldap_servers', $config['security']) && $ldapServers = $config['security']['ldap_servers']) {
+                $definition = $this->container->getDefinition('evrinoma.security.provider.ldap');
+                $definition->addMethodCall('setServers', [$ldapServers]);
+            }
         }
 
         if (array_key_exists('LexikJWTAuthenticationBundle', $container->getParameterBag()->get('kernel.bundles'))) {
