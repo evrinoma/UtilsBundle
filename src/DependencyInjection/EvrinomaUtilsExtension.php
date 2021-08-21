@@ -15,7 +15,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class EvrinomaUtilsExtension extends Extension
 {
+//region SECTION: Fields
     private $container;
+//endregion Fields
 
 //region SECTION: Public
     public function load(array $configs, ContainerBuilder $container)
@@ -28,6 +30,24 @@ class EvrinomaUtilsExtension extends Extension
         $this->container = $container;
 
         if (array_key_exists('security', $config)) {
+            $this->addDefinition(
+                'Evrinoma\UtilsBundle\Security\Configuration',
+                'evrinoma.security.configuration',
+                [
+                    $config['security']['event']['on_authentication_success'],
+                    $config['security']['event']['on_authentication_failure'],
+                    $config['security']['redirect_by_server'],
+                    $config['security']['firewall_session_key'],
+                    $config['security']['route']['login'],
+                    $config['security']['route']['check'],
+                    $config['security']['route']['redirect'],
+                    $config['security']['form']['username'],
+                    $config['security']['form']['password'],
+                    $config['security']['form']['csrf_token'],
+
+                ],
+                true
+            );
             if (array_key_exists('ldap_servers', $config['security']) && $ldapServers = $config['security']['ldap_servers']) {
                 $definition = $this->container->getDefinition('evrinoma.security.provider.ldap');
                 $definition->addMethodCall('setServers', [$ldapServers]);
