@@ -95,7 +95,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        if ($this->configuration->events()->isAuthenticationFailureEnabled()) {
+        if ($this->configuration->event()->isAuthenticationFailureEnabled()) {
             $event = new AuthenticationFailureEvent();
             $this->eventDispatcher->dispatch($event);
         }
@@ -114,10 +114,10 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
     {
         $response = null;
 
-        if ($this->httpUtils->checkRequestPath($request, '/'.$this->configuration->routes()->getLoginCheck())) {
+        if ($this->httpUtils->checkRequestPath($request, '/'.$this->configuration->route()->loginCheck())) {
             $redirectUrl = '';
 
-            if ($this->configuration->events()->isAuthenticationSuccessEnabled()) {
+            if ($this->configuration->event()->isAuthenticationSuccessEnabled()) {
                 $event = new AuthenticationSuccessEvent();
                 $this->eventDispatcher->dispatch($event);
                 $redirectUrl = $event->getRedirectUrl();
@@ -140,7 +140,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return $this->httpUtils->createRedirectResponse($request, $this->configuration->routes()->getLogin());
+        return $this->httpUtils->createRedirectResponse($request, $this->configuration->route()->login());
     }
 
     /**

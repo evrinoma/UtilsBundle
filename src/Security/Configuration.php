@@ -11,9 +11,9 @@ use Evrinoma\UtilsBundle\Security\Configuration\Route;
 final class Configuration
 {
 //region SECTION: Fields
-    private Event $events;
+    private Event $event;
     private Form  $form;
-    private Route $routes;
+    private Route $route;
 
     private bool $redirectByServer;
 
@@ -29,21 +29,21 @@ final class Configuration
      * @param bool   $authenticationFailureEvent
      * @param bool   $redirectByServer
      * @param string $fireWallSessionKey
-     * @param string $loginRoute
-     * @param string $loginCheckRoute
-     * @param string $defaultRoute
+     * @param string $login
+     * @param string $loginCheck
+     * @param string $redirect
      * @param string $username
      * @param string $password
      * @param string $csrfToken
      */
-    public function __construct(bool $authenticationSuccessEvent, bool $authenticationFailureEvent, bool $redirectByServer, string $fireWallSessionKey, string $loginRoute, string $loginCheckRoute, string $defaultRoute, string $username, string $password, string $csrfToken)
+    public function __construct(bool $authenticationSuccessEvent, bool $authenticationFailureEvent, bool $redirectByServer, string $fireWallSessionKey, string $login, string $loginCheck, string $redirect, string $username, string $password, string $csrfToken)
     {
         $this->redirectByServer   = $redirectByServer;
         $this->fireWallSessionKey = $fireWallSessionKey;
 
-        $this->events = new Event($authenticationSuccessEvent, $authenticationFailureEvent);
-        $this->form   = new Form($username, $password, $csrfToken);
-        $this->routes = new Route($loginRoute, $loginCheckRoute, $defaultRoute);
+        $this->event = new Event($authenticationSuccessEvent, $authenticationFailureEvent);
+        $this->form  = new Form($username, $password, $csrfToken);
+        $this->s = new Route($login, $loginCheck, $redirect);
     }
 //endregion Constructor
 
@@ -59,9 +59,9 @@ final class Configuration
     /**
      * @return Event
      */
-    public function events(): Event
+    public function event(): Event
     {
-        return $this->events;
+        return $this->event;
     }
 
     /**
@@ -75,9 +75,9 @@ final class Configuration
     /**
      * @return Route
      */
-    public function routes(): Route
+    public function route(): Route
     {
-        return $this->routes;
+        return $this->route;
     }
 //endregion Public
 

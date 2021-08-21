@@ -30,7 +30,7 @@ final class Route
     /**
      * @return string
      */
-    public function getLogin(): string
+    public function login(): string
     {
         return $this->login;
     }
@@ -38,7 +38,7 @@ final class Route
     /**
      * @return string
      */
-    public function getLoginCheck(): string
+    public function loginCheck(): string
     {
         return $this->loginCheck;
     }
@@ -46,7 +46,7 @@ final class Route
     /**
      * @return string
      */
-    public function getRedirect(): string
+    public function redirect(): string
     {
         return $this->redirect;
     }
