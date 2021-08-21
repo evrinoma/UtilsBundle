@@ -10,15 +10,18 @@ use Symfony\Component\HttpFoundation\Request;
 final class AuthorizationExtractor implements ExtractorInterface
 {
 //region SECTION: Fields
-    private $jwtAccessToken;
     /**
-     * @var ?string
+     * @var string|null
      */
-    private $jwtAccessTokenKey;
+    private ?string $jwtAccessToken;
     /**
-     * @var string
+     * @var string|null
      */
-    private $username;
+    private ?string $jwtAccessTokenKey;
+    /**
+     * @var string|null
+     */
+    private ?string $username;
 //endregion Fields
 
 //region SECTION: Constructor

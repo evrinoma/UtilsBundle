@@ -2,9 +2,11 @@
 
 namespace Evrinoma\UtilsBundle\Security\Guard\Ldap;
 
+use Evrinoma\UtilsBundle\Security\Configuration;
+use Evrinoma\UtilsBundle\Security\Event\AuthenticationFailureEvent;
+use Evrinoma\UtilsBundle\Security\Event\AuthenticationSuccessEvent;
 use Evrinoma\UtilsBundle\Security\Model\SecurityModelInterface;
 use Evrinoma\UtilsBundle\Security\Provider\Ldap\LdapProviderInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -17,6 +19,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\Security\Http\HttpUtils;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class AuthenticatorGuard extends AbstractGuardAuthenticator
 {
@@ -25,22 +28,32 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
     /**
      * @var HttpUtils
      */
-    private $httpUtils;
+    private HttpUtils $httpUtils;
 
     /**
      * @var TokenStorageInterface|null
      */
-    private $tokenStorage;
+    private ?TokenStorageInterface $tokenStorage;
 
     /**
      * @var CsrfTokenManagerInterface
      */
-    private $csrfTokenManager;
+    private CsrfTokenManagerInterface $csrfTokenManager;
 
     /**
      * @var LdapProviderInterface
      */
-    private $ldapProvider;
+    private LdapProviderInterface $ldapProvider;
+
+    /**
+     * @var Configuration
+     */
+    private Configuration $configuration;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    private EventDispatcherInterface $eventDispatcher;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -50,14 +63,18 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      * @param HttpUtils                 $httpUtils
      * @param TokenStorageInterface     $tokenStorage
      * @param CsrfTokenManagerInterface $csrfTokenManager
+     * @param EventDispatcherInterface  $eventDispatcher
+     * @param Configuration             $configuration
      * @param LdapProviderInterface     $ldapProvider
      */
-    public function __construct(HttpUtils $httpUtils, TokenStorageInterface $tokenStorage, CsrfTokenManagerInterface $csrfTokenManager, LdapProviderInterface $ldapProvider)
+    public function __construct(HttpUtils $httpUtils, TokenStorageInterface $tokenStorage, CsrfTokenManagerInterface $csrfTokenManager, EventDispatcherInterface $eventDispatcher, Configuration $configuration, LdapProviderInterface $ldapProvider)
     {
         $this->httpUtils        = $httpUtils;
         $this->tokenStorage     = $tokenStorage;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->ldapProvider     = $ldapProvider;
+        $this->configuration    = $configuration;
+        $this->eventDispatcher = $eventDispatcher;
     }
 //endregion Constructor
 
@@ -70,7 +87,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return ($request->request->has(SecurityModelInterface::USERNAME) && $request->request->has(SecurityModelInterface::PASSWORD));
+        return ($request->request->has($this->configuration->form()->getUsernamePrefix() && $request->request->has($this->configuration->form()->getPasswordPrefix())));
     }
 
     /**
@@ -78,6 +95,11 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        if ($this->configuration->events()->isAuthenticationFailureEnabled()) {
+            $event = new AuthenticationFailureEvent();
+            $this->eventDispatcher->dispatch($event);
+        }
+
         return null;
     }
 
@@ -92,8 +114,19 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
     {
         $response = null;
 
-        if ($this->httpUtils->checkRequestPath($request, '/'.SecurityModelInterface::LOGIN_CHECK)) {
-            $response = ($request->request->has(SecurityModelInterface::LOCATION) && $request->request->get(SecurityModelInterface::LOCATION) === true) ? $this->httpUtils->createRedirectResponse($request, SecurityModelInterface::HOMEPAGE) : new JsonResponse([SecurityModelInterface::URL => $this->httpUtils->generateUri($request, SecurityModelInterface::HOMEPAGE)]);
+        if ($this->httpUtils->checkRequestPath($request, '/'.$this->configuration->routes()->getLoginCheck())) {
+            $redirectUrl = '';
+
+            if ($this->configuration->events()->isAuthenticationSuccessEnabled()) {
+                $event = new AuthenticationSuccessEvent();
+                $this->eventDispatcher->dispatch($event);
+                $redirectUrl = $event->getRedirectUrl();
+                $response    = $event->toResponse();
+            }
+
+            if ($this->configuration->isRedirectByServer()) {
+                $response = $this->httpUtils->createRedirectResponse($request, $redirectUrl);
+            }
         }
 
         return $response;
@@ -107,7 +140,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return $this->httpUtils->createRedirectResponse($request, SecurityModelInterface::LOGIN);
+        return $this->httpUtils->createRedirectResponse($request, $this->configuration->routes()->getLogin());
     }
 
     /**
@@ -140,7 +173,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        $extractor = new AuthorizationExtractor(SecurityModelInterface::USERNAME, SecurityModelInterface::PASSWORD, SecurityModelInterface::CSRF_TOKEN);
+        $extractor = new AuthorizationExtractor($this->configuration->form());
 
         $extractor->extract($request);
 

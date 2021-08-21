@@ -2,7 +2,7 @@
 
 namespace Evrinoma\UtilsBundle\Security\Guard\Session;
 
-use Evrinoma\UtilsBundle\Security\Model\SecurityModelInterface;
+use Evrinoma\UtilsBundle\Security\Configuration;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,20 +23,21 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
     /**
      * @var TokenStorageInterface|null
      */
-    private $tokenStorage;
+    private ?TokenStorageInterface $tokenStorage;
     /**
      * @var string
      */
-    private $sessionKey = '_security_'.SecurityModelInterface::FIREWALL_SESSION_KEY;
+    private string $sessionKey;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage, Configuration $configuration)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->sessionKey   = '_security_'.$configuration->getFireWallSessionKey();;
     }
 //endregion Constructor
 
@@ -56,9 +57,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $data = [
-            'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
-        ];
+        $data = ['message' => strtr($exception->getMessageKey(), $exception->getMessageData()),];
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
     }
@@ -83,9 +82,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $data = [
-            'message' => 'Session Authentication Required',
-        ];
+        $data = ['message' => 'Session Authentication Required',];
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
     }

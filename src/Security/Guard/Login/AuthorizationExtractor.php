@@ -3,56 +3,55 @@
 
 namespace Evrinoma\UtilsBundle\Security\Guard\Login;
 
+use Evrinoma\UtilsBundle\Security\Configuration\Form;
 use Evrinoma\UtilsBundle\Security\Guard\ExtractorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 final class AuthorizationExtractor implements ExtractorInterface
 {
 //region SECTION: Fields
-    private $username;
-    private $password;
-    private $csrfToken;
+    //region SECTION: Fields
     /**
-     * @var ?string
+     * @var string|null
      */
-    private $csrfTokenKey;
+    private ?string $username;
     /**
-     * @var ?string
+     * @var string|null
      */
-    private $passwordKey;
+    private ?string $password;
     /**
-     * @var ?string
+     * @var string|null
      */
-    private $usernameKey;
+    private ?string $csrfToken;
+    /**
+     * @var Form
+     */
+    private Form $form;
 //endregion Fields
 
 //region SECTION: Constructor
     /**
      * AuthorizationExtractor constructor.
      *
-     * @param $usernameKey
-     * @param $passwordKey
-     * @param $csrfTokenKey
+     * @param Form $form
      */
-    public function __construct($usernameKey, $passwordKey, $csrfTokenKey)
+    public function __construct(Form $form)
     {
-        $this->usernameKey  = $usernameKey;
-        $this->passwordKey  = $passwordKey;
-        $this->csrfTokenKey = $csrfTokenKey;
+        $this->form = $form;
     }
 //endregion Constructor
 
 //region SECTION: Public
     public function extract(Request $request): void
     {
-        if ($request->request->has($this->usernameKey)) {
-            $this->setUserName(trim($request->request->get($this->usernameKey)));
+        if ($request->request->has($this->form->getUsernamePrefix())) {
+            $this->setUserName(trim($request->request->get($this->form->getUsernamePrefix())));
         }
-        if ($request->request->has($this->passwordKey)) {
-            $this->setPassword($request->request->get($this->passwordKey));
+        if ($request->request->has($this->form->getPasswordPrefix())) {
+            $this->setPassword($request->request->get($this->form->getPasswordPrefix()));
         }
-        if ($request->request->has($this->csrfTokenKey)) {
-            $this->setCsrfToken($request->request->get($this->csrfTokenKey));
+        if ($request->request->has($this->form->getCsrfTokenPrefix())) {
+            $this->setCsrfToken($request->request->get($this->form->getCsrfTokenPrefix()));
         }
     }
 
