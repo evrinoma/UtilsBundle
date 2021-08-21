@@ -13,11 +13,11 @@ final class AuthorizationExtractor implements ExtractorInterface
     /**
      * @var string|null
      */
-    private ?string $jwtAccessToken;
+    private ?string $jwtAccessToken = null;
     /**
      * @var string|null
      */
-    private ?string $jwtAccessTokenKey;
+    private ?string $jwtAccessTokenKey = null;
     /**
      * @var string|null
      */

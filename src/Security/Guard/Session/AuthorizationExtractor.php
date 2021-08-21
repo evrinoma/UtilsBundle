@@ -13,7 +13,7 @@ final class AuthorizationExtractor implements ExtractorInterface
     /**
      * @var string|null
      */
-    private ?string $username;
+    private ?string $username = null;
 //endregion Fields
 
 //region SECTION: Public

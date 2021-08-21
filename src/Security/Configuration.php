@@ -43,7 +43,7 @@ final class Configuration
 
         $this->event = new Event($authenticationSuccessEvent, $authenticationFailureEvent);
         $this->form  = new Form($username, $password, $csrfToken);
-        $this->s = new Route($login, $loginCheck, $redirect);
+        $this->route = new Route($login, $loginCheck, $redirect);
     }
 //endregion Constructor
 

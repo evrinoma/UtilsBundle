@@ -86,7 +86,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return ($request->request->has($this->configuration->form()->getUsernamePrefix() && $request->request->has($this->configuration->form()->getPasswordPrefix())));
+        return ($request->request->has($this->configuration->form()->getUsernamePrefix()) && $request->request->has($this->configuration->form()->getPasswordPrefix()));
     }
 
     /**
@@ -114,7 +114,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
         $response = null;
 
         if ($this->httpUtils->checkRequestPath($request, '/'.$this->configuration->route()->loginCheck())) {
-            $redirectUrl = '';
+            $redirectUrl = $this->configuration->route()->redirect();
 
             if ($this->configuration->event()->isAuthenticationSuccessEnabled()) {
                 $event = new AuthenticationSuccessEvent();

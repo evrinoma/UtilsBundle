@@ -13,15 +13,15 @@ final class AuthorizationExtractor implements ExtractorInterface
     /**
      * @var string|null
      */
-    private ?string $username;
+    private ?string $username = null;
     /**
      * @var string|null
      */
-    private ?string $password;
+    private ?string $password = null;
     /**
      * @var string|null
      */
-    private ?string $csrfToken;
+    private ?string $csrfToken = null;
     /**
      * @var Form
      */
