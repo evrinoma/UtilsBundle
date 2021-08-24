@@ -12,9 +12,16 @@ interface SecurityModelInterface
     public const CSRF_TOKEN = '_csrf_token';
     public const USERNAME   = '_username';
     public const PASSWORD   = '_password';
+    public const LOCATION   = '_location';
+    public const URL = '_url';
 
-    public const BEARER = 'BEARER';
+    public const BEARER  = 'BEARER';
+    public const REFRESH = 'REFRESH';
 
+
+
+
+    /** @TODO refactor */
     public const HOMEPAGE    = 'core_home';
     public const LOGIN_CHECK = 'login_check';
     public const LOGIN       = 'login';

@@ -3,13 +3,13 @@
 namespace Evrinoma\UtilsBundle\Security\Guard\Login;
 
 use Evrinoma\UtilsBundle\Security\Model\SecurityModelInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -90,7 +90,13 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return ($this->httpUtils->checkRequestPath($request, '/'.SecurityModelInterface::LOGIN_CHECK)) ? $this->httpUtils->createRedirectResponse($request, SecurityModelInterface::HOMEPAGE) : null;
+        $response = null;
+
+        if ($this->httpUtils->checkRequestPath($request, '/'.SecurityModelInterface::LOGIN_CHECK)) {
+            $response = ($request->request->has(SecurityModelInterface::LOCATION) && $request->request->get(SecurityModelInterface::LOCATION) === true) ? $this->httpUtils->createRedirectResponse($request, SecurityModelInterface::HOMEPAGE) : new JsonResponse([SecurityModelInterface::URL => $this->httpUtils->generateUri($request, SecurityModelInterface::HOMEPAGE)]);
+        }
+
+        return $response;
     }
 
     /**
