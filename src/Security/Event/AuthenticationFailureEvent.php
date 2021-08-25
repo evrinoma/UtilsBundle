@@ -2,19 +2,6 @@
 
 namespace Evrinoma\UtilsBundle\Security\Event;
 
-final class AuthenticationFailureEvent implements EventInterface
+final class AuthenticationFailureEvent extends AbstractAuthenticationEvent
 {
-//region SECTION: Public
-    public function toResponse(): array
-    {
-        // TODO: Implement toResponse() method.
-    }
-//endregion Public
-
-//region SECTION: Getters/Setters
-    public function getRedirectUrl(): string
-    {
-        // TODO: Implement getRedirectUrl() method.
-    }
-//endregion Getters/Setters
 }

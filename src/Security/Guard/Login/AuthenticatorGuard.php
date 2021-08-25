@@ -6,6 +6,7 @@ use Evrinoma\UtilsBundle\Security\Configuration;
 use Evrinoma\UtilsBundle\Security\Event\AuthenticationFailureEvent;
 use Evrinoma\UtilsBundle\Security\Event\AuthenticationSuccessEvent;
 use Evrinoma\UtilsBundle\Security\Model\SecurityModelInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -97,6 +98,7 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
         if ($this->configuration->event()->isAuthenticationFailureEnabled()) {
             $event = new AuthenticationFailureEvent();
             $this->eventDispatcher->dispatch($event);
+            $response =new JsonResponse($event->toResponse(), Response::HTTP_UNAUTHORIZED);
         }
 
         return null;
@@ -119,8 +121,10 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
             if ($this->configuration->event()->isAuthenticationSuccessEnabled()) {
                 $event = new AuthenticationSuccessEvent();
                 $this->eventDispatcher->dispatch($event);
-                $redirectUrl = $event->getRedirectUrl();
-                $response    = $event->toResponse();
+                $redirectUrl = $event->redirectToUrl();
+                $response    = new JsonResponse($event->toResponse(), Response::HTTP_OK);
+            } else {
+                $response = new JsonResponse([], Response::HTTP_NO_CONTENT);
             }
 
             if ($this->configuration->isRedirectByServer()) {
