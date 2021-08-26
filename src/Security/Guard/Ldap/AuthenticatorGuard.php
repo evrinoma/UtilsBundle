@@ -102,6 +102,9 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
             $event = new AuthenticationFailureEvent();
             $this->eventDispatcher->dispatch($event);
             $response =new JsonResponse($event->toResponse(), Response::HTTP_UNAUTHORIZED);
+            foreach ($event->headerCookies() as $cookie) {
+                $response->headers->setCookie($cookie);
+            }
         }
 
         return $response;
@@ -126,6 +129,9 @@ class AuthenticatorGuard extends AbstractGuardAuthenticator
                 $this->eventDispatcher->dispatch($event);
                 $redirectUrl = $event->redirectToUrl();
                 $response    = new JsonResponse($event->toResponse(), Response::HTTP_OK);
+                foreach ($event->headerCookies() as $cookie) {
+                    $response->headers->setCookie($cookie);
+                }
             } else {
                 $response = new JsonResponse([], Response::HTTP_NO_CONTENT);
             }

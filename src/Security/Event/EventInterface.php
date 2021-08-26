@@ -4,12 +4,18 @@
 namespace Evrinoma\UtilsBundle\Security\Event;
 
 
+use Symfony\Component\HttpFoundation\Cookie;
+
 interface EventInterface
 {
 //region SECTION: Public
-    public function toResponse(): array;
+    public function headerCookies(): array;
+
+    public function responseData(): array;
 
     public function redirectToUrl(): string;
+
+    public function addCookie(Cookie $cookie): EventInterface;
 //endregion Public
 
 //region SECTION: Getters/Setters

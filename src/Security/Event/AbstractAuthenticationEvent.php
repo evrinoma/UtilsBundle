@@ -4,15 +4,32 @@
 namespace Evrinoma\UtilsBundle\Security\Event;
 
 
+use Symfony\Component\HttpFoundation\Cookie;
+
 abstract class AbstractAuthenticationEvent implements EventInterface
 {
 //region SECTION: Fields
-    private string $url      = '';
-    private array  $response = [];
+    /**
+     * @var string
+     */
+    private string $url = '';
+    /**
+     * @var array
+     */
+    private array $response = [];
+    /**
+     * @var Cookie[]
+     */
+    private array $cookies = [];
 //endregion Fields
 
 //region SECTION: Public
-    public function toResponse(): array
+    public function headerCookies(): array
+    {
+        return $this->cookies;
+    }
+
+    public function responseData(): array
     {
         return $this->response;
     }
@@ -20,6 +37,13 @@ abstract class AbstractAuthenticationEvent implements EventInterface
     public function redirectToUrl(): string
     {
         return $this->url;
+    }
+
+    public function addCookie(Cookie $cookie): EventInterface
+    {
+        $this->cookies[] = $cookie;
+
+        return $this;
     }
 //endregion Public
 
