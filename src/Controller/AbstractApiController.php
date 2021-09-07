@@ -20,9 +20,9 @@ abstract class AbstractApiController extends AbstractController
      */
     private SerializerInterface $serializer;
     /**
-     * @var SerializationContext
+     * @var SerializationContext|null
      */
-    private SerializationContext $serializationContext;
+    private ?SerializationContext $serializationContext = null;
 //endregion Fields
 
 //region SECTION: Constructor
