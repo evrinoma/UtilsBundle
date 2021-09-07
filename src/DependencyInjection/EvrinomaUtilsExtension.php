@@ -15,10 +15,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class EvrinomaUtilsExtension extends Extension
 {
-//region SECTION: Fields
-    private ContainerBuilder $container;
-//endregion Fields
-
 //region SECTION: Public
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -27,7 +23,6 @@ class EvrinomaUtilsExtension extends Extension
 
         $configuration   = $this->getConfiguration($configs, $container);
         $config          = $this->processConfiguration($configuration, $configs);
-        $this->container = $container;
     }
 //endregion Public
 
