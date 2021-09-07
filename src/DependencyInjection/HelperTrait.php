@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-trait Helper
+trait HelperTrait
 {
 //region SECTION: Protected
     /**
