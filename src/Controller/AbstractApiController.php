@@ -3,7 +3,6 @@
 namespace Evrinoma\UtilsBundle\Controller;
 
 use JMS\Serializer\SerializationContext;
-use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,13 +16,13 @@ abstract class AbstractApiController extends AbstractController
 {
 //region SECTION: Fields
     /**
-     * @var Serializer
+     * @var SerializerInterface
      */
-    private $serializer;
+    private SerializerInterface $serializer;
     /**
      * @var SerializationContext
      */
-    private $serializationContext;
+    private SerializationContext $serializationContext;
 //endregion Fields
 
 //region SECTION: Constructor
