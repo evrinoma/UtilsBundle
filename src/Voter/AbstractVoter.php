@@ -17,7 +17,7 @@ abstract class AbstractVoter implements VoterInterface
     /**
      * @var AuthorizationCheckerInterface
      */
-    protected $security;
+    protected AuthorizationCheckerInterface $security;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -58,7 +58,7 @@ abstract class AbstractVoter implements VoterInterface
 
     private function isSuperAdmin(): bool
     {
-        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN) ? true : false;
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
     }
 
     private function isDevAdmin(array $roles): bool
