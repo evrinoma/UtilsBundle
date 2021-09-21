@@ -6,6 +6,7 @@ namespace Evrinoma\UtilsBundle\Manager;
  * Class AbstractBaseManager
  *
  * @package Evrinoma\UtilsBundle\Manager
+ * @deprecated
  */
 abstract class AbstractBaseManager implements BaseInterface
 {

@@ -2,7 +2,9 @@
 
 namespace Evrinoma\UtilsBundle\Manager;
 
-
+/**
+ * @deprecated
+ */
 interface EntityInterface extends BaseInterface
 {
     public function removeEntitys():EntityInterface;

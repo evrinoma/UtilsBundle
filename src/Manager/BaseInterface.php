@@ -3,7 +3,9 @@
 
 namespace Evrinoma\UtilsBundle\Manager;
 
-
+/**
+ * @deprecated
+ */
 interface BaseInterface
 {
     public function hasSingleData();

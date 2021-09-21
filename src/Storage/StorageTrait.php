@@ -3,7 +3,9 @@
 
 namespace Evrinoma\UtilsBundle\Storage;
 
-
+/**
+ * @deprecated
+ */
 trait StorageTrait
 {
 //region SECTION: Fields

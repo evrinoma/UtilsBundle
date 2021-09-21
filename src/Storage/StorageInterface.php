@@ -2,6 +2,9 @@
 
 namespace Evrinoma\UtilsBundle\Storage;
 
+/**
+ * @deprecated
+ */
 interface StorageInterface
 {
 //region SECTION: Public
