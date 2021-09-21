@@ -2,6 +2,7 @@
 
 namespace Evrinoma\UtilsBundle\Validator;
 
+use Evrinoma\UtilsBundle\Constraint\ConstraintInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 interface ValidatorInterface
