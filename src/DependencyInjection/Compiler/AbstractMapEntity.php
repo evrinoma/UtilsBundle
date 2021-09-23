@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 
-abstract class MapEntityAbstract implements MapEntityInterface
+abstract class AbstractMapEntity implements MapEntityInterface
 {
 //region SECTION: Fields
     protected string           $nameSpace;
