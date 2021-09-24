@@ -1,6 +1,6 @@
 <?php
 
-namespace Evinoma\UtilsBundle\Mediator;
+namespace Evrinoma\UtilsBundle\Mediator;
 
 use Doctrine\ORM\QueryBuilder;
 use Evrinoma\DtoBundle\Dto\DtoInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Evinoma\UtilsBundle\Mediator;
+namespace Evrinoma\UtilsBundle\Mediator;
 
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
