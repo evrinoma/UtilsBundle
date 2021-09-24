@@ -8,9 +8,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 interface ApiControllerInterface
 {
 //region SECTION: Public
-    public function putAction(): JsonResponse;
 
     public function postAction(): JsonResponse;
+
+    public function putAction(): JsonResponse;
 
     public function deleteAction(): JsonResponse;
 
