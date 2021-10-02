@@ -21,6 +21,7 @@ class RestChoiceType extends AbstractType
     public const REST_CHOICES        = 'rest_choices';
     public const REST_COMPONENT_NAME = 'rest_component_name';
     public const REST_DEFAULT        = 'rest_default';
+    public const REST_CHOICES_DEFAULT = ['value unset'];
 //endregion Fields
 
 //region SECTION: Public
