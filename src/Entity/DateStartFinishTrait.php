@@ -14,13 +14,13 @@ trait DateStartFinishTrait
      *
      * @ORM\Column(name="dateStart", type="date_immutable", nullable=true)
      */
-    private $dateStart;
+    protected $dateStart;
     /**
      * @var \DateTimeImmutable
      *
      * @ORM\Column(name="dateFinish", type="date_immutable", nullable=true)
      */
-    private $dateFinish;
+    protected $dateFinish;
 //endregion Fields
 
 //region SECTION: Public
@@ -37,7 +37,7 @@ trait DateStartFinishTrait
      */
     public function hasDateFinish(): bool
     {
-        $this->dateFinish !== null;
+        return $this->dateFinish !== null;
     }
 //endregion Public
 
