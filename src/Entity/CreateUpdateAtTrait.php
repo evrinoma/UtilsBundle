@@ -50,7 +50,7 @@ trait CreateUpdateAtTrait
     /**
      * @param \DateTimeImmutable $createdAt
      *
-     * @return $this
+     * @return self
      */
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
@@ -62,7 +62,7 @@ trait CreateUpdateAtTrait
     /**
      * @param \DateTimeImmutable $updatedAt
      *
-     * @return $this
+     * @return self
      */
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {

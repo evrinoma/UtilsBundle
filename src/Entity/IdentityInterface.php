@@ -14,7 +14,7 @@ interface IdentityInterface
     /**
      * @param string $identity
      *
-     * @return $this
+     * @return self
      */
     public function setIdentity(string $identity): self;
 }

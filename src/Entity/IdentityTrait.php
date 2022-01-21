@@ -33,7 +33,7 @@ trait IdentityTrait
     /**
      * @param string $identity
      *
-     * @return AbstractType
+     * @return self
      */
     public function setIdentity(string $identity): self
     {

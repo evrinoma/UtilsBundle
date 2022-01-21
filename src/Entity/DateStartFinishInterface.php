@@ -32,14 +32,14 @@ interface DateStartFinishInterface
     /**
      * @param \DateTimeImmutable $dateStart
      *
-     * @return $this
+     * @return self
      */
     public function setDateStart(\DateTimeImmutable $dateStart): self;
 
     /**
      * @param \DateTimeImmutable $dateFinish
      *
-     * @return $this
+     * @return self
      */
     public function setDateFinish(\DateTimeImmutable $dateFinish): self;
 //endregion Getters/Setters

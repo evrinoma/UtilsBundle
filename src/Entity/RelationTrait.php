@@ -72,7 +72,6 @@ trait RelationTrait
         return $this->children;
     }
 
-
     /**
      * @param $parent
      *
@@ -85,5 +84,4 @@ trait RelationTrait
         return $this;
     }
 //endregion Getters/Setters
-
 }

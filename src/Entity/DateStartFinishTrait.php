@@ -61,7 +61,7 @@ trait DateStartFinishTrait
     /**
      * @param \DateTimeImmutable $dateStart
      *
-     * @return $this
+     * @return self
      */
     public function setDateStart(\DateTimeImmutable $dateStart): self
     {
@@ -73,7 +73,7 @@ trait DateStartFinishTrait
     /**
      * @param \DateTimeImmutable $dateFinish
      *
-     * @return $this
+     * @return self
      */
     public function setDateFinish(\DateTimeImmutable $dateFinish): self
     {
