@@ -55,7 +55,7 @@ abstract class AbstractValidator implements BasicValidatorInterface
 
     public function addConstraint(ConstraintInterface $constant): void
     {
-        $this->constraints[$constant->getName()] = $constant;
+        $this->constraints[] = $constant;
     }
 
     public function validate($value, $constraints = null, $groups = null): ConstraintViolationListInterface

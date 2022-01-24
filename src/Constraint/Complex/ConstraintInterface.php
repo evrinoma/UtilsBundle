@@ -2,9 +2,9 @@
 
 namespace Evrinoma\UtilsBundle\Constraint\Complex;
 
-use Symfony\Component\Validator\ConstraintValidatorInterface;
+use Symfony\Component\Validator\Constraint;
 
 interface ConstraintInterface
 {
-    public function getConstraint(): ConstraintValidatorInterface;
+    public function getConstraint(): Constraint;
 }
