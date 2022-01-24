@@ -77,6 +77,9 @@ abstract class AbstractValidator implements BasicValidatorInterface
             foreach ($this->propertyConstraints as $propertyConstraint) {
                 $metadata->addPropertyConstraints($propertyConstraint->getPropertyName(), $propertyConstraint->getConstraints());
             }
+            foreach ($this->constraints as $constraint) {
+                $metadata->addConstraint($constraint->getConstraint());
+            }
             $this->metadataLoaded = !$this->metadataLoaded;
         }
 

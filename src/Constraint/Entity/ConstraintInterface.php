@@ -2,9 +2,9 @@
 
 namespace Evrinoma\UtilsBundle\Constraint\Entity;
 
+use Symfony\Component\Validator\Constraint;
+
 interface ConstraintInterface
 {
-    public function getConstraints(): array;
-
-    public function getName(): string;
+    public function getConstraint(): Constraint;
 }
