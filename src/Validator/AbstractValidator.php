@@ -53,7 +53,7 @@ abstract class AbstractValidator implements BasicValidatorInterface
         $this->propertyConstraints[$constant->getPropertyName()] = $constant;
     }
 
-    public function addConstraint(ConstraintInterface $constant): void
+    public function addConstraint($constant): void
     {
         $this->constraints[] = $constant;
     }
@@ -77,9 +77,9 @@ abstract class AbstractValidator implements BasicValidatorInterface
             foreach ($this->propertyConstraints as $propertyConstraint) {
                 $metadata->addPropertyConstraints($propertyConstraint->getPropertyName(), $propertyConstraint->getConstraints());
             }
-            foreach ($this->constraints as $constraint) {
-                $metadata->addConstraint($constraint->getConstraint());
-            }
+//            foreach ($this->constraints as $constraint) {
+//                $metadata->addConstraint($constraint->getConstraint());
+//            }
             $this->metadataLoaded = !$this->metadataLoaded;
         }
 

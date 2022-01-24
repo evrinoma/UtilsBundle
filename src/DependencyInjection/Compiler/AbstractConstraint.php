@@ -31,7 +31,7 @@ abstract class AbstractConstraint
         $taggedServices = $container->findTaggedServiceIds(static::$alias);
 
         foreach ($taggedServices as $id => $tags) {
-            $definition->addMethodCall(static::$methodCall, [new Reference($id)]);
+             $definition->addMethodCall(static::$methodCall, [new Reference($id)]);
         }
     }
 }
