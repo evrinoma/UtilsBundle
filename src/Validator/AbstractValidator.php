@@ -2,7 +2,8 @@
 
 namespace Evrinoma\UtilsBundle\Validator;
 
-use Evrinoma\UtilsBundle\Constraint\ConstraintInterface;
+use Evrinoma\UtilsBundle\Constraint\Entity\ConstraintInterface;
+use Evrinoma\UtilsBundle\Constraint\Property\ConstraintInterface as PropertyConstraintInterface;
 use Evrinoma\UtilsBundle\Validator\ValidatorInterface as BasicValidatorInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validation;
@@ -15,6 +16,10 @@ abstract class AbstractValidator implements BasicValidatorInterface
      * @var string|null
      */
     protected static ?string $entityClass = null;
+    /**
+     * @var PropertyConstraintInterface[]
+     */
+    public array $propertyConstraints = [];
     /**
      * @var ConstraintInterface[]
      */
@@ -43,9 +48,14 @@ abstract class AbstractValidator implements BasicValidatorInterface
 //endregion Constructor
 
 //region SECTION: Public
+    public function addPropertyConstraint(PropertyConstraintInterface $constant): void
+    {
+        $this->propertyConstraints[$constant->getPropertyName()] = $constant;
+    }
+
     public function addConstraint(ConstraintInterface $constant): void
     {
-        $this->constraints[$constant->getPropertyName()] = $constant;
+        $this->constraints[$constant->getName()] = $constant;
     }
 
     public function validate($value, $constraints = null, $groups = null): ConstraintViolationListInterface
@@ -64,8 +74,8 @@ abstract class AbstractValidator implements BasicValidatorInterface
     {
         if (!$this->metadataLoaded) {
             $metadata = $this->validator->getMetadataFor(self::$entityClass);
-            foreach ($this->constraints as $constraint) {
-                $metadata->addPropertyConstraints($constraint->getPropertyName(), $constraint->getConstraints());
+            foreach ($this->propertyConstraints as $propertyConstraint) {
+                $metadata->addPropertyConstraints($propertyConstraint->getPropertyName(), $propertyConstraint->getConstraints());
             }
             $this->metadataLoaded = !$this->metadataLoaded;
         }

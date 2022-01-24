@@ -1,6 +1,6 @@
 <?php
 
-namespace Evrinoma\UtilsBundle\Constraint;
+namespace Evrinoma\UtilsBundle\Constraint\Property;
 
 use Evrinoma\UtilsBundle\Model\ActiveModel;
 use Symfony\Component\Validator\Constraints\Choice;
