@@ -5,8 +5,8 @@ namespace Evrinoma\UtilsBundle\Validator;
 use Evrinoma\UtilsBundle\Constraint\Complex\ConstraintInterface;
 use Evrinoma\UtilsBundle\Constraint\Property\ConstraintInterface as PropertyConstraintInterface;
 use Evrinoma\UtilsBundle\Validator\ValidatorInterface as BasicValidatorInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractValidator implements BasicValidatorInterface
@@ -21,7 +21,7 @@ abstract class AbstractValidator implements BasicValidatorInterface
      */
     public array $propertyConstraints = [];
     /**
-     * @var ConstraintInterface[]
+     * @var Constraint[]
      */
     public array $constraints = [];
     /**
@@ -38,12 +38,13 @@ abstract class AbstractValidator implements BasicValidatorInterface
     /**
      * ContractorValidator constructor.
      *
-     * @param string $entityClass
+     * @param string             $entityClass
+     * @param ValidatorInterface $validator
      */
-    protected function __construct(string $entityClass)
+    protected function __construct(string $entityClass, ValidatorInterface $validator)
     {
         self::$entityClass = $entityClass;
-        $this->validator   = Validation::createValidatorBuilder()->getValidator();
+        $this->validator   = $validator;
     }
 //endregion Constructor
 
@@ -53,9 +54,11 @@ abstract class AbstractValidator implements BasicValidatorInterface
         $this->propertyConstraints[$constant->getPropertyName()] = $constant;
     }
 
-    public function addConstraint($constant): void
+    public function addConstraint(ConstraintInterface $constant): void
     {
-        $this->constraints[] = $constant;
+        foreach ($constant->getConstraints() as $constant) {
+            $this->constraints[] = $constant;
+        }
     }
 
     public function validate($value, $constraints = null, $groups = null): ConstraintViolationListInterface
@@ -74,12 +77,12 @@ abstract class AbstractValidator implements BasicValidatorInterface
     {
         if (!$this->metadataLoaded) {
             $metadata = $this->validator->getMetadataFor(self::$entityClass);
+            foreach ($this->constraints as $constraint) {
+                $metadata->addConstraint($constraint);
+            }
             foreach ($this->propertyConstraints as $propertyConstraint) {
                 $metadata->addPropertyConstraints($propertyConstraint->getPropertyName(), $propertyConstraint->getConstraints());
             }
-//            foreach ($this->constraints as $constraint) {
-//                $metadata->addConstraint($constraint->getConstraint());
-//            }
             $this->metadataLoaded = !$this->metadataLoaded;
         }
 

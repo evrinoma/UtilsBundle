@@ -2,6 +2,7 @@
 
 namespace Evrinoma\UtilsBundle\Validator;
 
+use Evrinoma\UtilsBundle\Constraint\Complex\ConstraintInterface;
 use Evrinoma\UtilsBundle\Constraint\Property\ConstraintInterface as PropertyConstraintInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -11,5 +12,5 @@ interface ValidatorInterface
 
     public function addPropertyConstraint(PropertyConstraintInterface $constant): void;
 
-    public function addConstraint($constant): void;
+    public function addConstraint(ConstraintInterface $constant): void;
 }

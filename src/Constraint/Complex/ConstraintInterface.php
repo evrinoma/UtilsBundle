@@ -4,5 +4,5 @@ namespace Evrinoma\UtilsBundle\Constraint\Complex;
 
 interface ConstraintInterface
 {
-    public function getConstraint();
+    public function getConstraints(): array;
 }
