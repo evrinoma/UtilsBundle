@@ -38,10 +38,10 @@ abstract class AbstractValidator implements BasicValidatorInterface
     /**
      * ContractorValidator constructor.
      *
-     * @param string             $entityClass
      * @param ValidatorInterface $validator
+     * @param string             $entityClass
      */
-    protected function __construct(string $entityClass, ValidatorInterface $validator)
+    protected function __construct(ValidatorInterface $validator, string $entityClass)
     {
         self::$entityClass = $entityClass;
         $this->validator   = $validator;
