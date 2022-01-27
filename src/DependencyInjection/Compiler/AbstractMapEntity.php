@@ -62,19 +62,30 @@ abstract class AbstractMapEntity implements MapEntityInterface
         return $this->resolveTargetEntityDefinition;
     }
 
-    protected function addResolveTargetEntity(array $mapping, $searchInParams = true): MapEntityInterface
+    protected function addResolveTargetEntity(array $resolve, $searchInParams = true): MapEntityInterface
     {
+//        $resolveTargetEntity = $this->getResolveTargetEntity();
+//
+//        foreach ($metaData as $className => $aliasClassName) {
+//            if ($searchInParams) {
+//                $aliasClassName = $this->container->getParameter($aliasClassName);
+//            }
+//            $resolveTargetEntity->addMethodCall('addResolveTargetEntity', [$aliasClassName, $className, []]);
+//        }
+//
+//        return $this->callResolveTargetEntity();
+//
         $resolveTargetEntity = $this->getResolveTargetEntity();
 
-        foreach ($mapping as $classNameMapping => $aliasClassName) {
+        foreach ($resolve as $classNameMapping => $value) {
             if ($searchInParams) {
-                $aliasClassName = $this->container->getParameter($aliasClassName);
+                $classNameMapping = $this->container->getParameter($classNameMapping);
             }
-            if (!is_array($classNameMapping)) {
+            if (!is_array($value)||!is_string($classNameMapping)) {
                 throw new MapEntityCannotBeCompiledException("Wrong mapping structure");
             }
-            foreach ($classNameMapping as $className => $mapping) {
-                $resolveTargetEntity->addMethodCall('addResolveTargetEntity', [$aliasClassName, $className, $mapping]);
+            foreach ($value as $aliasClassName => $mapping) {
+                $resolveTargetEntity->addMethodCall('addResolveTargetEntity', [$aliasClassName, $classNameMapping, $mapping]);
             }
         }
 
