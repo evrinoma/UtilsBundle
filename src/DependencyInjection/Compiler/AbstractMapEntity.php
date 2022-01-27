@@ -64,17 +64,6 @@ abstract class AbstractMapEntity implements MapEntityInterface
 
     protected function addResolveTargetEntity(array $resolve, $searchInParams = true): MapEntityInterface
     {
-//        $resolveTargetEntity = $this->getResolveTargetEntity();
-//
-//        foreach ($metaData as $className => $aliasClassName) {
-//            if ($searchInParams) {
-//                $aliasClassName = $this->container->getParameter($aliasClassName);
-//            }
-//            $resolveTargetEntity->addMethodCall('addResolveTargetEntity', [$aliasClassName, $className, []]);
-//        }
-//
-//        return $this->callResolveTargetEntity();
-//
         $resolveTargetEntity = $this->getResolveTargetEntity();
 
         foreach ($resolve as $classNameMapping => $value) {
