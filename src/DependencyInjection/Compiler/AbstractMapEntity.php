@@ -5,6 +5,7 @@ namespace Evrinoma\UtilsBundle\DependencyInjection\Compiler;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Evrinoma\ContractorBundle\DependencyInjection\EvrinomaContractorExtension;
+use Evrinoma\UtilsBundle\Exception\MapEntityCannotBeCompiledException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -61,15 +62,20 @@ abstract class AbstractMapEntity implements MapEntityInterface
         return $this->resolveTargetEntityDefinition;
     }
 
-    protected function addResolveTargetEntity(array $metaData, $searchInParams = true): MapEntityInterface
+    protected function addResolveTargetEntity(array $mapping, $searchInParams = true): MapEntityInterface
     {
         $resolveTargetEntity = $this->getResolveTargetEntity();
 
-        foreach ($metaData as $className => $aliasClassName) {
+        foreach ($mapping as $classNameMapping => $aliasClassName) {
             if ($searchInParams) {
                 $aliasClassName = $this->container->getParameter($aliasClassName);
             }
-            $resolveTargetEntity->addMethodCall('addResolveTargetEntity', [$aliasClassName, $className, []]);
+            if (!is_array($classNameMapping)) {
+                throw new MapEntityCannotBeCompiledException("Wrong mapping structure");
+            }
+            foreach ($classNameMapping as $className => $mapping) {
+                $resolveTargetEntity->addMethodCall('addResolveTargetEntity', [$aliasClassName, $className, $mapping]);
+            }
         }
 
         return $this->callResolveTargetEntity();
