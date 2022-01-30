@@ -76,7 +76,7 @@ abstract class AbstractValidator implements BasicValidatorInterface
     private function addConstrains(): self
     {
         if (!$this->metadataLoaded) {
-            $metadata = $this->validator->getMetadataFor(self::$entityClass);
+            $metadata = $this->validator->getMetadataFor(static::$entityClass);
             foreach ($this->constraints as $constraint) {
                 $metadata->addConstraint($constraint);
             }
