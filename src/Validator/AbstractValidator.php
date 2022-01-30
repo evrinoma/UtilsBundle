@@ -43,8 +43,8 @@ abstract class AbstractValidator implements BasicValidatorInterface
      */
     protected function __construct(ValidatorInterface $validator, string $entityClass)
     {
-        self::$entityClass = $entityClass;
-        $this->validator   = $validator;
+        static::$entityClass = $entityClass;
+        $this->validator     = $validator;
     }
 //endregion Constructor
 
