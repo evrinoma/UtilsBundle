@@ -13,7 +13,7 @@ trait ActiveTrait
     {
         return [
             new NotBlank(),
-            new Choice([ActiveModel::ACTIVE, ActiveModel::DELETED, ActiveModel::BLOCKED]),
+            new Choice([ActiveModel::ACTIVE, ActiveModel::DELETED, ActiveModel::BLOCKED, ActiveModel::MODERATED]),
         ];
     }
 
