@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 trait RestTrait
 {
 //region SECTION: Fields
-    private $status = Response::HTTP_OK;
+    private int $status = Response::HTTP_OK;
 //endregion Fields
 
 //region SECTION: Public
