@@ -4,7 +4,6 @@ namespace Evrinoma\UtilsBundle\DependencyInjection\Compiler;
 
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Evrinoma\ContractorBundle\DependencyInjection\EvrinomaContractorExtension;
 use Evrinoma\UtilsBundle\Exception\MapEntityCannotBeCompiledException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -17,13 +16,11 @@ abstract class AbstractMapEntity implements MapEntityInterface
     protected string           $nameSpace;
     protected string           $path;
     protected ContainerBuilder $container;
-    private bool               $callResolver = false;
+    private bool               $callResolver                  = false;
+    private ?Definition        $resolveTargetEntityDefinition = null;
 //endregion Fields
 
 //region SECTION: Constructor
-    private ?Definition $resolveTargetEntityDefinition = null;
-
-
     public function __construct(string $nameSpace, string $path)
     {
         $this->nameSpace = $nameSpace;
@@ -53,15 +50,6 @@ abstract class AbstractMapEntity implements MapEntityInterface
         $driver->setMethodCalls($calls);
     }
 
-    private function getResolveTargetEntity(): Definition
-    {
-        if ($this->resolveTargetEntityDefinition === null) {
-            $this->resolveTargetEntityDefinition = $this->container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
-        }
-
-        return $this->resolveTargetEntityDefinition;
-    }
-
     protected function addResolveTargetEntity(array $resolve, $searchInParams = true): MapEntityInterface
     {
         $resolveTargetEntity = $this->getResolveTargetEntity();
@@ -70,7 +58,7 @@ abstract class AbstractMapEntity implements MapEntityInterface
             if ($searchInParams) {
                 $classNameMapping = $this->container->getParameter($classNameMapping);
             }
-            if (!is_array($value)||!is_string($classNameMapping)) {
+            if (!is_array($value) || !is_string($classNameMapping)) {
                 throw new MapEntityCannotBeCompiledException("Wrong mapping structure");
             }
             foreach ($value as $aliasClassName => $mapping) {
@@ -92,13 +80,13 @@ abstract class AbstractMapEntity implements MapEntityInterface
         return $this;
     }
 
-    protected function remapMetadata(Definition $driver, string $mapFolder): MapEntityInterface
+    protected function remapMetadata(Definition $driver, string $class, string $mapFolder): MapEntityInterface
     {
         $calls = [];
 
         foreach ($driver->getMethodCalls() as $i => $call) {
-            if ($call[1][1] && $call[1][1] === EvrinomaContractorExtension::ENTITY) {
-                $call[1][1] = EvrinomaContractorExtension::ENTITY.'\\'.$mapFolder;
+            if ($call[1][1] && $call[1][1] === $class) {
+                $call[1][1] = $class.'\\'.$mapFolder;
             }
             $calls[] = $call;
         }
@@ -109,6 +97,15 @@ abstract class AbstractMapEntity implements MapEntityInterface
 //endregion Protected
 
 //region SECTION: Private
+    private function getResolveTargetEntity(): Definition
+    {
+        if ($this->resolveTargetEntityDefinition === null) {
+            $this->resolveTargetEntityDefinition = $this->container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
+        }
+
+        return $this->resolveTargetEntityDefinition;
+    }
+
     /**
      * @param bool $callResolver
      *
