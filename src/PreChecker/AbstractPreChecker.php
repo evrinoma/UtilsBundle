@@ -4,9 +4,9 @@ namespace Evrinoma\UtilsBundle\PreChecker;
 
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 
-interface PreCheckerInterface
+abstract class AbstractPreChecker
 {
 //region SECTION: Public
-    public function check(DtoInterface $dto): bool;
+    abstract public function check(DtoInterface $dto): bool;
 //endregion Public
 }
