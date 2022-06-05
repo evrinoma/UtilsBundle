@@ -1,6 +1,6 @@
 <?php
 
-namespace Evrinoma\UtilsBundle\Command\Adaptor;
+namespace Evrinoma\UtilsBundle\Command;
 
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Symfony\Component\Console\Input\InputInterface;
