@@ -5,11 +5,6 @@ namespace Evrinoma\UtilsBundle\Rest;
 use Evrinoma\UtilsBundle\Model\RestModel;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Trait RestTrait
- *
- * @package Evrinoma\UtilsBundle\Voter\Rest
- */
 trait RestTrait
 {
 

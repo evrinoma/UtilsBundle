@@ -2,14 +2,8 @@
 
 namespace Evrinoma\UtilsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\ContractBundle\Model\Define\AbstractType;
 
-/**
- * Trait IdentityTrait
- *
- * @package Evrinoma\UtilsBundle\Entity
- */
 trait IdentityTrait
 {
 

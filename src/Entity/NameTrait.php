@@ -2,7 +2,6 @@
 
 namespace Evrinoma\UtilsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
 trait NameTrait
 {

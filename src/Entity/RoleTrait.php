@@ -2,13 +2,7 @@
 
 namespace Evrinoma\UtilsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Trait RoleTrait
- *
- * @package Evrinoma\UtilsBundle\Entity
- */
 trait RoleTrait
 {
     /**

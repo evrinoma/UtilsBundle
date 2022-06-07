@@ -9,11 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class RestChoiceType
- *
- * @package Evrinoma\UtilsBundle\Rest\Form
- */
+
 class RestChoiceType extends AbstractType
 {
 

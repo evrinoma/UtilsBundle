@@ -3,15 +3,8 @@
 namespace Evrinoma\UtilsBundle\Entity;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
-use JMS\Serializer\Annotation\VirtualProperty;
 
-/**
- * Trait ActiveTrait
- *
- * @package Evrinoma\UtilsBundle\Entity
- */
 trait ActiveTrait
 {
 

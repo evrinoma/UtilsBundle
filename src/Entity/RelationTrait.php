@@ -4,11 +4,7 @@ namespace Evrinoma\UtilsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * Trait RelationTrait
- *
- * @package Evrinoma\UtilsBundle\Entity
- */
+
 trait RelationTrait
 {
 

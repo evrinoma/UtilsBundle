@@ -7,11 +7,7 @@ use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * Class AbstractApiController
- *
- * @package Evrinoma\UtilsBundle\Controller
- */
+
 abstract class AbstractApiController extends AbstractController
 {
 

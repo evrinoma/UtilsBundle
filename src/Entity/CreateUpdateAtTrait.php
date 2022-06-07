@@ -3,14 +3,7 @@
 
 namespace Evrinoma\UtilsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 
-/**
- * Trait CreateUpdateTrait
- *
- * @package Evrinoma\UtilsBundle\Entity
- */
 trait CreateUpdateAtTrait
 {
 

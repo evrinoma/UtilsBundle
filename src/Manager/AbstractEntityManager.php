@@ -10,9 +10,6 @@ use Evrinoma\UtilsBundle\Entity\ActiveInterface;
 use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 
 /**
- * Class AbstractEntityManager
- *
- * @package Evrinoma\UtilsBundle\Manager
  * @deprecated
  */
 abstract class AbstractEntityManager implements EntityInterface

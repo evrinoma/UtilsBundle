@@ -2,13 +2,6 @@
 
 namespace Evrinoma\UtilsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * Trait IdTrait
- *
- * @package Evrinoma\UtilsBundle\Entity
- */
 trait IdTrait
 {
 

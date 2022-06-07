@@ -2,11 +2,7 @@
 
 namespace Evrinoma\UtilsBundle\Model;
 
-/**
- * Class ActiveModel
- *
- * @package Evrinoma\UtilsBundle\Model
- */
+
 final class ActiveModel
 {
 
