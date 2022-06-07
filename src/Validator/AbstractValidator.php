@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evrinoma\UtilsBundle\Validator;
 
 use Evrinoma\UtilsBundle\Constraint\Complex\ConstraintInterface;
@@ -11,7 +22,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractValidator implements BasicValidatorInterface
 {
-
     /**
      * @var string|null
      */
@@ -33,8 +43,6 @@ abstract class AbstractValidator implements BasicValidatorInterface
      */
     private bool $metadataLoaded = false;
 
-
-
     /**
      * ContractorValidator constructor.
      *
@@ -44,10 +52,8 @@ abstract class AbstractValidator implements BasicValidatorInterface
     protected function __construct(ValidatorInterface $validator, string $entityClass)
     {
         static::$entityClass = $entityClass;
-        $this->validator     = $validator;
+        $this->validator = $validator;
     }
-
-
 
     public function addPropertyConstraint(PropertyConstraintInterface $constant): void
     {
@@ -68,8 +74,6 @@ abstract class AbstractValidator implements BasicValidatorInterface
         return $this->validator->validate($value, $constraints, $groups);
     }
 
-
-
     /**
      * @return $this
      */
@@ -88,5 +92,4 @@ abstract class AbstractValidator implements BasicValidatorInterface
 
         return $this;
     }
-
 }

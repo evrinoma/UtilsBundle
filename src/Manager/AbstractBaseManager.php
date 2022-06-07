@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evrinoma\UtilsBundle\Manager;
 
 /**
@@ -7,25 +18,18 @@ namespace Evrinoma\UtilsBundle\Manager;
  */
 abstract class AbstractBaseManager implements BaseInterface
 {
-
-
     /**
      * @var mixed
      */
     protected $data = [];
-
-
-
 
     /**
      * @return mixed
      */
     public function hasSingleData()
     {
-        return count($this->data) === 1;
+        return 1 === \count($this->data);
     }
-
-
 
     /**
      * @return mixed
@@ -34,7 +38,6 @@ abstract class AbstractBaseManager implements BaseInterface
     {
         return $this->data;
     }
-
 
     /**
      * @param mixed $data
@@ -47,6 +50,4 @@ abstract class AbstractBaseManager implements BaseInterface
 
         return $this;
     }
-
-
 }

@@ -1,19 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evrinoma\UtilsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-
 trait RelationTrait
 {
-
-
     protected $parent = null;
 
     protected $children = null;
-
-
 
     /**
      * RelationTrait constructor.
@@ -22,8 +28,6 @@ trait RelationTrait
     {
         $this->children = new ArrayCollection();
     }
-
-
 
     /**
      * @param $child
@@ -46,10 +50,8 @@ trait RelationTrait
      */
     public function hasChildren(): bool
     {
-        return ($this->children && $this->children->count() !== 0);
+        return $this->children && 0 !== $this->children->count();
     }
-
-
 
     /**
      * @return $this
@@ -58,7 +60,6 @@ trait RelationTrait
     {
         return $this->parent;
     }
-
 
     /**
      * @return ArrayCollection
@@ -79,5 +80,4 @@ trait RelationTrait
 
         return $this;
     }
-
 }

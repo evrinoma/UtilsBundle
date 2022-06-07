@@ -1,12 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evrinoma\UtilsBundle\Entity;
-
-
 
 trait DateStartFinishTrait
 {
-
     /**
      * @var \DateTimeImmutable
      *
@@ -20,14 +28,12 @@ trait DateStartFinishTrait
      */
     protected $dateFinish;
 
-
-
     /**
      * @return bool
      */
     public function hasDateStart(): bool
     {
-        return $this->dateStart !== null;
+        return null !== $this->dateStart;
     }
 
     /**
@@ -35,10 +41,8 @@ trait DateStartFinishTrait
      */
     public function hasDateFinish(): bool
     {
-        return $this->dateFinish !== null;
+        return null !== $this->dateFinish;
     }
-
-
 
     /**
      * @return \DateTimeImmutable
@@ -79,7 +83,4 @@ trait DateStartFinishTrait
 
         return $this;
     }
-
-
-
 }

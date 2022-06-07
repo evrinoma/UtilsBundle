@@ -1,8 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Evrinoma\UtilsBundle\DependencyInjection;
-
 
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -10,7 +19,6 @@ use Symfony\Component\DependencyInjection\Definition;
 
 trait HelperTrait
 {
-
     /**
      * @param ContainerBuilder $container
      * @param string           $className
@@ -20,10 +28,10 @@ trait HelperTrait
      *
      * @return Definition
      */
-    protected function addDefinition(ContainerBuilder $container,  string $className, string $aliasName, $arguments, $public = false): Definition
+    protected function addDefinition(ContainerBuilder $container, string $className, string $aliasName, $arguments, $public = false): Definition
     {
         $definition = new Definition($className);
-        $alias      = new Alias($aliasName);
+        $alias = new Alias($aliasName);
 
         if ($public) {
             $definition->setPublic(true);
@@ -44,10 +52,10 @@ trait HelperTrait
      * @param array            $config
      * @param array            $map
      */
-    protected function remapParameters(ContainerBuilder $container,array $config, array $map): void
+    protected function remapParameters(ContainerBuilder $container, array $config, array $map): void
     {
         foreach ($map as $name => $paramName) {
-            if (array_key_exists($name, $config)) {
+            if (\array_key_exists($name, $config)) {
                 $container->setParameter($paramName, $config[$name]);
             }
         }
@@ -62,14 +70,14 @@ trait HelperTrait
     {
         foreach ($namespaces as $ns => $map) {
             if ($ns) {
-                if (!array_key_exists($ns, $config)) {
+                if (!\array_key_exists($ns, $config)) {
                     continue;
                 }
                 $namespaceConfig = $config[$ns];
             } else {
                 $namespaceConfig = $config;
             }
-            if (is_array($map)) {
+            if (\is_array($map)) {
                 $this->remapParameters($container, $namespaceConfig, $map);
             } else {
                 foreach ($namespaceConfig as $name => $value) {
@@ -83,11 +91,11 @@ trait HelperTrait
      * @param string $class
      *
      * @return string
+     *
      * @throws \ReflectionException
      */
     protected function toShortName(string $class)
     {
         return (new \ReflectionClass($class))->getShortName();
     }
-
 }

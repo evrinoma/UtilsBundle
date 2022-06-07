@@ -1,20 +1,26 @@
 <?php
 
-namespace Evrinoma\UtilsBundle\Entity;
+declare(strict_types=1);
 
-use Evrinoma\ContractBundle\Model\Define\AbstractType;
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Evrinoma\UtilsBundle\Entity;
 
 trait IdentityTrait
 {
-
     /**
      * @var string
      *
      * @ORM\Column(name="identity", type="string", length=255, nullable=false)
      */
     protected string $identity;
-
-
 
     /**
      * @return string
@@ -35,5 +41,4 @@ trait IdentityTrait
 
         return $this;
     }
-
 }

@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evrinoma\UtilsBundle\Rest;
 
 use Evrinoma\UtilsBundle\Model\RestModel;
@@ -7,20 +18,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait RestTrait
 {
-
     private int $status = Response::HTTP_OK;
-
-
 
     /**
      * @return bool
      */
     public function isRestStatusOk()
     {
-        return $this->getRestStatus() === Response::HTTP_OK;
+        return Response::HTTP_OK === $this->getRestStatus();
     }
-
-
 
     abstract public function getRestStatus(): int;
 
@@ -53,7 +59,6 @@ trait RestTrait
 
         return $this;
     }
-
 
     /**
      * @return self
@@ -164,6 +169,4 @@ trait RestTrait
 
         return $this;
     }
-
-
 }

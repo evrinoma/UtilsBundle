@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evrinoma\UtilsBundle\Manager;
 
 use Doctrine\Common\Collections\Criteria;
@@ -14,8 +25,6 @@ use Evrinoma\UtilsBundle\Entity\ActiveTrait;
  */
 abstract class AbstractEntityManager implements EntityInterface
 {
-
-
     /**
      * @var EntityManagerInterface
      */
@@ -41,8 +50,6 @@ abstract class AbstractEntityManager implements EntityInterface
      */
     private $classModel;
 
-
-
     /**
      * AbstractEntity constructor.
      *
@@ -55,8 +62,6 @@ abstract class AbstractEntityManager implements EntityInterface
             $this->repository = $this->entityManager->getRepository($this->repositoryClass);
         }
     }
-
-
 
     /**
      * @return Criteria
@@ -96,7 +101,7 @@ abstract class AbstractEntityManager implements EntityInterface
 
     /**
      * @param EntityAdaptorInterface $dto
-     * @param             $entity
+     * @param                        $entity
      *
      * @return mixed
      */
@@ -109,12 +114,10 @@ abstract class AbstractEntityManager implements EntityInterface
         return $entity;
     }
 
-
-
     /**
      * @return EntityInterface
      */
-    public function removeEntitys():EntityInterface
+    public function removeEntitys(): EntityInterface
     {
         foreach ($this->getData() as $entity) {
             $this->entityManager->remove($entity);
@@ -126,7 +129,7 @@ abstract class AbstractEntityManager implements EntityInterface
     /**
      * @return EntityInterface
      */
-    public function lockEntities():EntityInterface
+    public function lockEntities(): EntityInterface
     {
         /** @var ActiveInterface $entity */
         foreach ($this->getData() as $entity) {
@@ -136,7 +139,7 @@ abstract class AbstractEntityManager implements EntityInterface
         return $this;
     }
 
-    public function toModel():array
+    public function toModel(): array
     {
         return ['class' => $this->getClassModel(), 'model' => $this->getData()];
     }
@@ -146,24 +149,18 @@ abstract class AbstractEntityManager implements EntityInterface
      */
     public function hasSingleData()
     {
-        return count($this->data) === 1;
+        return 1 === \count($this->data);
     }
-
-
 
     private function getClassModel()
     {
         return $this->classModel;
     }
 
-
-
-    public function getRepositoryClass():string
+    public function getRepositoryClass(): string
     {
         return $this->repositoryClass;
     }
-
-
 
     /**
      * @return mixed
@@ -181,7 +178,7 @@ abstract class AbstractEntityManager implements EntityInterface
         return $this->repository->matching((!$criteria) ? $this->getCriteria() : $criteria)->count();
     }
 
-    public function setClassModel($class):EntityInterface
+    public function setClassModel($class): EntityInterface
     {
         $this->classModel = $class;
 
@@ -199,6 +196,4 @@ abstract class AbstractEntityManager implements EntityInterface
 
         return $this;
     }
-
-
 }

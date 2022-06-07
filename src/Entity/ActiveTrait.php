@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evrinoma\UtilsBundle\Entity;
 
 use Doctrine\Common\Collections\Criteria;
@@ -7,7 +18,6 @@ use Evrinoma\UtilsBundle\Model\ActiveModel;
 
 trait ActiveTrait
 {
-
     /**
      * @var string
      *
@@ -15,45 +25,43 @@ trait ActiveTrait
      */
     protected $active = ActiveModel::ACTIVE;
 
-
-
     /**
-     *
      * @return bool
      */
     public function isActive(): bool
     {
-        return $this->active === ActiveModel::ACTIVE;
+        return ActiveModel::ACTIVE === $this->active;
     }
 
     /**
      * @VirtualProperty
+     *
      * @return bool
      */
     public function isBlocked(): bool
     {
-        return $this->active === ActiveModel::BLOCKED;
+        return ActiveModel::BLOCKED === $this->active;
     }
 
     /**
      * @VirtualProperty
+     *
      * @return bool
      */
     public function isDeleted(): bool
     {
-        return $this->active === ActiveModel::DELETED;
+        return ActiveModel::DELETED === $this->active;
     }
 
     /**
      * @VirtualProperty
+     *
      * @return bool
      */
     public function isModerated(): bool
     {
-        return $this->active === ActiveModel::MODERATED;
+        return ActiveModel::MODERATED === $this->active;
     }
-
-
 
     /**
      * @return string
@@ -93,7 +101,7 @@ trait ActiveTrait
             case ActiveModel::DELETED:
                 $this->setActiveToDelete();
                 break;
-            case ActiveModel::MODERATED :
+            case ActiveModel::MODERATED:
                 $this->setActiveToModerated();
                 break;
         }
@@ -140,5 +148,4 @@ trait ActiveTrait
 
         return $this;
     }
-
 }

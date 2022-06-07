@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Evrinoma\UtilsBundle\DependencyInjection\Compiler;
 
 use Doctrine\ORM\Events;
@@ -9,25 +20,19 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-
 abstract class AbstractMapEntity implements MapEntityInterface
 {
-
     protected string           $nameSpace;
     protected string           $path;
     protected ContainerBuilder $container;
-    private bool               $callResolver                  = false;
+    private bool               $callResolver = false;
     private ?Definition        $resolveTargetEntityDefinition = null;
-
-
 
     public function __construct(string $nameSpace, string $path)
     {
         $this->nameSpace = $nameSpace;
-        $this->path      = $path;
+        $this->path = $path;
     }
-
-
 
     protected function loadMetadata(Definition $driver, Reference $referenceAnnotationReader, $formatterModel, $formatterEntity): void
     {
@@ -42,7 +47,7 @@ abstract class AbstractMapEntity implements MapEntityInterface
     {
         $calls = [];
         foreach ($driver->getMethodCalls() as $i => $call) {
-            if ($call[1][1] && in_array($call[1][1], $namesSpaces)) {
+            if ($call[1][1] && \in_array($call[1][1], $namesSpaces)) {
                 continue;
             }
             $calls[] = $call;
@@ -58,8 +63,8 @@ abstract class AbstractMapEntity implements MapEntityInterface
             if ($searchInParams) {
                 $classNameMapping = $this->container->getParameter($classNameMapping);
             }
-            if (!is_array($value) || !is_string($classNameMapping)) {
-                throw new MapEntityCannotBeCompiledException("Wrong mapping structure");
+            if (!\is_array($value) || !\is_string($classNameMapping)) {
+                throw new MapEntityCannotBeCompiledException('Wrong mapping structure');
             }
             foreach ($value as $aliasClassName => $mapping) {
                 $resolveTargetEntity->addMethodCall('addResolveTargetEntity', [$aliasClassName, $classNameMapping, $mapping]);
@@ -95,11 +100,9 @@ abstract class AbstractMapEntity implements MapEntityInterface
         return $this;
     }
 
-
-
     private function getResolveTargetEntity(): Definition
     {
-        if ($this->resolveTargetEntityDefinition === null) {
+        if (null === $this->resolveTargetEntityDefinition) {
             $this->resolveTargetEntityDefinition = $this->container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
         }
 
@@ -118,13 +121,10 @@ abstract class AbstractMapEntity implements MapEntityInterface
         return $this;
     }
 
-
-
     public function setContainer(ContainerBuilder $container): MapEntityInterface
     {
         $this->container = $container;
 
         return $this;
     }
-
 }

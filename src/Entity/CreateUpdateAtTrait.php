@@ -1,12 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Evrinoma\UtilsBundle\Entity;
 
-
 trait CreateUpdateAtTrait
 {
-
     /**
      * @var \DateTimeImmutable
      * @Type("DateTimeImmutable<'d-m-Y'>")
@@ -20,9 +28,6 @@ trait CreateUpdateAtTrait
      * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      */
     protected $updatedAt;
-
-
-
 
     /**
      * @return \DateTimeImmutable
@@ -69,7 +74,7 @@ trait CreateUpdateAtTrait
      */
     public function hasCreatedAt(): bool
     {
-        return $this->createdAt !== null;
+        return null !== $this->createdAt;
     }
 
     /**
@@ -77,7 +82,6 @@ trait CreateUpdateAtTrait
      */
     public function hasUpdatedAt(): bool
     {
-        return $this->updatedAt !== null;
+        return null !== $this->updatedAt;
     }
-
 }
