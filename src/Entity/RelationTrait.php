@@ -12,13 +12,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 trait RelationTrait
 {
 
-//region SECTION: Fields
+
     protected $parent = null;
 
     protected $children = null;
-//endregion Fields
 
-//region SECTION: Constructor
+
+
     /**
      * RelationTrait constructor.
      */
@@ -26,9 +26,9 @@ trait RelationTrait
     {
         $this->children = new ArrayCollection();
     }
-//endregion Constructor
 
-//region SECTION: Public
+
+
     /**
      * @param $child
      *
@@ -52,9 +52,9 @@ trait RelationTrait
     {
         return ($this->children && $this->children->count() !== 0);
     }
-//endregion Public
 
-//region SECTION: Getters/Setters
+
+
     /**
      * @return $this
      */
@@ -83,5 +83,5 @@ trait RelationTrait
 
         return $this;
     }
-//endregion Getters/Setters
+
 }

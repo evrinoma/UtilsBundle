@@ -8,11 +8,11 @@ namespace Evrinoma\UtilsBundle\Storage;
  */
 trait StorageTrait
 {
-//region SECTION: Fields
-    private $entities = [];
-//endregion Fields
 
-//region SECTION: Getters/Setters
+    private $entities = [];
+
+
+
     public function setEntities(array $entities)
     {
         $this->entities = $entities;
@@ -61,5 +61,5 @@ trait StorageTrait
             yield $entity;
         }
     }
-//endregion Getters/Setters
+
 }

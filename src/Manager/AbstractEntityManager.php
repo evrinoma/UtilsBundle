@@ -18,7 +18,7 @@ use Evrinoma\UtilsBundle\Entity\ActiveTrait;
 abstract class AbstractEntityManager implements EntityInterface
 {
 
-//region SECTION: Fields
+
     /**
      * @var EntityManagerInterface
      */
@@ -43,9 +43,9 @@ abstract class AbstractEntityManager implements EntityInterface
      * @var string
      */
     private $classModel;
-//endregion Fields
 
-//region SECTION: Constructor
+
+
     /**
      * AbstractEntity constructor.
      *
@@ -58,9 +58,9 @@ abstract class AbstractEntityManager implements EntityInterface
             $this->repository = $this->entityManager->getRepository($this->repositoryClass);
         }
     }
-//endregion Constructor
 
-//region SECTION: Protected
+
+
     /**
      * @return Criteria
      */
@@ -111,9 +111,9 @@ abstract class AbstractEntityManager implements EntityInterface
 
         return $entity;
     }
-//endregion Protected
 
-//region SECTION: Public
+
+
     /**
      * @return EntityInterface
      */
@@ -151,23 +151,23 @@ abstract class AbstractEntityManager implements EntityInterface
     {
         return count($this->data) === 1;
     }
-//endregion Public
 
-//region SECTION: Private
+
+
     private function getClassModel()
     {
         return $this->classModel;
     }
-//endregion Private
 
-//region SECTION: Find Filters Repository
+
+
     public function getRepositoryClass():string
     {
         return $this->repositoryClass;
     }
-//endregion Find Filters Repository
 
-//region SECTION: Getters/Setters
+
+
     /**
      * @return mixed
      */
@@ -202,6 +202,6 @@ abstract class AbstractEntityManager implements EntityInterface
 
         return $this;
     }
-//endregion Getters/Setters
+
 
 }

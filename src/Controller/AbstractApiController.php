@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 abstract class AbstractApiController extends AbstractController
 {
-//region SECTION: Fields
+
     /**
      * @var SerializerInterface
      */
@@ -23,9 +23,9 @@ abstract class AbstractApiController extends AbstractController
      * @var SerializationContext|null
      */
     private ?SerializationContext $serializationContext = null;
-//endregion Fields
 
-//region SECTION: Constructor
+
+
     /**
      * AbstractApiController constructor.
      *
@@ -35,9 +35,9 @@ abstract class AbstractApiController extends AbstractController
     {
         $this->serializer = $serializer;
     }
-//endregion Constructor
 
-//region SECTION: Protected
+
+
     protected function json($data, int $status = 200, array $headers = [], array $context = []): JsonResponse
     {
         if ($this->serializer) {
@@ -63,5 +63,5 @@ abstract class AbstractApiController extends AbstractController
 
         return $this;
     }
-//endregion Protected
+
 }

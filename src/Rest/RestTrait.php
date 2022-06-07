@@ -12,11 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait RestTrait
 {
-//region SECTION: Fields
-    private int $status = Response::HTTP_OK;
-//endregion Fields
 
-//region SECTION: Public
+    private int $status = Response::HTTP_OK;
+
+
+
     /**
      * @return bool
      */
@@ -24,9 +24,9 @@ trait RestTrait
     {
         return $this->getRestStatus() === Response::HTTP_OK;
     }
-//endregion Public
 
-//region SECTION: Getters/Setters
+
+
     abstract public function getRestStatus(): int;
 
     /**
@@ -169,6 +169,6 @@ trait RestTrait
 
         return $this;
     }
-//endregion Getters/Setters
+
 
 }

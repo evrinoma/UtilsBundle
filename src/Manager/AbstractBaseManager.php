@@ -11,15 +11,15 @@ namespace Evrinoma\UtilsBundle\Manager;
 abstract class AbstractBaseManager implements BaseInterface
 {
 
-//region SECTION: Fields
+
     /**
      * @var mixed
      */
     protected $data = [];
 
-//endregion Fields
 
-//region SECTION: Public
+
+
     /**
      * @return mixed
      */
@@ -27,9 +27,9 @@ abstract class AbstractBaseManager implements BaseInterface
     {
         return count($this->data) === 1;
     }
-//endregion Public
 
-//region SECTION: Getters/Setters
+
+
     /**
      * @return mixed
      */
@@ -50,6 +50,6 @@ abstract class AbstractBaseManager implements BaseInterface
 
         return $this;
     }
-//endregion Getters/Setters
+
 
 }

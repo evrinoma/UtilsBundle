@@ -14,16 +14,16 @@ use JMS\Serializer\Annotation\VirtualProperty;
  */
 trait ActiveTrait
 {
-//region SECTION: Fields
+
     /**
      * @var string
      *
      * @ORM\Column(name="active", type="string", length=255, nullable=false)
      */
     protected $active = ActiveModel::ACTIVE;
-//endregion Fields
 
-//region SECTION: Public
+
+
     /**
      *
      * @return bool
@@ -59,9 +59,9 @@ trait ActiveTrait
     {
         return $this->active === ActiveModel::MODERATED;
     }
-//endregion Public
 
-//region SECTION: Getters/Setters
+
+
     /**
      * @return string
      */
@@ -147,5 +147,5 @@ trait ActiveTrait
 
         return $this;
     }
-//endregion Getters/Setters
+
 }

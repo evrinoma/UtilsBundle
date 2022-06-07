@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait IdTrait
 {
-//region SECTION: Fields
+
 
     /**
      * @var int
@@ -21,9 +21,9 @@ trait IdTrait
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-//endregion Fields
 
-//region SECTION: Public
+
+
     /**
      * @return int
      */
@@ -31,5 +31,5 @@ trait IdTrait
     {
         return $this->id;
     }
-//endregion Getters/Setters
+
 }

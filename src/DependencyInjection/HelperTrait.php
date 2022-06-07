@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 
 trait HelperTrait
 {
-//region SECTION: Protected
+
     /**
      * @param ContainerBuilder $container
      * @param string           $className
@@ -89,5 +89,5 @@ trait HelperTrait
     {
         return (new \ReflectionClass($class))->getShortName();
     }
-//endregion Protected
+
 }

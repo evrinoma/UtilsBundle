@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait DateStartFinishTrait
 {
-//region SECTION: Fields
+
     /**
      * @var \DateTimeImmutable
      *
@@ -21,9 +21,9 @@ trait DateStartFinishTrait
      * @ORM\Column(name="dateFinish", type="date_immutable", nullable=true)
      */
     protected $dateFinish;
-//endregion Fields
 
-//region SECTION: Public
+
+
     /**
      * @return bool
      */
@@ -39,9 +39,9 @@ trait DateStartFinishTrait
     {
         return $this->dateFinish !== null;
     }
-//endregion Public
 
-//region SECTION: Getters/Setters
+
+
     /**
      * @return \DateTimeImmutable
      */
@@ -81,7 +81,7 @@ trait DateStartFinishTrait
 
         return $this;
     }
-//endregion Getters/Setters
+
 
 
 }

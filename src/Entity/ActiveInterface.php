@@ -9,7 +9,7 @@ use Evrinoma\UtilsBundle\Model\ActiveModel;
 
 interface ActiveInterface
 {
-//region SECTION: Public
+
     /**
      * @return bool
      */
@@ -24,11 +24,11 @@ interface ActiveInterface
      * @return bool
      */
     public function isModerated(): bool;
-//endregion Public
 
-//region SECTION: Getters/Setters
+
+
     public static function getCriteria(): Criteria;
-//endregion Public
+
 
     /**
      * @return string

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class RestModel
 {
-//region SECTION: Fields
+
     public const UNKNOWN_ERROR = 520;
-//endregion Fields
+
 }

@@ -12,16 +12,16 @@ use Evrinoma\ContractBundle\Model\Define\AbstractType;
  */
 trait IdentityTrait
 {
-//region SECTION: Fields
+
     /**
      * @var string
      *
      * @ORM\Column(name="identity", type="string", length=255, nullable=false)
      */
     protected string $identity;
-//endregion Fields
 
-//region SECTION: Public
+
+
     /**
      * @return string
      */
@@ -41,5 +41,5 @@ trait IdentityTrait
 
         return $this;
     }
-//endregion Getters/Setters
+
 }

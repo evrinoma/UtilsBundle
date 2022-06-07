@@ -13,7 +13,7 @@ use JMS\Serializer\Annotation\Type;
  */
 trait CreateUpdateAtTrait
 {
-//region SECTION: Fields
+
     /**
      * @var \DateTimeImmutable
      * @Type("DateTimeImmutable<'d-m-Y'>")
@@ -27,10 +27,10 @@ trait CreateUpdateAtTrait
      * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      */
     protected $updatedAt;
-//endregion Fields
 
 
-//region SECTION: Getters/Setters
+
+
     /**
      * @return \DateTimeImmutable
      */
@@ -86,5 +86,5 @@ trait CreateUpdateAtTrait
     {
         return $this->updatedAt !== null;
     }
-//endregion Getters/Setters
+
 }

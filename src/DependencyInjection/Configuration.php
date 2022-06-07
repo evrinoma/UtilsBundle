@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-//region SECTION: Getters/Setters
+
     /**
      * {@inheritdoc}
      */
@@ -24,5 +24,5 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
-//endregion Getters/Setters
+
 }

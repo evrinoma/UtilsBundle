@@ -16,15 +16,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RestChoiceType extends AbstractType
 {
-//region SECTION: Fields
+
     public const REST_DESCRIPTION    = 'rest_description';
     public const REST_CHOICES        = 'rest_choices';
     public const REST_COMPONENT_NAME = 'rest_component_name';
     public const REST_DEFAULT        = 'rest_default';
     public const REST_CHOICES_DEFAULT = ['value unset'];
-//endregion Fields
 
-//region SECTION: Public
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
@@ -58,12 +58,12 @@ class RestChoiceType extends AbstractType
         $resolver->setDefault(self::REST_DEFAULT, '--');
         $resolver->setDefault('compound', true);
     }
-//endregion Public
 
-//region SECTION: Getters/Setters
+
+
     public function getParent()
     {
         return ChoiceType::class;
     }
-//endregion Getters/Setters
+
 }

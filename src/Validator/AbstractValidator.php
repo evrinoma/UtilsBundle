@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractValidator implements BasicValidatorInterface
 {
-//region SECTION: Fields
+
     /**
      * @var string|null
      */
@@ -32,9 +32,9 @@ abstract class AbstractValidator implements BasicValidatorInterface
      * @var bool
      */
     private bool $metadataLoaded = false;
-//endregion Fields
 
-//region SECTION: Constructor
+
+
     /**
      * ContractorValidator constructor.
      *
@@ -46,9 +46,9 @@ abstract class AbstractValidator implements BasicValidatorInterface
         static::$entityClass = $entityClass;
         $this->validator     = $validator;
     }
-//endregion Constructor
 
-//region SECTION: Public
+
+
     public function addPropertyConstraint(PropertyConstraintInterface $constant): void
     {
         $this->propertyConstraints[$constant->getPropertyName()] = $constant;
@@ -67,9 +67,9 @@ abstract class AbstractValidator implements BasicValidatorInterface
 
         return $this->validator->validate($value, $constraints, $groups);
     }
-//endregion Public
 
-//region SECTION: Private
+
+
     /**
      * @return $this
      */
@@ -88,5 +88,5 @@ abstract class AbstractValidator implements BasicValidatorInterface
 
         return $this;
     }
-//endregion Private
+
 }

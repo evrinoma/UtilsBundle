@@ -12,23 +12,23 @@ use Symfony\Component\DependencyInjection\Reference;
 
 abstract class AbstractMapEntity implements MapEntityInterface
 {
-//region SECTION: Fields
+
     protected string           $nameSpace;
     protected string           $path;
     protected ContainerBuilder $container;
     private bool               $callResolver                  = false;
     private ?Definition        $resolveTargetEntityDefinition = null;
-//endregion Fields
 
-//region SECTION: Constructor
+
+
     public function __construct(string $nameSpace, string $path)
     {
         $this->nameSpace = $nameSpace;
         $this->path      = $path;
     }
-//endregion Constructor
 
-//region SECTION: Protected
+
+
     protected function loadMetadata(Definition $driver, Reference $referenceAnnotationReader, $formatterModel, $formatterEntity): void
     {
         $definitionAnnotationDriver = new Definition(AnnotationDriver::class, [$referenceAnnotationReader, sprintf($formatterModel, $this->path)]);
@@ -94,9 +94,9 @@ abstract class AbstractMapEntity implements MapEntityInterface
 
         return $this;
     }
-//endregion Protected
 
-//region SECTION: Private
+
+
     private function getResolveTargetEntity(): Definition
     {
         if ($this->resolveTargetEntityDefinition === null) {
@@ -117,14 +117,14 @@ abstract class AbstractMapEntity implements MapEntityInterface
 
         return $this;
     }
-//endregion Private
 
-//region SECTION: Getters/Setters
+
+
     public function setContainer(ContainerBuilder $container): MapEntityInterface
     {
         $this->container = $container;
 
         return $this;
     }
-//endregion Getters/Setters
+
 }

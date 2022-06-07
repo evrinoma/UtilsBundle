@@ -6,11 +6,11 @@ namespace Evrinoma\UtilsBundle\Rest;
 
 interface RestInterface
 {
-//region SECTION: Public
-    public function isRestStatusOk();
-//endregion Public
 
-//region SECTION: Getters/Setters
+    public function isRestStatusOk();
+
+
+
     public function getRestStatus(): int;
 
     public function setRestOk();
@@ -40,5 +40,5 @@ interface RestInterface
     public function setRestUnprocessableEntity();
 
     public function setRestNotImplemented();
-//endregion Getters/Setters
+
 }

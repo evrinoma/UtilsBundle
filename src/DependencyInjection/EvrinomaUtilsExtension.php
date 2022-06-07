@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class EvrinomaUtilsExtension extends Extension
 {
-//region SECTION: Public
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -24,12 +24,12 @@ class EvrinomaUtilsExtension extends Extension
         $configuration   = $this->getConfiguration($configs, $container);
         $config          = $this->processConfiguration($configuration, $configs);
     }
-//endregion Public
 
-//region SECTION: Getters/Setters
+
+
     public function getAlias()
     {
         return EvrinomaUtilsBundle::UTILS_BUNDLE;
     }
-//endregion Getters/Setters
+
 }

@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 trait ActiveTrait
 {
-//region SECTION: Getters/Setters
+
     public function getConstraints(): array
     {
         return [
@@ -21,5 +21,5 @@ trait ActiveTrait
     {
         return 'active';
     }
-//endregion Getters/Setters
+
 }
