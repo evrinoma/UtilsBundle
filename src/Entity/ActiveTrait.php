@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Entity;
 
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 trait ActiveTrait
 {
