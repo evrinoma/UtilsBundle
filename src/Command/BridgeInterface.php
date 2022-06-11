@@ -24,7 +24,9 @@ interface BridgeInterface
 
     public function action(DtoInterface $dto): void;
 
-    public function questioners(InputInterface $input): array;
+    public function argumentQuestioners(InputInterface $input): array;
+
+    public function optionQuestioners(InputInterface $input): array;
 
     public function argumentToDto(InputInterface $input): DtoInterface;
 }
