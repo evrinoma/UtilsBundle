@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Controller;
 
 use Evrinoma\UtilsBundle\Rest\RestInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 interface ApiStatusControllerInterface
 {
