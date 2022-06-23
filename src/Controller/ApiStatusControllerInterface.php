@@ -13,17 +13,10 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Controller;
 
+use Evrinoma\UtilsBundle\Rest\RestInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-interface ApiControllerInterface extends ApiStatusControllerInterface
+interface ApiStatusControllerInterface
 {
-    public function postAction(): JsonResponse;
-
-    public function putAction(): JsonResponse;
-
-    public function deleteAction(): JsonResponse;
-
-    public function criteriaAction(): JsonResponse;
-
-    public function getAction(): JsonResponse;
+    public function setRestStatus(RestInterface $manager, \Exception $e): array;
 }
