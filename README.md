@@ -24,4 +24,4 @@ composer install --dev
 ## Done
 
 ## License
-    MIT
+    PROPRIETARY
