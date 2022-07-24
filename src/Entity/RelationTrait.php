@@ -21,9 +21,6 @@ trait RelationTrait
 
     protected $children = null;
 
-    /**
-     * RelationTrait constructor.
-     */
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -32,7 +29,7 @@ trait RelationTrait
     /**
      * @param $child
      *
-     * @return $this
+     * @return self
      */
     public function addChild($child): self
     {
@@ -54,9 +51,17 @@ trait RelationTrait
     }
 
     /**
-     * @return $this
+     * @return bool
      */
-    public function getParent()
+    public function hasParent(): bool
+    {
+        return null !== $this->parent;
+    }
+
+    /**
+     * @return self
+     */
+    public function getParent(): self
     {
         return $this->parent;
     }
@@ -72,9 +77,9 @@ trait RelationTrait
     /**
      * @param $parent
      *
-     * @return $this
+     * @return self
      */
-    public function setParent($parent): self
+    public function setParent($parent = null): self
     {
         $this->parent = $parent;
 
