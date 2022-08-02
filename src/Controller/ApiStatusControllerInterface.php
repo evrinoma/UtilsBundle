@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Controller;
 
-use Evrinoma\UtilsBundle\Rest\RestInterface;
-
 interface ApiStatusControllerInterface
 {
-    public function setRestStatus(RestInterface $manager, \Exception $e): array;
+    public function setRestStatus(\Exception $e): array;
 }
