@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Controller;
 
-use Evrinoma\UtilsBundle\Rest\RestTrait;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,8 +20,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class AbstractApiController extends AbstractController
 {
-    use RestTrait;
-
     /**
      * @var SerializerInterface
      */
@@ -43,8 +40,6 @@ abstract class AbstractApiController extends AbstractController
     }
 
     /**
-     * @deprecated
-     *
      * @param       $data
      * @param int   $status
      * @param array $headers
@@ -75,10 +70,5 @@ abstract class AbstractApiController extends AbstractController
         }
 
         return $this;
-    }
-
-    public function getRestStatus(): int
-    {
-        return $this->status;
     }
 }

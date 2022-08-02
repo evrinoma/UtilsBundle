@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the package.
+ *
+ * (c) Nikolay Nikolaev <evrinoma@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Evrinoma\UtilsBundle\Controller;
+
+use Evrinoma\UtilsBundle\Rest\RestPayloadInterface;
+use Evrinoma\UtilsBundle\Rest\RestPayloadTrait;
+use Evrinoma\UtilsBundle\Rest\RestStatusControllerTrait;
+use Evrinoma\UtilsBundle\Rest\RestStatusInterface;
+use Evrinoma\UtilsBundle\Rest\RestStatusTrait;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+abstract class AbstractWrappedApiController extends AbstractApiController implements ApiControllerInterface, RestStatusControllerInterface, RestStatusInterface, RestPayloadInterface
+{
+    use RestPayloadTrait;
+    use RestStatusControllerTrait;
+    use RestStatusTrait;
+
+    /**
+     * @param string $message
+     * @param array  $data
+     * @param array  $headers
+     *
+     * @return JsonResponse
+     */
+    protected function JsonResponse(string $message, array $data, array $headers = []): JsonResponse
+    {
+        return $this->json($this->getRestPayload($message, $data), $this->getRestStatus(), $headers);
+    }
+}

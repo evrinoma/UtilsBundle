@@ -11,9 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Evrinoma\UtilsBundle\Model;
+namespace Evrinoma\UtilsBundle\Model\Rest;
 
-final class RestModel
+final class StatusModel
 {
     public const UNKNOWN_ERROR = 520;
 }

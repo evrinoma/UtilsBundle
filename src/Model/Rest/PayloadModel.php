@@ -11,9 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Evrinoma\UtilsBundle\Controller;
+namespace Evrinoma\UtilsBundle\Model\Rest;
 
-interface ApiStatusControllerInterface
+final class PayloadModel
 {
-    public function setRestStatus(\Exception $e): array;
+    public const PAYLOAD = 'payload';
 }

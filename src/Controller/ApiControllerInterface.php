@@ -15,7 +15,7 @@ namespace Evrinoma\UtilsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-interface ApiControllerInterface extends ApiStatusControllerInterface
+interface ApiControllerInterface
 {
     public function postAction(): JsonResponse;
 
