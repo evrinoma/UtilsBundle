@@ -36,7 +36,7 @@ return (new PhpCsFixer\Config())
         'native_constant_invocation' => ['strict' => false],
         'nullable_type_declaration_for_default_null_value' => ['use_nullable_type_declaration' => false],
         'header_comment' => ['header' => $fileHeaderComment],
-        'modernize_strpos' => true,
+        'modernize_strpos' => false,
         'declare_strict_types' => true,
         'no_superfluous_phpdoc_tags' => false,
         'self_accessor' => false,
