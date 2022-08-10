@@ -33,8 +33,8 @@ abstract class AbstractWrappedApiController extends AbstractApiController implem
      *
      * @return JsonResponse
      */
-    protected function JsonResponse(string $message, array $data, array $headers = []): JsonResponse
+    protected function JsonResponse(string $message, array $data, array $error, array $headers = []): JsonResponse
     {
-        return $this->json($this->getRestPayload($message, $data), $this->getRestStatus(), $headers);
+        return $this->json($this->getRestPayload($message, $data, $error), $this->getRestStatus(), $headers);
     }
 }

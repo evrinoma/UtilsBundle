@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Rest;
 
+use Evrinoma\UtilsBundle\Model\Rest\ErrorModel;
 use Evrinoma\UtilsBundle\Model\Rest\MessageModel;
 use Evrinoma\UtilsBundle\Model\Rest\PayloadModel;
 use Evrinoma\UtilsBundle\Model\Rest\TypeModel;
@@ -22,7 +23,7 @@ trait RestPayloadTrait
 {
     use TypeTrait;
 
-    public function getRestPayload(string $message, array $data): array
+    public function getRestPayload(string $message, array $data, array $error): array
     {
         if (!$this->hasRestType()) {
             switch ($this->getRestStatus()) {
@@ -38,8 +39,9 @@ trait RestPayloadTrait
 
         return [
                 TypeModel::TYPE => $this->toRestTypeString(),
-                PayloadModel::PAYLOAD => $data,
                 MessageModel::MESSAGE => $message,
+                PayloadModel::PAYLOAD => $data,
+                ErrorModel::ERROR =>$error,
             ];
     }
 
