@@ -21,5 +21,5 @@ interface RestPayloadInterface extends TypeInterface
 
     public function toRestTypeString(): string;
 
-    public function getRestPayload(string $message, array $data): array;
+    public function getRestPayload(string $message, array $data, array $error): array;
 }
