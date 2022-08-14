@@ -41,7 +41,7 @@ trait RestPayloadTrait
                 TypeModel::TYPE => $this->toRestTypeString(),
                 MessageModel::MESSAGE => $message,
                 PayloadModel::PAYLOAD => $data,
-                ErrorModel::ERROR =>$error,
+                ErrorModel::ERROR => $error,
             ];
     }
 
