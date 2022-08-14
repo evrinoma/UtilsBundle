@@ -16,17 +16,8 @@ namespace Evrinoma\UtilsBundle\Mediator;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
 
-abstract class AbstractQueryMediator
+trait OrmQueryMediator
 {
-    protected static string $alias = '';
-
-    abstract protected function createQuery(DtoInterface $dto, QueryBuilderInterface $builder): void;
-
-    public function alias(): string
-    {
-        return static::$alias;
-    }
-
     public function getResult(DtoInterface $dto, QueryBuilderInterface $builder): array
     {
         return $builder->getQuery()->getResult();
