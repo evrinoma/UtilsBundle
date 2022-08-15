@@ -29,6 +29,6 @@ abstract class AbstractQueryMediator
 
     public function getResult(DtoInterface $dto, QueryBuilderInterface $builder): array
     {
-        return $builder->getQuery()->getResult();
+        return [];
     }
 }
