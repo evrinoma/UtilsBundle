@@ -50,7 +50,7 @@ abstract class RepositoryWrapper
         $builder = new DummyQueryBuilder();
         $self = $this;
         $builder->setHandler(function ($dto) use ($self) {
-            return $self->resultWrapped($dto);
+            return $self->criteriaWrapped($dto);
         });
 
         return $builder;
@@ -69,7 +69,7 @@ abstract class RepositoryWrapper
         return null;
     }
 
-    public function resultWrapped($dto): array
+    protected function criteriaWrapped($dto): array
     {
         return [];
     }
