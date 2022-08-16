@@ -28,4 +28,6 @@ interface RepositoryWrapperInterface
     public function createQueryBuilderWrapped(string $alias): QueryBuilderInterface;
 
     public function findWrapped($id, $lockMode = null, $lockVersion = null);
+
+    public function resultWrapped($dto): array;
 }

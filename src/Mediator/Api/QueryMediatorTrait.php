@@ -11,15 +11,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Evrinoma\UtilsBundle\QueryBuilder;
+namespace Evrinoma\UtilsBundle\Mediator\Api;
 
 use Evrinoma\DtoBundle\Dto\DtoInterface;
+use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
 
-interface QueryBuilderInterface
+trait QueryMediatorTrait
 {
-    public function skipQuery(): QueryBuilderInterface;
-
-    public function getResult(DtoInterface $dto): array;
-
-    public function setHandler(\Closure $closure): void;
+    public function getResult(DtoInterface $dto, QueryBuilderInterface $builder): array
+    {
+        return $builder->skipQuery()->getResult($dto);
+    }
 }

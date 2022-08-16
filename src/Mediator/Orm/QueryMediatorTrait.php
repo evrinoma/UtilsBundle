@@ -11,12 +11,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Evrinoma\UtilsBundle\Mediator;
+namespace Evrinoma\UtilsBundle\Mediator\Orm;
 
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
 
-trait OrmQueryMediatorTrait
+trait QueryMediatorTrait
 {
     public function getResult(DtoInterface $dto, QueryBuilderInterface $builder): array
     {

@@ -15,4 +15,5 @@ namespace Evrinoma\UtilsBundle\QueryBuilder;
 
 final class DummyQueryBuilder implements QueryBuilderInterface
 {
+    use QueryBuilderTrait;
 }

@@ -47,7 +47,13 @@ abstract class RepositoryWrapper
 
     public function createQueryBuilderWrapped(string $alias): QueryBuilderInterface
     {
-        return new DummyQueryBuilder();
+        $builder = new DummyQueryBuilder();
+        $self = $this;
+        $builder->setHandler(function ($dto) use ($self) {
+            return $self->resultWrapped($dto);
+        });
+
+        return $builder;
     }
 
     public function persistWrapped($entity): void
@@ -61,5 +67,10 @@ abstract class RepositoryWrapper
     public function findWrapped($id, $lockMode = null, $lockVersion = null)
     {
         return null;
+    }
+
+    public function resultWrapped($dto): array
+    {
+        return [];
     }
 }

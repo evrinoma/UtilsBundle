@@ -17,4 +17,5 @@ use Doctrine\ORM\QueryBuilder as BaseQueryBuilder;
 
 final class QueryBuilder extends BaseQueryBuilder implements QueryBuilderInterface
 {
+    use QueryBuilderTrait;
 }
