@@ -26,12 +26,12 @@ abstract class RepositoryWrapper extends ServiceEntityRepository
             ->from($this->_entityName, $alias, $indexBy);
     }
 
-    public function persistWrapped($entity)
+    public function persistWrapped($entity): void
     {
         $this->getEntityManager()->persist($entity);
     }
 
-    public function removeWrapped($entity)
+    public function removeWrapped($entity): void
     {
         $this->getEntityManager()->remove($entity);
     }

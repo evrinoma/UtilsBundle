@@ -17,9 +17,9 @@ use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
 
 interface RepositoryWrapperInterface
 {
-    public function persistWrapped($entity);
+    public function persistWrapped($entity): void;
 
-    public function removeWrapped($entity);
+    public function removeWrapped($entity): void;
 
     public function referenceWrapped(string $id);
 
