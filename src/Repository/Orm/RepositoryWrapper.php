@@ -55,4 +55,9 @@ abstract class RepositoryWrapper extends ServiceEntityRepository
     {
         return parent::find($id, $lockMode, $lockVersion);
     }
+
+    public function resultWrapped($dto): array
+    {
+        return [];
+    }
 }
