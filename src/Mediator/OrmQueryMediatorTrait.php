@@ -16,7 +16,7 @@ namespace Evrinoma\UtilsBundle\Mediator;
 use Evrinoma\DtoBundle\Dto\DtoInterface;
 use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
 
-trait OrmQueryMediator
+trait OrmQueryMediatorTrait
 {
     public function getResult(DtoInterface $dto, QueryBuilderInterface $builder): array
     {
