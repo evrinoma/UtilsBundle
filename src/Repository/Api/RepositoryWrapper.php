@@ -14,14 +14,27 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Repository\Api;
 
 use Doctrine\ORM\Exception\ORMException;
+use Evrinoma\UtilsBundle\Persistence\ManagerRegistry;
 use Evrinoma\UtilsBundle\QueryBuilder\DummyQueryBuilder;
 use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
 
 abstract class RepositoryWrapper
 {
+    protected ManagerRegistry $managerRegistry;
+
     protected string $entityClass = '';
 
     private array $cache = [];
+
+    public function __construct(ManagerRegistry $managerRegistry)
+    {
+        $this->managerRegistry = $managerRegistry;
+    }
+
+    protected function criteriaWrapped($dto): array
+    {
+        return [];
+    }
 
     public function referenceWrapped(string $id)
     {
@@ -67,10 +80,5 @@ abstract class RepositoryWrapper
     public function findWrapped($id, $lockMode = null, $lockVersion = null)
     {
         return null;
-    }
-
-    protected function criteriaWrapped($dto): array
-    {
-        return [];
     }
 }
