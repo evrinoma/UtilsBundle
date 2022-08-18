@@ -31,7 +31,7 @@ abstract class RepositoryWrapper
         $this->managerRegistry = $managerRegistry;
     }
 
-    protected function criteriaWrapped($dto): array
+    protected function criteriaWrapped($entity): array
     {
         return [];
     }
