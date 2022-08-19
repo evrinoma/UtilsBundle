@@ -16,7 +16,7 @@ namespace Evrinoma\UtilsBundle\Persistence;
 use Evrinoma\FetchBundle\Handler\HandlerInterface;
 use Evrinoma\FetchBundle\Manager\FetchManagerInterface;
 
-class ManagerRegistry
+class ManagerRegistry implements ManagerRegistryInterface
 {
     private FetchManagerInterface $manager;
 

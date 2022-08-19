@@ -14,8 +14,12 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\DependencyInjection;
 
 use Evrinoma\UtilsBundle\EvrinomaUtilsBundle;
+use Evrinoma\UtilsBundle\Persistence\ManagerRegistry;
+use Evrinoma\UtilsBundle\Persistence\ManagerRegistryInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -28,6 +32,12 @@ class EvrinomaUtilsExtension extends Extension
 
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
+
+        $fetchManager = new Definition(ManagerRegistry::class);
+        $fetchManager->setPublic(true);
+        $alias = new Alias('evrinoma.fetch.manager.fetch');
+        $container->addDefinitions(['evrinoma.fetch.manager.fetch' => $fetchManager]);
+        $container->addAliases([ManagerRegistryInterface::class => $alias]);
     }
 
     public function getAlias()

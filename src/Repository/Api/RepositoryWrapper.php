@@ -14,19 +14,19 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Repository\Api;
 
 use Doctrine\ORM\Exception\ORMException;
-use Evrinoma\UtilsBundle\Persistence\ManagerRegistry;
+use Evrinoma\UtilsBundle\Persistence\ManagerRegistryInterface;
 use Evrinoma\UtilsBundle\QueryBuilder\DummyQueryBuilder;
 use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
 
 abstract class RepositoryWrapper
 {
-    protected ManagerRegistry $managerRegistry;
+    protected ManagerRegistryInterface $managerRegistry;
 
     protected string $entityClass = '';
 
     private array $cache = [];
 
-    public function __construct(ManagerRegistry $managerRegistry)
+    public function __construct(ManagerRegistryInterface $managerRegistry)
     {
         $this->managerRegistry = $managerRegistry;
     }
