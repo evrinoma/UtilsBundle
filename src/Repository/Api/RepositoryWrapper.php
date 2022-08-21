@@ -31,11 +31,6 @@ abstract class RepositoryWrapper
         $this->managerRegistry = $managerRegistry;
     }
 
-    protected function criteriaWrapped($entity): array
-    {
-        return [];
-    }
-
     public function referenceWrapped(string $id)
     {
         if (!\array_key_exists($id, $this->cache)) {
@@ -80,5 +75,10 @@ abstract class RepositoryWrapper
     public function findWrapped($id, $lockMode = null, $lockVersion = null)
     {
         return null;
+    }
+
+    protected function criteriaWrapped($entity): array
+    {
+        return [];
     }
 }
