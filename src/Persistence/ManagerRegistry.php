@@ -13,13 +13,17 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Persistence;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\OneToMany;
+use Evrinoma\UtilsBundle\Exception\HydrateException;
 use Evrinoma\UtilsBundle\Manager\EntityManagerInterface;
 use Evrinoma\UtilsBundle\Mapping\MetadataManagerInterface;
 use InvalidArgumentException;
 
 class ManagerRegistry implements ManagerRegistryInterface
 {
-    protected array $managers;
+    protected array                    $cache = [];
+    protected array                    $managers;
     protected MetadataManagerInterface $metadataManager;
 
     /**
@@ -28,6 +32,11 @@ class ManagerRegistry implements ManagerRegistryInterface
     public function __construct(MetadataManagerInterface $metadataManager)
     {
         $this->metadataManager = $metadataManager;
+    }
+
+    protected function getMetaDataManager(): MetadataManagerInterface
+    {
+        return $this->metadataManager;
     }
 
     /**
@@ -52,35 +61,54 @@ class ManagerRegistry implements ManagerRegistryInterface
         return $this->managers[$entityClass];
     }
 
-    protected function getMetaDataManager(): MetadataManagerInterface
-    {
-        return $this->metadataManager;
-    }
-
     public function hydrateRowData(array $rows, string $entityClass): array
     {
         $entities = [];
         foreach ($rows as $row) {
             $entity = new $entityClass();
+            $identity = $this->getMetaDataManager()->getIdentity($entityClass);
+            $valueId = null;
+            if (\array_key_exists($identity, $row)) {
+                $valueId = $row[$identity];
+            }
+            if (\array_key_exists($entityClass, $this->cache) && \array_key_exists($valueId, $this->cache[$entityClass])) {
+                return $this->cache[$entityClass][$valueId];
+            }
             foreach ($this->getMetaDataManager()->getMetadata($entityClass) as $name => $metaData) {
                 if (\array_key_exists($name, $row)) {
-                    $methodName = 'set'.ucfirst($name);
-                    switch ($metaData->type) {
-                        case 'string' :
-                            $value = (string) $row[$name];
-                            break;
-                        case 'int':
-                            $value = (int) $row[$name];
-                            break;
-                        case 'float':
-                            $value = (float) $row[$name];
-                            break;
-                        default:
-                            $value = $row[$name];
+                    if ($metaData instanceof Column) {
+                        $methodName = 'set'.ucfirst($name);
+                        switch ($metaData->type) {
+                            case 'string' :
+                                $value = (string) $row[$name];
+                                break;
+                            case 'int':
+                                $value = (int) $row[$name];
+                                break;
+                            case 'float':
+                                $value = (float) $row[$name];
+                                break;
+                            default:
+                                $value = $row[$name];
+                        }
+                        $entity->{$methodName}($value);
                     }
-                    $entity->{$methodName}($value);
+                    if ($metaData instanceof OneToMany) {
+                        $mappedEntityClass = $this->getMetaDataManager()->getClassName($metaData->targetEntity);
+                        if (\is_array($row[$name])) {
+                            $methodName = 'set'.ucfirst($name);
+                            $values = $this->hydrateRowData($row[$name], $mappedEntityClass);
+                            $entity->{$methodName}($values);
+                        } else {
+                            throw new HydrateException();
+                        }
+                    }
                 }
             }
+            if (null !== $valueId) {
+                $this->cache[$entityClass][$valueId] = $entity;
+            }
+
             $entities[] = $entity;
         }
 

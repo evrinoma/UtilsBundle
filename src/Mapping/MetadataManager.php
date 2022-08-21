@@ -15,13 +15,19 @@ namespace Evrinoma\UtilsBundle\Mapping;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\OneToMany;
 use Evrinoma\UtilsBundle\Exception\MetadataNotFoundException;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class MetadataManager implements MetadataManagerInterface
 {
+    private const IDENTITY = 'identity';
+    private const MAP = 'map';
+    private array             $aliases = [];
     private array             $metadata = [];
+    private array             $identifiers = [];
     protected Reader          $annotationReader;
     private FilesystemAdapter $cache;
 
@@ -48,17 +54,31 @@ class MetadataManager implements MetadataManagerInterface
             $reflectionObject = new \ReflectionObject(new $entity());
             $reflectionProperties = $reflectionObject->getProperties(\ReflectionProperty::IS_PROTECTED);
             foreach ($reflectionProperties as $reflectionProperty) {
+                $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, GeneratedValue::class);
+                if (null !== $annotation) {
+                    $mapping[self::IDENTITY] = $reflectionProperty->name;
+                }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, Column::class);
                 if (null !== $annotation) {
-                    $mapping[$annotation->name] = $annotation;
+                    $mapping[self::MAP][$annotation->name] = $annotation;
+                }
+                $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, OneToMany::class);
+                if (null !== $annotation) {
+                    $mapping[self::MAP][$reflectionProperty->name] = $annotation;
                 }
             }
             $metaCached->set($mapping);
             $this->cache->save($metaCached);
         }
-        $this->metadata[$entity] = $metaCached->get();
+        $mapping = $metaCached->get();
+
+        if (\array_key_exists(self::IDENTITY, $mapping)) {
+            $this->identifiers[$entity] = $mapping[self::IDENTITY];
+        }
+        $this->metadata[$entity] = $mapping[self::MAP];
+
         if (null !== $alias) {
-            $this->metadata[$alias] = &$this->metadata[$entity];
+            $this->aliases[$alias] = $entity;
         }
     }
 
@@ -73,6 +93,50 @@ class MetadataManager implements MetadataManagerInterface
     {
         if (\array_key_exists($entityClass, $this->metadata)) {
             return $this->metadata[$entityClass];
+        }
+
+        $entityClass = $this->getClassName($entityClass);
+
+        if (\array_key_exists($entityClass, $this->metadata)) {
+            return $this->metadata[$entityClass];
+        } else {
+            throw new MetadataNotFoundException();
+        }
+    }
+
+    /**
+     * @param string $entityClass
+     *
+     * @return string
+     *
+     * @throws MetadataNotFoundException
+     */
+    public function getIdentity(string $entityClass): string
+    {
+        if (\array_key_exists($entityClass, $this->identifiers)) {
+            return $this->identifiers[$entityClass];
+        }
+
+        $entityClass = $this->getClassName($entityClass);
+
+        if (\array_key_exists($entityClass, $this->identifiers)) {
+            return $this->identifiers[$entityClass];
+        } else {
+            throw new MetadataNotFoundException();
+        }
+    }
+
+    /**
+     * @param string $alias
+     *
+     * @return string
+     *
+     * @throws MetadataNotFoundException
+     */
+    public function getClassName(string $alias): string
+    {
+        if (\array_key_exists($alias, $this->aliases)) {
+            return $this->aliases[$alias];
         } else {
             throw new MetadataNotFoundException();
         }

@@ -34,4 +34,22 @@ interface MetadataManagerInterface
      * @throws MetadataNotFoundException
      */
     public function getMetadata(string $entityClass): array;
+
+    /**
+     * @param string $entityClass
+     *
+     * @return string
+     *
+     * @throws MetadataNotFoundException
+     */
+    public function getIdentity(string $entityClass): string;
+
+    /**
+     * @param string $alias
+     *
+     * @return string
+     *
+     * @throws MetadataNotFoundException
+     */
+    public function getClassName(string $alias): string;
 }
