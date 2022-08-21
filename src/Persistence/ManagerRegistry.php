@@ -51,4 +51,39 @@ class ManagerRegistry implements ManagerRegistryInterface
 
         return $this->managers[$entityClass];
     }
+
+    protected function getMetaDataManager(): MetadataManagerInterface
+    {
+        return $this->metadataManager;
+    }
+
+    public function hydrateRowData(array $rows, string $entityClass): array
+    {
+        $entities = [];
+        foreach ($rows as $row) {
+            $entity = new $entityClass();
+            foreach ($this->getMetaDataManager()->getMetadata($entityClass) as $name => $metaData) {
+                if (\array_key_exists($name, $row)) {
+                    $methodName = 'set'.ucfirst($name);
+                    switch ($metaData->type) {
+                        case 'string' :
+                            $value = (string) $row[$name];
+                            break;
+                        case 'int':
+                            $value = (int) $row[$name];
+                            break;
+                        case 'float':
+                            $value = (float) $row[$name];
+                            break;
+                        default:
+                            $value = $row[$name];
+                    }
+                    $entity->{$methodName}($value);
+                }
+            }
+            $entities[] = $entity;
+        }
+
+        return $entities;
+    }
 }

@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Mapping;
 
-use Psr\Cache\InvalidArgumentException;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
 use Evrinoma\UtilsBundle\Exception\MetadataNotFoundException;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class MetadataManager implements MetadataManagerInterface

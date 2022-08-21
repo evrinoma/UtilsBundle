@@ -27,4 +27,12 @@ interface ManagerRegistryInterface
      * @throws InvalidArgumentException
      */
     public function getManager(string $entityClass): EntityManagerInterface;
+
+    /**
+     * @param array  $rows
+     * @param string $entityClass
+     *
+     * @return array
+     */
+    public function hydrateRowData(array $rows, string $entityClass): array;
 }
