@@ -13,9 +13,18 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Persistence;
 
-use Evrinoma\FetchBundle\Handler\HandlerInterface;
+use Evrinoma\UtilsBundle\Manager\EntityManagerInterface;
+use InvalidArgumentException;
 
 interface ManagerRegistryInterface
 {
-    public function getManager(string $handlerName, string $descriptionName): HandlerInterface;
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
+    public function registerEntityManager(EntityManagerInterface $entityManager): void;
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function getManager(string $entityClass): EntityManagerInterface;
 }

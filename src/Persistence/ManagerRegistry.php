@@ -13,23 +13,42 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Persistence;
 
-use Evrinoma\FetchBundle\Handler\HandlerInterface;
-use Evrinoma\FetchBundle\Manager\FetchManagerInterface;
+use Evrinoma\UtilsBundle\Manager\EntityManagerInterface;
+use Evrinoma\UtilsBundle\Mapping\MetadataManagerInterface;
+use InvalidArgumentException;
 
 class ManagerRegistry implements ManagerRegistryInterface
 {
-    private FetchManagerInterface $manager;
+    protected array $managers;
+    protected MetadataManagerInterface $metadataManager;
 
     /**
-     * @param FetchManagerInterface $manager
+     * @param MetadataManagerInterface $metadataManager
      */
-    public function __construct(FetchManagerInterface $manager)
+    public function __construct(MetadataManagerInterface $metadataManager)
     {
-        $this->manager = $manager;
+        $this->metadataManager = $metadataManager;
     }
 
-    public function getManager(string $handlerName, string $descriptionName): HandlerInterface
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
+    public function registerEntityManager(EntityManagerInterface $entityManager): void
     {
-        return $this->manager->getHandler($handlerName, $descriptionName);
+        $entityClass = \get_class($entityManager);
+        $this->managers[$entityClass] = $entityManager;
+        $this->managers[$entityManager->getManagerName()] = &$this->managers[$entityClass];
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function getManager(string $entityClass): EntityManagerInterface
+    {
+        if (!isset($this->managers[$entityClass])) {
+            throw new InvalidArgumentException(sprintf('Manager named "%s" does not exist.', $entityClass));
+        }
+
+        return $this->managers[$entityClass];
     }
 }
