@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Mapping;
 
+use Psr\Cache\InvalidArgumentException;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
 use Evrinoma\UtilsBundle\Exception\MetadataNotFoundException;
@@ -22,18 +23,23 @@ class MetadataManager implements MetadataManagerInterface
 {
     private array             $metadata = [];
     protected Reader          $annotationReader;
-    private string            $cacheDir;
     private FilesystemAdapter $cache;
 
+    /**
+     * @param string $cacheDir
+     * @param Reader $annotationReader
+     */
     public function __construct(string $cacheDir, Reader $annotationReader)
     {
-        $this->cacheDir = $cacheDir;
         $this->annotationReader = $annotationReader;
-        $this->cache = new FilesystemAdapter('', 0, $this->cacheDir.'/meta');
+        $this->cache = new FilesystemAdapter('', 0, $cacheDir.'/meta');
     }
 
     /**
-     * @param string $entity
+     * @param string      $entity
+     * @param string|null $alias
+     *
+     * @throws InvalidArgumentException
      */
     public function registerEntity(string $entity, string $alias = null): void
     {

@@ -14,11 +14,15 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Mapping;
 
 use Evrinoma\UtilsBundle\Exception\MetadataNotFoundException;
+use Psr\Cache\InvalidArgumentException;
 
 interface MetadataManagerInterface
 {
     /**
-     * @param string $entity
+     * @param string      $entity
+     * @param string|null $alias
+     *
+     * @throws InvalidArgumentException
      */
     public function registerEntity(string $entity, string $alias = null): void;
 
