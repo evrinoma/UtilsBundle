@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Persistence;
 
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Evrinoma\UtilsBundle\Exception\HydrateException;
 use Evrinoma\UtilsBundle\Manager\EntityManagerInterface;
@@ -72,7 +73,7 @@ class ManagerRegistry implements ManagerRegistryInterface
                 $valueId = $row[$identity];
             }
             if (\array_key_exists($entityClass, $this->cache) && \array_key_exists($valueId, $this->cache[$entityClass])) {
-                return $this->cache[$entityClass][$valueId];
+                return [$this->cache[$entityClass][$valueId]];
             }
             foreach ($this->getMetaDataManager()->getMetadata($entityClass) as $name => $metaData) {
                 if (\array_key_exists($name, $row)) {
@@ -103,6 +104,19 @@ class ManagerRegistry implements ManagerRegistryInterface
                             $methodName = 'set'.ucfirst($name);
                             $values = $this->hydrateRowData($row[$name], $mappedEntityClass);
                             $entity->{$methodName}($values);
+                        } else {
+                            throw new HydrateException();
+                        }
+                    }
+                    if ($metaData instanceof ManyToOne) {
+                        $mappedEntityClass = $this->getMetaDataManager()->getClassName($metaData->targetEntity);
+                        if (\is_array($row[$name])) {
+                            $methodName = 'set'.ucfirst($name);
+                            $values = $this->hydrateRowData([$row[$name]], $mappedEntityClass);
+                            if (0 === \count($values) || \count($values) > 1) {
+                                throw new HydrateException();
+                            }
+                            $entity->{$methodName}($values[0]);
                         } else {
                             throw new HydrateException();
                         }

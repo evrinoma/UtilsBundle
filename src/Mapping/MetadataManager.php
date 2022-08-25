@@ -16,6 +16,7 @@ namespace Evrinoma\UtilsBundle\Mapping;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Evrinoma\UtilsBundle\Exception\MetadataNotFoundException;
 use Psr\Cache\InvalidArgumentException;
@@ -63,6 +64,10 @@ class MetadataManager implements MetadataManagerInterface
                     $mapping[self::MAP][$annotation->name] = $annotation;
                 }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, OneToMany::class);
+                if (null !== $annotation) {
+                    $mapping[self::MAP][$reflectionProperty->name] = $annotation;
+                }
+                $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, ManyToOne::class);
                 if (null !== $annotation) {
                     $mapping[self::MAP][$reflectionProperty->name] = $annotation;
                 }
