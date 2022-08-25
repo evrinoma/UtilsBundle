@@ -82,11 +82,15 @@ class ManagerRegistry implements ManagerRegistryInterface
                             case 'string' :
                                 $value = (string) $row[$name];
                                 break;
+                            case 'integer':
                             case 'int':
                                 $value = (int) $row[$name];
                                 break;
                             case 'float':
                                 $value = (float) $row[$name];
+                                break;
+                            case 'datetime_immutable':
+                                $value = new \DateTimeImmutable($row[$name]);
                                 break;
                             default:
                                 $value = $row[$name];
