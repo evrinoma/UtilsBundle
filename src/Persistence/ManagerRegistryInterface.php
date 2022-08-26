@@ -35,4 +35,12 @@ interface ManagerRegistryInterface
      * @return array
      */
     public function hydrateRowData(array $rows, string $entityClass): array;
+
+    /**
+     * @param string $entityClass
+     * @param mixed  $id
+     *
+     * @return mixed
+     */
+    public function &getReference(string $entityClass, $id);
 }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Persistence;
 
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -24,6 +25,7 @@ use InvalidArgumentException;
 class ManagerRegistry implements ManagerRegistryInterface
 {
     protected array                    $cache = [];
+    protected array                    $proxy = [];
     protected array                    $managers;
     protected MetadataManagerInterface $metadataManager;
 
@@ -73,7 +75,7 @@ class ManagerRegistry implements ManagerRegistryInterface
                 $valueId = $row[$identity];
             }
             if (\array_key_exists($entityClass, $this->cache) && \array_key_exists($valueId, $this->cache[$entityClass])) {
-                return [$this->cache[$entityClass][$valueId]];
+                return [$this->getCache($entityClass, $valueId)];
             }
             foreach ($this->getMetaDataManager()->getMetadata($entityClass) as $name => $metaData) {
                 if (\array_key_exists($name, $row)) {
@@ -123,13 +125,59 @@ class ManagerRegistry implements ManagerRegistryInterface
                     }
                 }
             }
-            if (null !== $valueId) {
-                $this->cache[$entityClass][$valueId] = $entity;
-            }
+            $this->setCache($entityClass, $valueId, $entity);
 
-            $entities[] = $entity;
+            $entities[] = $this->getCache($entityClass, $valueId);
         }
 
         return $entities;
+    }
+
+    private function &getCache(string $entityClass, $id)
+    {
+        return $this->cache[$entityClass][$id];
+    }
+
+    private function setCache(string $entityClass, $id, $value): void
+    {
+        if (null !== $id) {
+            $this->cache[$entityClass][$id] = $value;
+            $this->setProxy($entityClass, $id, $value);
+        }
+    }
+
+    public function &getReference(string $entityClass, $id)
+    {
+        if (!\array_key_exists($id, $this->cache)) {
+            $entity = new $entityClass();
+            if (method_exists($entity, 'setId')) {
+                $reflectionMethod = new \ReflectionMethod($entityClass, 'setId');
+                $params = $reflectionMethod->getParameters();
+                if (1 === \count($params)) {
+                    $type = $params[0]->getType();
+                    settype($id, $type->getName());
+                } else {
+                    throw new ORMException();
+                }
+                $entity->setId($id);
+                $this->setProxy($entityClass, $id, $entity);
+            } else {
+                throw new ORMException();
+            }
+        }
+
+        return $this->getProxy($entityClass, $id);
+    }
+
+    private function &getProxy(string $entityClass, $id)
+    {
+        return $this->proxy[$entityClass][$id];
+    }
+
+    private function setProxy(string $entityClass, $id, $value): void
+    {
+        if (null !== $id) {
+            $this->proxy[$entityClass][$id] = $value;
+        }
     }
 }

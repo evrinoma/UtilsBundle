@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Repository\Api;
 
-use Doctrine\ORM\Exception\ORMException;
 use Evrinoma\UtilsBundle\Persistence\ManagerRegistryInterface;
 use Evrinoma\UtilsBundle\QueryBuilder\DummyQueryBuilder;
 use Evrinoma\UtilsBundle\QueryBuilder\QueryBuilderInterface;
@@ -33,19 +32,7 @@ abstract class RepositoryWrapper
 
     public function referenceWrapped(string $id)
     {
-        if (!\array_key_exists($id, $this->cache)) {
-            $entity = new $this->entityClass();
-            if (method_exists($entity, 'setId')) {
-                $entity->setId($id);
-                $this->cache[$id] = $entity;
-            } else {
-                throw new ORMException();
-            }
-        } else {
-            $entity = $this->cache[$id];
-        }
-
-        return $entity;
+        return $this->managerRegistry->getReference($this->entityClass, $id);
     }
 
     public function containsWrapped($entity): bool
