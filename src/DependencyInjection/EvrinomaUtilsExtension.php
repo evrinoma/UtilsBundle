@@ -55,8 +55,8 @@ class EvrinomaUtilsExtension extends Extension
 
         $baseHandler = new Definition(BaseHandler::class);
         $baseHandler->setPublic(true);
-        $alias = new Alias('evrinoma.utils.handler.base_handler');
-        $container->addDefinitions(['evrinoma.utils.handler.base_handler' => $baseHandler]);
+        $alias = new Alias(BaseHandler::class);
+        $container->addDefinitions([BaseHandler::class => $baseHandler]);
         $container->addAliases([HandlerInterface::class => $alias]);
     }
 
