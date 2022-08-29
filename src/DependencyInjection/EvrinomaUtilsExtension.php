@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\DependencyInjection;
 
 use Evrinoma\UtilsBundle\EvrinomaUtilsBundle;
+use Evrinoma\UtilsBundle\Handler\BaseHandler;
+use Evrinoma\UtilsBundle\Handler\HandlerInterface;
 use Evrinoma\UtilsBundle\Mapping\MetadataManager;
 use Evrinoma\UtilsBundle\Mapping\MetadataManagerInterface;
 use Evrinoma\UtilsBundle\Persistence\ManagerRegistry;
@@ -50,6 +52,12 @@ class EvrinomaUtilsExtension extends Extension
         $container->addDefinitions(['evrinoma.utils.persistence.manager_registry' => $managerRegistry]);
         $container->addAliases([ManagerRegistryInterface::class => $alias]);
         $managerRegistry->setArgument(0, $metadataManager);
+
+        $baseHandler = new Definition(BaseHandler::class);
+        $baseHandler->setPublic(true);
+        $alias = new Alias('evrinoma.utils.handler.base_handler');
+        $container->addDefinitions(['evrinoma.utils.handler.base_handler' => $baseHandler]);
+        $container->addAliases([HandlerInterface::class => $alias]);
     }
 
     public function getAlias()
