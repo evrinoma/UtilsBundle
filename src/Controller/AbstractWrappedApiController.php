@@ -20,7 +20,7 @@ use Evrinoma\UtilsBundle\Rest\RestStatusInterface;
 use Evrinoma\UtilsBundle\Rest\RestStatusTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-abstract class AbstractWrappedApiController extends AbstractApiController implements ApiControllerInterface, RestStatusControllerInterface, RestStatusInterface, RestPayloadInterface
+abstract class AbstractWrappedApiController extends AbstractApiController implements RestStatusControllerInterface, RestStatusInterface, RestPayloadInterface
 {
     use RestPayloadTrait;
     use RestStatusControllerTrait;
@@ -29,6 +29,7 @@ abstract class AbstractWrappedApiController extends AbstractApiController implem
     /**
      * @param string $message
      * @param array  $data
+     * @param array  $error
      * @param array  $headers
      *
      * @return JsonResponse
