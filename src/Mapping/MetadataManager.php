@@ -53,7 +53,7 @@ class MetadataManager implements MetadataManagerInterface
         $metaCached = $this->cache->getItem('metadata.'.strtolower(str_replace('\\\\', '.', $entity)));
         if (!$metaCached->isHit()) {
             $reflectionObject = new \ReflectionObject(new $entity());
-            $reflectionProperties = $reflectionObject->getProperties(\ReflectionProperty::IS_PROTECTED);
+            $reflectionProperties = $reflectionObject->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_PRIVATE);
             foreach ($reflectionProperties as $reflectionProperty) {
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, GeneratedValue::class);
                 if (null !== $annotation) {

@@ -82,6 +82,7 @@ class ManagerRegistry implements ManagerRegistryInterface
                     if ($metaData instanceof Column) {
                         $methodName = 'set'.ucfirst($name);
                         switch ($metaData->type) {
+                            case 'text' :
                             case 'string' :
                                 $value = (string) $row[$name];
                                 break;
