@@ -16,8 +16,11 @@ namespace Evrinoma\UtilsBundle\Mapping;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\Common\Collections\Collection;
+use Evrinoma\UtilsBundle\Exception\MetadataHydrateException;
 use Evrinoma\UtilsBundle\Exception\MetadataNotFoundException;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -70,6 +73,24 @@ class MetadataManager implements MetadataManagerInterface
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, ManyToOne::class);
                 if (null !== $annotation) {
                     $mapping[self::MAP][$reflectionProperty->name] = $annotation;
+                }
+                $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, ManyToMany::class);
+                if (null !== $annotation) {
+                    $reflector = new \ReflectionClass($entity);
+                    $methodName = 'set'.ucfirst($reflectionProperty->name);
+                    $params = $reflector->getMethod($methodName)->getParameters();
+                    if (1 === \count($params))
+                    {
+                        $param = $params[0];
+                        if ($param->getType() == null || ($param->getType() !== null && $param->getType()->getName() === Collection::class))
+                        {
+                            $mapping[self::MAP][$reflectionProperty->name] = $annotation;
+                        } else {
+                            throw new MetadataHydrateException();
+                        }
+                    } else {
+                        throw new MetadataHydrateException();
+                    }
                 }
             }
             $metaCached->set($mapping);

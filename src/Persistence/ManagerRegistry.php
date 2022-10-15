@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Persistence;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Evrinoma\UtilsBundle\Exception\HydrateException;
@@ -120,6 +123,16 @@ class ManagerRegistry implements ManagerRegistryInterface
                                 throw new HydrateException();
                             }
                             $entity->{$methodName}($values[0]);
+                        } else {
+                            throw new HydrateException();
+                        }
+                    }
+                    if ($metaData instanceof ManyToMany) {
+                        $mappedEntityClass = $this->getMetaDataManager()->getClassName($metaData->targetEntity);
+                        if (\is_array($row[$name])) {
+                            $methodName = 'set'.ucfirst($name);
+                            $values = $this->hydrateRowData($row[$name], $mappedEntityClass);
+                            $entity->{$methodName}(new ArrayCollection($values));
                         } else {
                             throw new HydrateException();
                         }
