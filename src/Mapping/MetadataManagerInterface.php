@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Mapping;
 
+use Doctrine\ORM\Mapping\Annotation;
 use Evrinoma\UtilsBundle\Exception\MetadataNotFoundException;
 use Psr\Cache\InvalidArgumentException;
 
@@ -34,6 +35,13 @@ interface MetadataManagerInterface
      * @throws MetadataNotFoundException
      */
     public function getMetadata(string $entityClass): array;
+
+    /**
+     * @param string $entityClass
+     * @param string $filedName
+     * @param string $classAnnotation
+     */
+    public function findMetadata(string $entityClass, string $filedName, string $classAnnotation): ?Annotation;
 
     /**
      * @param string $entityClass

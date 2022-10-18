@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Persistence;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -70,9 +70,10 @@ class ManagerRegistry implements ManagerRegistryInterface
     public function hydrateRowData(array $rows, string $entityClass): array
     {
         $entities = [];
+        $metaDataManager = $this->getMetaDataManager();
         foreach ($rows as $row) {
             $entity = new $entityClass();
-            $identity = $this->getMetaDataManager()->getIdentity($entityClass);
+            $identity = $metaDataManager->getIdentity($entityClass);
             $valueId = null;
             if (\array_key_exists($identity, $row)) {
                 $valueId = $row[$identity];
@@ -80,7 +81,11 @@ class ManagerRegistry implements ManagerRegistryInterface
             if (\array_key_exists($entityClass, $this->cache) && \array_key_exists($valueId, $this->cache[$entityClass])) {
                 return [$this->getCache($entityClass, $valueId)];
             }
-            foreach ($this->getMetaDataManager()->getMetadata($entityClass) as $name => $metaData) {
+            foreach ($metaDataManager->getMetadata($entityClass) as $name => $metaData) {
+                $annotation = $metaDataManager->findMetadata($entityClass, $name, JoinColumn::class);
+                if (null !== $annotation) {
+                    $row[$name] = &$row[$annotation->name];
+                }
                 if (\array_key_exists($name, $row)) {
                     if ($metaData instanceof Column) {
                         $methodName = 'set'.ucfirst($name);
@@ -105,7 +110,7 @@ class ManagerRegistry implements ManagerRegistryInterface
                         $entity->{$methodName}($value);
                     }
                     if ($metaData instanceof OneToMany) {
-                        $mappedEntityClass = $this->getMetaDataManager()->getClassName($metaData->targetEntity);
+                        $mappedEntityClass = $metaDataManager->getClassName($metaData->targetEntity);
                         if (\is_array($row[$name])) {
                             $methodName = 'set'.ucfirst($name);
                             $values = $this->hydrateRowData($row[$name], $mappedEntityClass);
@@ -115,7 +120,7 @@ class ManagerRegistry implements ManagerRegistryInterface
                         }
                     }
                     if ($metaData instanceof ManyToOne) {
-                        $mappedEntityClass = $this->getMetaDataManager()->getClassName($metaData->targetEntity);
+                        $mappedEntityClass = $metaDataManager->getClassName($metaData->targetEntity);
                         if (\is_array($row[$name])) {
                             $methodName = 'set'.ucfirst($name);
                             $values = $this->hydrateRowData([$row[$name]], $mappedEntityClass);
@@ -128,7 +133,7 @@ class ManagerRegistry implements ManagerRegistryInterface
                         }
                     }
                     if ($metaData instanceof ManyToMany) {
-                        $mappedEntityClass = $this->getMetaDataManager()->getClassName($metaData->targetEntity);
+                        $mappedEntityClass = $metaDataManager->getClassName($metaData->targetEntity);
                         if (\is_array($row[$name])) {
                             $methodName = 'set'.ucfirst($name);
                             $values = $this->hydrateRowData($row[$name], $mappedEntityClass);

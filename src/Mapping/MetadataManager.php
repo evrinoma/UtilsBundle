@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Mapping;
 
 use Doctrine\Common\Annotations\Reader;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\Annotation;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\Common\Collections\Collection;
 use Evrinoma\UtilsBundle\Exception\MetadataHydrateException;
 use Evrinoma\UtilsBundle\Exception\MetadataNotFoundException;
 use Psr\Cache\InvalidArgumentException;
@@ -28,9 +30,11 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 class MetadataManager implements MetadataManagerInterface
 {
     private const IDENTITY = 'identity';
-    private const MAP = 'map';
+    private const META = 'meta';
+    private const EMETA = 'emeta';
     private array             $aliases = [];
     private array             $metadata = [];
+    private array             $extendMetadata = [];
     private array             $identifiers = [];
     protected Reader          $annotationReader;
     private FilesystemAdapter $cache;
@@ -64,33 +68,38 @@ class MetadataManager implements MetadataManagerInterface
                 }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, Column::class);
                 if (null !== $annotation) {
-                    $mapping[self::MAP][$annotation->name] = $annotation;
+                    $mapping[self::META][$annotation->name] = $annotation;
                 }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, OneToMany::class);
                 if (null !== $annotation) {
-                    $mapping[self::MAP][$reflectionProperty->name] = $annotation;
+                    $mapping[self::META][$reflectionProperty->name] = $annotation;
                 }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, ManyToOne::class);
                 if (null !== $annotation) {
-                    $mapping[self::MAP][$reflectionProperty->name] = $annotation;
+                    $mapping[self::META][$reflectionProperty->name] = $annotation;
                 }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, ManyToMany::class);
                 if (null !== $annotation) {
                     $reflector = new \ReflectionClass($entity);
                     $methodName = 'set'.ucfirst($reflectionProperty->name);
                     $params = $reflector->getMethod($methodName)->getParameters();
-                    if (1 === \count($params))
-                    {
+                    if (1 === \count($params)) {
                         $param = $params[0];
-                        if ($param->getType() == null || ($param->getType() !== null && $param->getType()->getName() === Collection::class))
-                        {
-                            $mapping[self::MAP][$reflectionProperty->name] = $annotation;
+                        if (null == $param->getType() || (null !== $param->getType() && Collection::class === $param->getType()->getName())) {
+                            $mapping[self::META][$reflectionProperty->name] = $annotation;
                         } else {
                             throw new MetadataHydrateException();
                         }
                     } else {
                         throw new MetadataHydrateException();
                     }
+                }
+                $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, JoinColumn::class);
+                if (null !== $annotation) {
+                    if (null === $annotation->name) {
+                        throw new MetadataHydrateException();
+                    }
+                    $mapping[self::EMETA][$reflectionProperty->name.'_'.JoinColumn::class] = $annotation;
                 }
             }
             $metaCached->set($mapping);
@@ -101,7 +110,10 @@ class MetadataManager implements MetadataManagerInterface
         if (\array_key_exists(self::IDENTITY, $mapping)) {
             $this->identifiers[$entity] = $mapping[self::IDENTITY];
         }
-        $this->metadata[$entity] = $mapping[self::MAP];
+        if (\array_key_exists(self::EMETA, $mapping)) {
+            $this->extendMetadata[$entity] = $mapping[self::EMETA];
+        }
+        $this->metadata[$entity] = $mapping[self::META];
 
         if (null !== $alias) {
             $this->aliases[$alias] = $entity;
@@ -128,6 +140,30 @@ class MetadataManager implements MetadataManagerInterface
         } else {
             throw new MetadataNotFoundException();
         }
+    }
+
+    public function findMetadata(string $entityClass, string $filedName, string $classAnnotation): ?Annotation
+    {
+        $entityMetadata = $this->getExtendMetadata($entityClass);
+        if (\array_key_exists($filedName.'_'.$classAnnotation, $entityMetadata)) {
+            return $entityMetadata[$filedName.'_'.$classAnnotation];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $entityClass
+     *
+     * @return array
+     */
+    private function getExtendMetadata(string $entityClass): array
+    {
+        if (\array_key_exists($entityClass, $this->extendMetadata)) {
+            return $this->extendMetadata[$entityClass];
+        }
+
+        return [];
     }
 
     /**
