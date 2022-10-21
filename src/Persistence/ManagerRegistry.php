@@ -83,7 +83,7 @@ class ManagerRegistry implements ManagerRegistryInterface
             }
             foreach ($metaDataManager->getMetadata($entityClass) as $name => $metaData) {
                 $annotation = $metaDataManager->findMetadata($entityClass, $name, JoinColumn::class);
-                if (null !== $annotation) {
+                if (null !== $annotation && \array_key_exists($annotation->name, $row) && null !== $row[$annotation->name]) {
                     $row[$name] = &$row[$annotation->name];
                 }
                 if (\array_key_exists($name, $row)) {
