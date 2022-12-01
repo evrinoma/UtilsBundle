@@ -32,12 +32,15 @@ class MetadataManager implements MetadataManagerInterface
     private const IDENTITY = 'identity';
     private const META = 'meta';
     private const EMETA = 'emeta';
-    private array             $aliases = [];
-    private array             $metadata = [];
-    private array             $extendMetadata = [];
-    private array             $identifiers = [];
-    protected Reader          $annotationReader;
+    private const SETTER = 'setter';
+    private array       $aliases = [];
+    private array       $metadata = [];
+    private array       $extendMetadata = [];
+    private array       $identifiers = [];
+    private array       $setters = [];
+    protected Reader     $annotationReader;
     private FilesystemAdapter $cache;
+    private array       $reflectionMethodNames = [];
 
     /**
      * @param string $cacheDir
@@ -61,6 +64,10 @@ class MetadataManager implements MetadataManagerInterface
         if (!$metaCached->isHit()) {
             $reflectionObject = new \ReflectionObject(new $entity());
             $reflectionProperties = $reflectionObject->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_PRIVATE);
+            $reflectionMethodNames = array_map(
+                    function ($value): string {return $value->getName(); },
+        $reflectionObject->getMethods(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_PRIVATE)
+      );
             foreach ($reflectionProperties as $reflectionProperty) {
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, GeneratedValue::class);
                 if (null !== $annotation) {
@@ -69,14 +76,17 @@ class MetadataManager implements MetadataManagerInterface
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, Column::class);
                 if (null !== $annotation) {
                     $mapping[self::META][$annotation->name] = $annotation;
+                    $mapping[self::SETTER][$annotation->name] = $this->toSetterName($reflectionMethodNames, $reflectionProperty->getName());
                 }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, OneToMany::class);
                 if (null !== $annotation) {
                     $mapping[self::META][$reflectionProperty->name] = $annotation;
+                    $mapping[self::SETTER][$reflectionProperty->name] = $this->toSetterName($reflectionMethodNames, $reflectionProperty->getName());
                 }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, ManyToOne::class);
                 if (null !== $annotation) {
                     $mapping[self::META][$reflectionProperty->name] = $annotation;
+                    $mapping[self::SETTER][$reflectionProperty->name] = $this->toSetterName($reflectionMethodNames, $reflectionProperty->getName());
                 }
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, ManyToMany::class);
                 if (null !== $annotation) {
@@ -87,6 +97,7 @@ class MetadataManager implements MetadataManagerInterface
                         $param = $params[0];
                         if (null == $param->getType() || (null !== $param->getType() && Collection::class === $param->getType()->getName())) {
                             $mapping[self::META][$reflectionProperty->name] = $annotation;
+                            $mapping[self::SETTER][$reflectionProperty->name] = $this->toSetterName($reflectionMethodNames, $reflectionProperty->getName());
                         } else {
                             throw new MetadataHydrateException();
                         }
@@ -113,11 +124,37 @@ class MetadataManager implements MetadataManagerInterface
         if (\array_key_exists(self::EMETA, $mapping)) {
             $this->extendMetadata[$entity] = $mapping[self::EMETA];
         }
+        if (\array_key_exists(self::SETTER, $mapping)) {
+            $this->setters[$entity] = $mapping[self::SETTER];
+        }
+
         $this->metadata[$entity] = $mapping[self::META];
 
         if (null !== $alias) {
             $this->aliases[$alias] = $entity;
         }
+    }
+
+    /**
+     * @param string $class
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    public function getSetterName(string $class, string $fieldName): string
+    {
+        return $this->setters[$class][$fieldName];
+    }
+
+    private function toSetterName(array $reflectionMethodNames, string $reflectionPropertyName): string
+    {
+        $name = 'set'.ucfirst($reflectionPropertyName);
+
+        if (!\in_array($name, $reflectionMethodNames)) {
+            throw new MetadataHydrateException();
+        }
+
+        return $name;
     }
 
     /**

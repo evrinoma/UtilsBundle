@@ -60,4 +60,12 @@ interface MetadataManagerInterface
      * @throws MetadataNotFoundException
      */
     public function getClassName(string $alias): string;
+
+    /**
+     * @param string $class
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    public function getSetterName(string $class, string $fieldName): string;
 }

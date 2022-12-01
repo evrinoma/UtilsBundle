@@ -67,6 +67,16 @@ class ManagerRegistry implements ManagerRegistryInterface
         return $this->managers[$entityClass];
     }
 
+    /**
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    private function getSetterName(string $class, string $fieldName): string
+    {
+        return $this->getMetaDataManager()->getSetterName($class, $fieldName);
+    }
+
     public function hydrateRowData(array $rows, string $entityClass): array
     {
         $entities = [];
@@ -88,7 +98,6 @@ class ManagerRegistry implements ManagerRegistryInterface
                 }
                 if (\array_key_exists($name, $row)) {
                     if ($metaData instanceof Column) {
-                        $methodName = 'set'.ucfirst($name);
                         switch ($metaData->type) {
                             case 'text' :
                             case 'string' :
@@ -107,14 +116,13 @@ class ManagerRegistry implements ManagerRegistryInterface
                             default:
                                 $value = $row[$name];
                         }
-                        $entity->{$methodName}($value);
+                        $entity->{$this->getSetterName($entityClass, $name)}($value);
                     }
                     if ($metaData instanceof OneToMany) {
                         $mappedEntityClass = $metaDataManager->getClassName($metaData->targetEntity);
                         if (\is_array($row[$name])) {
-                            $methodName = 'set'.ucfirst($name);
                             $values = $this->hydrateRowData($row[$name], $mappedEntityClass);
-                            $entity->{$methodName}($values);
+                            $entity->{$this->getSetterName($entityClass, $name)}($values);
                         } else {
                             throw new HydrateException();
                         }
@@ -122,12 +130,11 @@ class ManagerRegistry implements ManagerRegistryInterface
                     if ($metaData instanceof ManyToOne) {
                         $mappedEntityClass = $metaDataManager->getClassName($metaData->targetEntity);
                         if (\is_array($row[$name])) {
-                            $methodName = 'set'.ucfirst($name);
                             $values = $this->hydrateRowData([$row[$name]], $mappedEntityClass);
                             if (0 === \count($values) || \count($values) > 1) {
                                 throw new HydrateException();
                             }
-                            $entity->{$methodName}($values[0]);
+                            $entity->{$this->getSetterName($entityClass, $name)}($values[0]);
                         } else {
                             throw new HydrateException();
                         }
@@ -135,9 +142,8 @@ class ManagerRegistry implements ManagerRegistryInterface
                     if ($metaData instanceof ManyToMany) {
                         $mappedEntityClass = $metaDataManager->getClassName($metaData->targetEntity);
                         if (\is_array($row[$name])) {
-                            $methodName = 'set'.ucfirst($name);
                             $values = $this->hydrateRowData($row[$name], $mappedEntityClass);
-                            $entity->{$methodName}(new ArrayCollection($values));
+                            $entity->{$this->getSetterName($entityClass, $name)}(new ArrayCollection($values));
                         } else {
                             throw new HydrateException();
                         }
