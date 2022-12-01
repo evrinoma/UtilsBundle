@@ -199,4 +199,13 @@ class ManagerRegistry implements ManagerRegistryInterface
             $this->proxy[$entityClass][$id] = $value;
         }
     }
+
+    public function transactional(callable $func)
+    {
+        return $func($this);
+    }
+
+    public function flush(): void
+    {
+    }
 }

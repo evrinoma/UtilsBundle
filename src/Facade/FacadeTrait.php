@@ -14,24 +14,22 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Facade;
 
 use Evrinoma\DtoBundle\Dto\DtoInterface;
+use Evrinoma\UtilsBundle\Adaptor\AdaptorRegistryInterface;
 use Evrinoma\UtilsBundle\Handler\HandlerInterface;
 
 trait FacadeTrait
 {
-    /**
-     * @var HandlerInterface
-     */
+    protected AdaptorRegistryInterface $adaptorRegistry;
+
     protected HandlerInterface  $handler;
 
     public function post(DtoInterface $dto, string $group, array &$data): void
     {
         $this->preValidator->onPost($dto);
 
-        $em = $this->managerRegistry->getManager();
-
         $commandManager = $this->commandManager;
 
-        $em->transactional(
+        $this->adaptorRegistry->transactional(
             function () use ($dto, $commandManager, &$data) {
                 $data[] = $commandManager->post($dto);
             }
@@ -44,11 +42,9 @@ trait FacadeTrait
     {
         $this->preValidator->onPut($dto);
 
-        $em = $this->managerRegistry->getManager();
-
         $commandManager = $this->commandManager;
 
-        $em->transactional(
+        $this->adaptorRegistry->transactional(
             function () use ($dto, $commandManager, &$data) {
                 $data[] = $commandManager->put($dto);
             }
@@ -61,11 +57,9 @@ trait FacadeTrait
     {
         $this->preValidator->onDelete($dto);
 
-        $em = $this->managerRegistry->getManager();
-
         $commandManager = $this->commandManager;
 
-        $em->transactional(
+        $this->adaptorRegistry->transactional(
             function () use ($dto, $commandManager, &$data) {
                 $commandManager->delete($dto);
                 $data = ['OK'];

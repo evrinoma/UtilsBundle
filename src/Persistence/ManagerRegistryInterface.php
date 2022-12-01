@@ -43,4 +43,13 @@ interface ManagerRegistryInterface
      * @return mixed
      */
     public function &getReference(string $entityClass, $id);
+
+    /**
+     * @param callable $func
+     *
+     * @return mixed
+     */
+    public function transactional(callable $func);
+
+    public function flush(): void;
 }
