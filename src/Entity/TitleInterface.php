@@ -18,7 +18,7 @@ interface TitleInterface
     /**
      * @return string
      */
-    public function getTitle(): string;
+    public function getTitle(): ?string;
 
     /**
      * @param string $title

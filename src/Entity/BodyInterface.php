@@ -18,7 +18,7 @@ interface BodyInterface
     /**
      * @return string
      */
-    public function getBody(): string;
+    public function getBody(): ?string;
 
     /**
      * @param string $body

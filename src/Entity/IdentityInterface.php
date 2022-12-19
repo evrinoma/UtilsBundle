@@ -18,7 +18,7 @@ interface IdentityInterface
     /**
      * @return string
      */
-    public function getIdentity(): string;
+    public function getIdentity(): ?string;
 
     /**
      * @param string $identity

@@ -18,7 +18,7 @@ interface UrlInterface
     /**
      * @return string
      */
-    public function getUrl(): string;
+    public function getUrl(): ?string;
 
     /**
      * @param string $url
