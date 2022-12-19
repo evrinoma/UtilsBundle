@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Handler;
 
+use Evrinoma\DtoBundle\Dto\DtoInterface;
+
 interface HandlerInterface
 {
-    public function onPost(array &$entities, string &$group): void;
+    public function onPost(DtoInterface $dto, array &$entities, string &$group): void;
 
-    public function onPut(array &$entities, string &$group): void;
+    public function onPut(DtoInterface $dto, array &$entities, string &$group): void;
 
-    public function onGet(array &$entities, string &$group): void;
+    public function onGet(DtoInterface $dto, array &$entities, string &$group): void;
 
-    public function onCriteria(array &$entities, string &$group): void;
+    public function onCriteria(DtoInterface $dto, array &$entities, string &$group): void;
 }
