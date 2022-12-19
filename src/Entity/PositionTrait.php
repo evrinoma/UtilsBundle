@@ -20,7 +20,7 @@ trait PositionTrait
     /**
      * @ORM\Column(name="position", type="integer")
      */
-    protected int $position;
+    protected $position;
 
     /**
      * @return int

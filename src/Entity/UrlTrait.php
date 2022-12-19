@@ -22,7 +22,7 @@ trait UrlTrait
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=false)
      */
-    protected string $url;
+    protected $url;
 
     /**
      * @return string

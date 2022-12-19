@@ -22,7 +22,7 @@ trait NameTrait
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
-    protected string $name;
+    protected $name;
 
     /**
      * @return string
