@@ -35,7 +35,7 @@ trait FacadeTrait
             }
         );
 
-        $this->handler->onPost($data, $group);
+        $this->handler->onPost($dto, $data, $group);
     }
 
     public function put(DtoInterface $dto, string $group, array &$data): void
@@ -50,7 +50,7 @@ trait FacadeTrait
             }
         );
 
-        $this->handler->onPut($data, $group);
+        $this->handler->onPut($dto, $data, $group);
     }
 
     public function delete(DtoInterface $dto, string $group, array &$data): void
@@ -70,12 +70,12 @@ trait FacadeTrait
     public function criteria(DtoInterface $dto, string $group, array &$data): void
     {
         $data = $this->queryManager->criteria($dto);
-        $this->handler->onCriteria($data, $group);
+        $this->handler->onCriteria($dto, $data, $group);
     }
 
     public function get(DtoInterface $dto, string $group, array &$data): void
     {
         $data[] = $this->queryManager->get($dto);
-        $this->handler->onGet($data, $group);
+        $this->handler->onGet($dto, $data, $group);
     }
 }
