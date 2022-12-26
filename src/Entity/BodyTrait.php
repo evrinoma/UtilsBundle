@@ -20,7 +20,7 @@ trait BodyTrait
     /**
      * @var string
      *
-     * @ORM\Column(name="body", type="string", length=2047, nullable=false)
+     * @ORM\Column(name="body", type="text", length=65535, nullable=false)
      */
     protected $body;
 
