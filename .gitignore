@@ -2,3 +2,5 @@
 /vendor/
 composer.lock
 .php-cs-fixer.cache
+.phpunit.result.cache
+.env.hooks
