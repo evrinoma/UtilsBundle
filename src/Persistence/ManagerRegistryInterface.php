@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Persistence;
 
 use Evrinoma\UtilsBundle\Manager\EntityManagerInterface;
-use InvalidArgumentException;
 
 interface ManagerRegistryInterface
 {
@@ -24,7 +23,7 @@ interface ManagerRegistryInterface
     public function registerEntityManager(EntityManagerInterface $entityManager): void;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function getManager(string $entityClass): EntityManagerInterface;
 

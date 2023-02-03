@@ -65,9 +65,9 @@ class MetadataManager implements MetadataManagerInterface
             $reflectionObject = new \ReflectionObject(new $entity());
             $reflectionProperties = $reflectionObject->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_PRIVATE);
             $reflectionMethodNames = array_map(
-                    function ($value): string {return $value->getName(); },
-        $reflectionObject->getMethods(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_PRIVATE)
-      );
+                function ($value): string {return $value->getName(); },
+                $reflectionObject->getMethods(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_PRIVATE)
+            );
             foreach ($reflectionProperties as $reflectionProperty) {
                 $annotation = $this->annotationReader->getPropertyAnnotation($reflectionProperty, GeneratedValue::class);
                 if (null !== $annotation) {

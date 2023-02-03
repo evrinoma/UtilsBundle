@@ -23,7 +23,6 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Evrinoma\UtilsBundle\Exception\HydrateException;
 use Evrinoma\UtilsBundle\Manager\EntityManagerInterface;
 use Evrinoma\UtilsBundle\Mapping\MetadataManagerInterface;
-use InvalidArgumentException;
 
 class ManagerRegistry implements ManagerRegistryInterface
 {
@@ -56,12 +55,12 @@ class ManagerRegistry implements ManagerRegistryInterface
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function getManager(string $entityClass): EntityManagerInterface
     {
         if (!isset($this->managers[$entityClass])) {
-            throw new InvalidArgumentException(sprintf('Manager named "%s" does not exist.', $entityClass));
+            throw new \InvalidArgumentException(sprintf('Manager named "%s" does not exist.', $entityClass));
         }
 
         return $this->managers[$entityClass];
