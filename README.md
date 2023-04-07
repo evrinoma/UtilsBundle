@@ -15,7 +15,7 @@ vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php
 ```
 ## Тесты
 ```bash
-composer install --dev
+COMPOSER_NO_DEV=0 composer install
 /usr/bin/php vendor/phpunit/phpunit/phpunit --bootstrap tests/bootstrap.php --configuration phpunit.xml.dist tests --teamcity
 
 ```
