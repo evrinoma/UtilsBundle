@@ -9,4 +9,4 @@ echo > $log
 
 rm -rf vendor
 rm -rf composer.lock
-composer install --dev
+COMPOSER_NO_DEV=0 composer install
