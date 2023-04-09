@@ -20,7 +20,7 @@ trait FinishAtTrait
     /**
      * @var \DateTimeImmutable
      *
-     * @ORM\Column(name="finish_at", type="date_immutable", nullable=true)
+     * @ORM\Column(name="finish_at", type="datetime_immutable", nullable=true)
      */
     protected $finishAt;
 
