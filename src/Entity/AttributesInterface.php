@@ -15,6 +15,8 @@ namespace Evrinoma\UtilsBundle\Entity;
 
 interface AttributesInterface
 {
+    public const ATTRIBUTES = 'attributes';
+
     public function getAttributes(): ?array;
 
     public function toAttributes(): array;

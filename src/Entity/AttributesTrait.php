@@ -31,7 +31,7 @@ trait AttributesTrait
 
     public function toAttributes(): array
     {
-        return $this->getAttributes() ? ['attributes' => $this->getAttributes()] : [];
+        return $this->getAttributes() ? [AttributesInterface::ATTRIBUTES => $this->getAttributes()] : [];
     }
 
     public function setAttributes(array $attributes): self
