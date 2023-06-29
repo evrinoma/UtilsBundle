@@ -24,7 +24,7 @@ trait LocationNameTrait
      */
     protected $locationName;
 
-    /*
+    /**
      * @return string
      */
     public function getLocationName(): ?string
