@@ -20,7 +20,7 @@ trait LocationNameTrait
     /**
      * @var string
      *
-     * @ORM\Column(name="location_name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="location_name", type="string", length=2047, nullable=false)
      */
     protected $locationName;
 
