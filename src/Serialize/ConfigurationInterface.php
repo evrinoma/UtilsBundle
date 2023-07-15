@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Serialize;
 
+use Symfony\Component\Serializer\Mapping\Loader\LoaderInterface;
+
 interface ConfigurationInterface
 {
+    public function getFile(): LoaderInterface;
 }
