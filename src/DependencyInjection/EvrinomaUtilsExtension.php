@@ -20,6 +20,8 @@ use Evrinoma\UtilsBundle\Mapping\MetadataManager;
 use Evrinoma\UtilsBundle\Mapping\MetadataManagerInterface;
 use Evrinoma\UtilsBundle\Persistence\ManagerRegistry;
 use Evrinoma\UtilsBundle\Persistence\ManagerRegistryInterface;
+use Evrinoma\UtilsBundle\Serialize\SerializerInterface;
+use Evrinoma\UtilsBundle\Serialize\Symfony\SerializerSymfony;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -59,6 +61,13 @@ class EvrinomaUtilsExtension extends Extension
         $container->addDefinitions([BaseHandler::class => $baseHandler]);
         $container->addAliases([HandlerInterface::class => $alias]);
         $container->addAliases(['evrinoma.utils.handler.base_handler' => $alias]);
+
+        $baseSerializer = new Definition(SerializerSymfony::class);
+        $baseSerializer->setPublic(true);
+        $alias = new Alias(SerializerSymfony::class);
+        $container->addDefinitions([SerializerSymfony::class => $baseSerializer]);
+        $container->addAliases([SerializerInterface::class => $alias]);
+        $container->addAliases(['evrinoma.utils.serializer' => $alias]);
     }
 
     public function getAlias()
