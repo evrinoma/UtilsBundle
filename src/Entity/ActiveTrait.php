@@ -16,7 +16,6 @@ namespace Evrinoma\UtilsBundle\Entity;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Evrinoma\UtilsBundle\Model\ActiveModel;
-use JMS\Serializer\Annotation\VirtualProperty;
 
 trait ActiveTrait
 {
@@ -36,8 +35,6 @@ trait ActiveTrait
     }
 
     /**
-     * @VirtualProperty
-     *
      * @return bool
      */
     public function isBlocked(): bool
@@ -46,8 +43,6 @@ trait ActiveTrait
     }
 
     /**
-     * @VirtualProperty
-     *
      * @return bool
      */
     public function isDeleted(): bool
@@ -56,8 +51,6 @@ trait ActiveTrait
     }
 
     /**
-     * @VirtualProperty
-     *
      * @return bool
      */
     public function isModerated(): bool

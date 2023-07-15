@@ -14,20 +14,19 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Type;
 
 trait CreateUpdateAtTrait
 {
     /**
      * @var \DateTimeImmutable
-     * @Type("DateTimeImmutable<'d-m-Y'>")
+     *
      * @ORM\Column(name="created_at", type="datetime_immutable", nullable=false)
      */
     protected $createdAt;
 
     /**
      * @var \DateTimeImmutable|null
-     * @Type("DateTimeImmutable<'d-m-Y'>")
+     *
      * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=true)
      */
     protected $updatedAt;
