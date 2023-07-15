@@ -29,16 +29,9 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 {
     private array $files = [];
 
-    private BasicSerializerInterface $serializer;
+    private ?BasicSerializerInterface $serializer = null;
 
     private ?string $group = null;
-
-    public function __construct()
-    {
-        $this->getConfigurations();
-
-        $this->serializer = new Serializer($this->normalizers(), $this->encoders());
-    }
 
     public function setGroup(string $name): SerializerInterface
     {
@@ -82,8 +75,21 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
         ];
     }
 
+    private function create(): BasicSerializerInterface
+    {
+        foreach ($this->getConfigurations() as $configuration) {
+            $this->files[] = $configuration->getFile();
+        }
+
+        if (null === $this->serializer) {
+            $this->serializer = new Serializer($this->normalizers(), $this->encoders());
+        }
+
+        return $this->serializer;
+    }
+
     public function serialize($data, $format = 'json'): string
     {
-        return $this->serializer->serialize($data, $format, $this->defaultContext());
+        return $this->create()->serialize($data, $format, $this->defaultContext());
     }
 }
