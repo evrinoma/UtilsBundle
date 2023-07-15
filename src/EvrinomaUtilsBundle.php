@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Evrinoma\UtilsBundle;
 
 use Evrinoma\UtilsBundle\DependencyInjection\Compiler\EntityManagerPass;
+use Evrinoma\UtilsBundle\DependencyInjection\Compiler\SerializerConfigurationPass;
 use Evrinoma\UtilsBundle\DependencyInjection\EvrinomaUtilsExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -26,7 +27,8 @@ class EvrinomaUtilsBundle extends Bundle
     {
         parent::build($container);
         $container
-            ->addCompilerPass(new EntityManagerPass());
+            ->addCompilerPass(new EntityManagerPass())
+            ->addCompilerPass(new SerializerConfigurationPass());
     }
 
     public function getContainerExtension()

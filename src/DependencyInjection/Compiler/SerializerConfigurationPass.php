@@ -31,7 +31,7 @@ class SerializerConfigurationPass implements CompilerPassInterface
 
         $definition = $container->findDefinition(SerializerInterface::class);
 
-        $taggedServices = $container->findTaggedServiceIds('evrinoma.utils.serializer.config');
+        $taggedServices = $container->findTaggedServiceIds('evrinoma.serializer');
 
         foreach ($taggedServices as $id => $tags) {
             $definition->addMethodCall('addConfiguration', [new Reference($id)]);
