@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": "^7.4 || ^8.0",
-    "doctrine/annotations": "^2.0",
+    "doctrine/annotations": "^1",
     "symfony/serializer": "^6.0",
     "lexik/jwt-authentication-bundle": "^2",
     "evrinoma/dto-bundle": "dev-master"
