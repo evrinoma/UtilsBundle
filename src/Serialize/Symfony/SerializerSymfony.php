@@ -20,6 +20,7 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\LoaderChain;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -28,6 +29,7 @@ use Symfony\Component\Serializer\SerializerInterface as BasicSerializerInterface
 class SerializerSymfony extends AbstractSerializerRegistry implements SerializerInterface, SerializerSymfonyInterface
 {
     protected int $circularReferenceLimit = 1;
+    protected bool $skipNullValues = true;
 
     private array $files = [];
 
@@ -47,6 +49,7 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
         return [
             AbstractNormalizer::CIRCULAR_REFERENCE_LIMIT => $this->circularReferenceLimit,
             AbstractNormalizer::GROUPS => $this->group,
+            AbstractObjectNormalizer::SKIP_NULL_VALUES => $this->skipNullValues,
         ];
     }
 
