@@ -17,26 +17,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 interface RelationInterface
 {
-    /**
-     * @param $child
-     *
-     * @return self
-     */
     public function addChild($child): self;
 
-    /**
-     * @return bool
-     */
     public function hasChildren(): bool;
 
-    /**
-     * @return self
-     */
-    public function getParent(): self;
+    public function getParent(): ?self;
 
-    /**
-     * @return bool
-     */
     public function hasParent(): bool;
 
     /**
@@ -44,10 +30,5 @@ interface RelationInterface
      */
     public function getChildren();
 
-    /**
-     * @param $parent
-     *
-     * @return self
-     */
     public function setParent($parent = null): self;
 }

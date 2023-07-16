@@ -26,11 +26,6 @@ trait RelationTrait
         $this->children = new ArrayCollection();
     }
 
-    /**
-     * @param $child
-     *
-     * @return self
-     */
     public function addChild($child): self
     {
         $child->setParent($this);
@@ -42,26 +37,17 @@ trait RelationTrait
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function hasChildren(): bool
     {
         return $this->children && 0 !== $this->children->count();
     }
 
-    /**
-     * @return bool
-     */
     public function hasParent(): bool
     {
         return null !== $this->parent;
     }
 
-    /**
-     * @return self
-     */
-    public function getParent(): self
+    public function getParent(): ?self
     {
         return $this->parent;
     }
@@ -74,11 +60,6 @@ trait RelationTrait
         return $this->children;
     }
 
-    /**
-     * @param $parent
-     *
-     * @return self
-     */
     public function setParent($parent = null): self
     {
         $this->parent = $parent;
