@@ -27,6 +27,8 @@ use Symfony\Component\Serializer\SerializerInterface as BasicSerializerInterface
 
 class SerializerSymfony extends AbstractSerializerRegistry implements SerializerInterface, SerializerSymfonyInterface
 {
+    protected int $circularReferenceLimit = 2;
+
     private array $files = [];
 
     private ?BasicSerializerInterface $serializer = null;
@@ -43,7 +45,7 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
     public function defaultContext(): array
     {
         return [
-            AbstractNormalizer::CIRCULAR_REFERENCE_LIMIT => 2,
+            AbstractNormalizer::CIRCULAR_REFERENCE_LIMIT => $this->circularReferenceLimit,
             AbstractNormalizer::GROUPS => $this->group,
         ];
     }
