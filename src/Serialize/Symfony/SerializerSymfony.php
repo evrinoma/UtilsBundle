@@ -27,7 +27,7 @@ use Symfony\Component\Serializer\SerializerInterface as BasicSerializerInterface
 
 class SerializerSymfony extends AbstractSerializerRegistry implements SerializerInterface, SerializerSymfonyInterface
 {
-    protected int $circularReferenceLimit = 2;
+    protected int $circularReferenceLimit = 1;
 
     private array $files = [];
 
