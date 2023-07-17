@@ -33,8 +33,21 @@ class SerializerConfigurationPass implements CompilerPassInterface
 
         $taggedServices = $container->findTaggedServiceIds('evrinoma.serializer');
 
+        $priorities = [];
         foreach ($taggedServices as $id => $tags) {
-            $definition->addMethodCall('addConfiguration', [new Reference($id)]);
+            $priority = current(array_column($tags, 'priority'));
+            if ($priority!==false) {
+                $priorities[$priority][] = [new Reference($id)];
+            } else {
+                $priorities[0][] = [new Reference($id)];
+            }
+        }
+        ksort($priorities);
+        foreach ($priorities as $order)
+        {
+            foreach ($order as $item) {
+                $definition->addMethodCall('addConfiguration', $item);
+            }
         }
     }
 }
