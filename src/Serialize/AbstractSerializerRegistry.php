@@ -22,7 +22,7 @@ abstract class AbstractSerializerRegistry implements ConfigurationRegistryInterf
 
     public function addConfiguration(ConfigurationInterface $configuration): void
     {
-        $this->configurations[] = $configuration;
+        $this->configurations[$configuration->tag()] = $configuration;
     }
 
     public function getConfigurations(): \Generator

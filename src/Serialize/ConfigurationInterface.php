@@ -18,4 +18,6 @@ use Symfony\Component\Serializer\Mapping\Loader\LoaderInterface;
 interface ConfigurationInterface
 {
     public function getFile(): LoaderInterface;
+
+    public function tag(): string;
 }
