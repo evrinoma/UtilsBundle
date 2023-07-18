@@ -19,6 +19,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\LoaderChain;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -62,10 +63,19 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 
     public function normalizers(): array
     {
+        $classMetadataFactory = new ClassMetadataFactory(new LoaderChain($this->files));
+
         return [
             new DateTimeNormalizer(),
             new ObjectNormalizer(
-                new ClassMetadataFactory(new LoaderChain($this->files)),
+                $classMetadataFactory,
+                new MetadataAwareNameConverter($classMetadataFactory),
+                null,
+                null,
+                null,
+            ),
+            new ObjectNormalizer(
+                $classMetadataFactory,
                 new CamelCaseToSnakeCaseNameConverter(),
                 null,
                 null,

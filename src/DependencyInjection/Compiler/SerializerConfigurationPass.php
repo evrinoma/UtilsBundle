@@ -36,15 +36,14 @@ class SerializerConfigurationPass implements CompilerPassInterface
         $priorities = [];
         foreach ($taggedServices as $id => $tags) {
             $priority = current(array_column($tags, 'priority'));
-            if ($priority!==false) {
+            if (false !== $priority) {
                 $priorities[$priority][] = [new Reference($id)];
             } else {
                 $priorities[0][] = [new Reference($id)];
             }
         }
         ksort($priorities);
-        foreach ($priorities as $order)
-        {
+        foreach ($priorities as $order) {
             foreach ($order as $item) {
                 $definition->addMethodCall('addConfiguration', $item);
             }
