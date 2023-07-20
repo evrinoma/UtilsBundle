@@ -73,6 +73,12 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
                 null,
                 null,
                 null,
+                null,
+                [
+                    AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, string $format, array $context) {
+                        return null;
+                    },
+                ]
             ),
             new ObjectNormalizer(
                 $classMetadataFactory,
