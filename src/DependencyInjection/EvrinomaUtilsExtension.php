@@ -64,6 +64,7 @@ class EvrinomaUtilsExtension extends Extension
 
         $baseSerializer = new Definition(SerializerSymfony::class);
         $baseSerializer->setPublic(true);
+        $baseSerializer->setArgument(0, $container->getParameterBag()->get('kernel.cache_dir'));
         $alias = new Alias(SerializerSymfony::class);
         $container->addDefinitions([SerializerSymfony::class => $baseSerializer]);
         $container->addAliases([SerializerInterface::class => $alias]);

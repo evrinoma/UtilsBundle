@@ -15,6 +15,7 @@ namespace Evrinoma\UtilsBundle\Serialize\Symfony;
 
 use Evrinoma\UtilsBundle\Serialize\AbstractSerializerRegistry;
 use Evrinoma\UtilsBundle\Serialize\SerializerInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\LoaderChain;
@@ -37,6 +38,13 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
     private ?BasicSerializerInterface $serializer = null;
 
     private ?string $group = null;
+
+    private FilesystemAdapter $cache;
+
+    public function __construct(string $cacheDir)
+    {
+        $this->cache = new FilesystemAdapter('', 0, $cacheDir.'/serializer');
+    }
 
     public function setGroup(string $name): SerializerInterface
     {
@@ -63,7 +71,13 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 
     public function normalizers(): array
     {
-        $classMetadataFactory = new ClassMetadataFactory(new LoaderChain($this->files));
+        $metadataCached = $this->cache->getItem('serializer.metadata');
+        if (!$metadataCached->isHit()) {
+            $classMetadataFactory = new ClassMetadataFactory(new LoaderChain($this->files));
+            $metadataCached->set($classMetadataFactory);
+            $this->cache->save($metadataCached);
+        }
+        $classMetadataFactory = $metadataCached->get();
 
         return [
             new DateTimeNormalizer(),
@@ -85,9 +99,16 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 
     private function create(): BasicSerializerInterface
     {
-        foreach ($this->getConfigurations() as $configuration) {
-            $this->files[] = $configuration->getFile();
+        $serializerCached = $this->cache->getItem('serializer.configuration');
+        if (!$serializerCached->isHit()) {
+            foreach ($this->getConfigurations() as $configuration) {
+                $this->files[] = $configuration->getFile();
+            }
+            $serializerCached->set($this->files);
+            $this->cache->save($serializerCached);
         }
+
+        $this->files = $serializerCached->get();
 
         if (null === $this->serializer) {
             $this->serializer = new Serializer($this->normalizers(), $this->encoders());
