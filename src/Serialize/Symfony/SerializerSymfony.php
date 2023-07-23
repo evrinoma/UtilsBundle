@@ -32,6 +32,7 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 {
     protected int $circularReferenceLimit = 1;
     protected bool $skipNullValues = true;
+    protected string $cachePrefix = 'default';
 
     private array $files = [];
 
@@ -71,7 +72,7 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 
     public function normalizers(): array
     {
-        $metadataCached = $this->cache->getItem('serializer.metadata');
+        $metadataCached = $this->cache->getItem('serializer.'.$this->cachePrefix.'.metadata');
         if (!$metadataCached->isHit()) {
             $classMetadataFactory = new ClassMetadataFactory(new LoaderChain($this->files));
             $metadataCached->set($classMetadataFactory);
@@ -99,7 +100,7 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 
     private function create(): BasicSerializerInterface
     {
-        $serializerCached = $this->cache->getItem('serializer.configuration');
+        $serializerCached = $this->cache->getItem('serializer.'.$this->cachePrefix.'.configuration');
         if (!$serializerCached->isHit()) {
             foreach ($this->getConfigurations() as $configuration) {
                 $this->files[] = $configuration->getFile();
