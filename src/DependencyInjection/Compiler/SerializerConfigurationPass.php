@@ -13,40 +13,18 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\DependencyInjection\Compiler;
 
-use Evrinoma\UtilsBundle\Serialize\SerializerInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 class SerializerConfigurationPass implements CompilerPassInterface
 {
+    use SerializerConfigurationPassTrait;
+
     /**
      * {@inheritDoc}
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has(SerializerInterface::class)) {
-            return;
-        }
-
-        $definition = $container->findDefinition(SerializerInterface::class);
-
-        $taggedServices = $container->findTaggedServiceIds('evrinoma.serializer');
-
-        $priorities = [];
-        foreach ($taggedServices as $id => $tags) {
-            $priority = current(array_column($tags, 'priority'));
-            if (false !== $priority) {
-                $priorities[$priority][] = [new Reference($id)];
-            } else {
-                $priorities[0][] = [new Reference($id)];
-            }
-        }
-        ksort($priorities);
-        foreach ($priorities as $order) {
-            foreach ($order as $item) {
-                $definition->addMethodCall('addConfiguration', $item);
-            }
-        }
+        $this->injectConfiguration($container);
     }
 }

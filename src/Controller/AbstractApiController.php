@@ -43,4 +43,11 @@ abstract class AbstractApiController extends AbstractController
 
         return $this;
     }
+
+    protected function setSerializeCircularReferenceLimit(int $circularReferenceLimit)
+    {
+        $this->serializer->setCircularReferenceLimit($circularReferenceLimit);
+
+        return $this;
+    }
 }

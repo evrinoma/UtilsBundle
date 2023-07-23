@@ -17,5 +17,7 @@ interface SerializerInterface
 {
     public function setGroup(string $name): SerializerInterface;
 
+    public function setCircularReferenceLimit(int $circularReferenceLimit): SerializerInterface;
+
     public function serialize($data, $format = 'json'): string;
 }

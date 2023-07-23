@@ -39,7 +39,7 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 
     private ?BasicSerializerInterface $serializer = null;
 
-    private ?string $group = null;
+    protected ?string $group = null;
 
     private FilesystemAdapter $cache;
 
@@ -51,6 +51,13 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
     public function setGroup(string $name): SerializerInterface
     {
         $this->group = $name;
+
+        return $this;
+    }
+
+    public function setCircularReferenceLimit(int $circularReferenceLimit): SerializerInterface
+    {
+        $this->circularReferenceLimit = $circularReferenceLimit;
 
         return $this;
     }

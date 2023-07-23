@@ -38,6 +38,11 @@ class SerializerJms extends AbstractSerializerRegistry implements SerializerInte
         return $this;
     }
 
+    public function setCircularReferenceLimit(int $circularReferenceLimit): SerializerInterface
+    {
+        return $this;
+    }
+
     public function serialize($data, $format = 'json'): string
     {
         return $this->serializer->serialize($data, $format, $this->serializationContext);
