@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EvrinomaUtilsBundle extends Bundle
 {
-    public const UTILS_BUNDLE = 'utils';
+    public const BUNDLE = 'utils';
 
     public function build(ContainerBuilder $container)
     {

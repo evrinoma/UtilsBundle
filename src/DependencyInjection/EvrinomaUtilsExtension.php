@@ -73,6 +73,6 @@ class EvrinomaUtilsExtension extends Extension
 
     public function getAlias()
     {
-        return EvrinomaUtilsBundle::UTILS_BUNDLE;
+        return EvrinomaUtilsBundle::BUNDLE;
     }
 }

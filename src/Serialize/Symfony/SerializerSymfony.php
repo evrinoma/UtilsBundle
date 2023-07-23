@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Evrinoma\UtilsBundle\Serialize\Symfony;
 
+use Evrinoma\UtilsBundle\EvrinomaUtilsBundle;
 use Evrinoma\UtilsBundle\Serialize\AbstractSerializerRegistry;
 use Evrinoma\UtilsBundle\Serialize\SerializerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -32,7 +33,7 @@ class SerializerSymfony extends AbstractSerializerRegistry implements Serializer
 {
     protected int $circularReferenceLimit = 1;
     protected bool $skipNullValues = true;
-    protected string $cachePrefix = 'default';
+    protected string $cachePrefix = EvrinomaUtilsBundle::BUNDLE;
 
     private array $files = [];
 
