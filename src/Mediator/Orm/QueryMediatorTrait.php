@@ -20,6 +20,8 @@ trait QueryMediatorTrait
 {
     public function getResult(DtoInterface $dto, QueryBuilderInterface $builder): array
     {
-        return $builder->getQuery()->getResult();
+        $result = $builder->getQuery()->getResult();
+
+        return (is_numeric($result)) ? [] : $result;
     }
 }
