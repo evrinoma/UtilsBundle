@@ -40,11 +40,7 @@ trait OrdersApiDtoTrait
             $entities = $request->get(OrderApiDtoInterface::ORDERS);
             if ($entities) {
                 foreach ($entities as $entity) {
-                    $newRequest = $this->getCloneRequest();
-                    $entity[DtoInterface::DTO_CLASS] = static::$classOrdersApiDto;
-                    $newRequest->request->add($entity);
-
-                    yield $newRequest;
+                    yield $this->toRequest($entity, static::$classOrdersApiDto);
                 }
             }
         }
