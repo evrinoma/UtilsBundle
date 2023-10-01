@@ -26,15 +26,7 @@ abstract class AbstractWrappedApiController extends AbstractApiController implem
     use RestStatusControllerTrait;
     use RestStatusTrait;
 
-    /**
-     * @param string $message
-     * @param array  $data
-     * @param array  $error
-     * @param array  $headers
-     *
-     * @return JsonResponse
-     */
-    protected function JsonResponse(string $message, array $data, array $error, array $headers = []): JsonResponse
+    protected function jsonResponse(string $message, array $data, array $error, array $headers = []): JsonResponse
     {
         return $this->json($this->getRestPayload($message, $data, $error), $this->getRestStatus(), $headers);
     }
