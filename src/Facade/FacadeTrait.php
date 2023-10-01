@@ -23,7 +23,7 @@ trait FacadeTrait
 
     protected HandlerInterface  $handler;
 
-    public function post(DtoInterface $dto, string $group, array &$data): void
+    public function post(DtoInterface $dto, string &$group, array &$data): void
     {
         $this->preValidator->onPost($dto);
 
@@ -38,7 +38,7 @@ trait FacadeTrait
         $this->handler->onPost($dto, $data, $group);
     }
 
-    public function put(DtoInterface $dto, string $group, array &$data): void
+    public function put(DtoInterface $dto, string &$group, array &$data): void
     {
         $this->preValidator->onPut($dto);
 
@@ -53,7 +53,7 @@ trait FacadeTrait
         $this->handler->onPut($dto, $data, $group);
     }
 
-    public function delete(DtoInterface $dto, string $group, array &$data): void
+    public function delete(DtoInterface $dto, string &$group, array &$data): void
     {
         $this->preValidator->onDelete($dto);
 
@@ -67,13 +67,13 @@ trait FacadeTrait
         );
     }
 
-    public function criteria(DtoInterface $dto, string $group, array &$data): void
+    public function criteria(DtoInterface $dto, string &$group, array &$data): void
     {
         $data = $this->queryManager->criteria($dto);
         $this->handler->onCriteria($dto, $data, $group);
     }
 
-    public function get(DtoInterface $dto, string $group, array &$data): void
+    public function get(DtoInterface $dto, string &$group, array &$data): void
     {
         $data[] = $this->queryManager->get($dto);
         $this->handler->onGet($dto, $data, $group);

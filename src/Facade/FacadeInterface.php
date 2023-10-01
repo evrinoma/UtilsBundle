@@ -17,13 +17,13 @@ use Evrinoma\DtoBundle\Dto\DtoInterface;
 
 interface FacadeInterface
 {
-    public function post(DtoInterface $dto, string $group, array &$data): void;
+    public function post(DtoInterface $dto, string &$group, array &$data): void;
 
-    public function put(DtoInterface $dto, string $group, array &$data): void;
+    public function put(DtoInterface $dto, string &$group, array &$data): void;
 
-    public function delete(DtoInterface $dto, string $group, array &$data): void;
+    public function delete(DtoInterface $dto, string &$group, array &$data): void;
 
-    public function criteria(DtoInterface $dto, string $group, array &$data): void;
+    public function criteria(DtoInterface $dto, string &$group, array &$data): void;
 
-    public function get(DtoInterface $dto, string $group, array &$data): void;
+    public function get(DtoInterface $dto, string &$group, array &$data): void;
 }
