@@ -21,24 +21,24 @@ interface ActiveInterface
     /**
      * @return bool
      */
-    public function isBlocked(): bool;
+    public function isBlocked(): ?bool;
 
     /**
      * @return bool
      */
-    public function isDeleted(): bool;
+    public function isDeleted(): ?bool;
 
     /**
      * @return bool
      */
-    public function isModerated(): bool;
+    public function isModerated(): ?bool;
 
-    public static function getCriteria(): Criteria;
+    public static function getCriteria(): ?Criteria;
 
     /**
      * @return string
      */
-    public function getActive(): string;
+    public function getActive(): ?string;
 
     /**
      * @return $this

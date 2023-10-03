@@ -29,7 +29,7 @@ trait ActiveTrait
     /**
      * @return bool
      */
-    public function isActive(): bool
+    public function isActive(): ?bool
     {
         return ActiveModel::ACTIVE === $this->active;
     }
@@ -37,7 +37,7 @@ trait ActiveTrait
     /**
      * @return bool
      */
-    public function isBlocked(): bool
+    public function isBlocked(): ?bool
     {
         return ActiveModel::BLOCKED === $this->active;
     }
@@ -45,7 +45,7 @@ trait ActiveTrait
     /**
      * @return bool
      */
-    public function isDeleted(): bool
+    public function isDeleted(): ?bool
     {
         return ActiveModel::DELETED === $this->active;
     }
@@ -53,7 +53,7 @@ trait ActiveTrait
     /**
      * @return bool
      */
-    public function isModerated(): bool
+    public function isModerated(): ?bool
     {
         return ActiveModel::MODERATED === $this->active;
     }
@@ -61,7 +61,7 @@ trait ActiveTrait
     /**
      * @return string
      */
-    public function getActive(): string
+    public function getActive(): ?string
     {
         return $this->active;
     }
@@ -69,7 +69,7 @@ trait ActiveTrait
     /**
      * @return Criteria
      */
-    public static function getCriteria(): Criteria
+    public static function getCriteria(): ?Criteria
     {
         $criteria = new Criteria();
         $criteria->where(

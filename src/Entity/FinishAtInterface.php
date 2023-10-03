@@ -23,7 +23,7 @@ interface FinishAtInterface
     /**
      * @return \DateTimeImmutable
      */
-    public function getFinishAt(): \DateTimeImmutable;
+    public function getFinishAt(): ?\DateTimeImmutable;
 
     /**
      * @param \DateTimeImmutable $finishAt

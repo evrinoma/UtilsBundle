@@ -35,7 +35,7 @@ trait FinishAtTrait
     /**
      * @return \DateTimeImmutable
      */
-    public function getFinishAt(): \DateTimeImmutable
+    public function getFinishAt(): ?\DateTimeImmutable
     {
         return $this->finishAt;
     }

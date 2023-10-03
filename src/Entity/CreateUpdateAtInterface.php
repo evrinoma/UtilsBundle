@@ -28,7 +28,7 @@ interface CreateUpdateAtInterface
     /**
      * @return \DateTimeImmutable
      */
-    public function getCreatedAt(): \DateTimeImmutable;
+    public function getCreatedAt(): ?\DateTimeImmutable;
 
     /**
      * @return \DateTimeImmutable|null
