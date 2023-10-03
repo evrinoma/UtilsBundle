@@ -82,7 +82,7 @@ trait RolesTrait
     /**
      * @return array
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         return $this->roles;
     }

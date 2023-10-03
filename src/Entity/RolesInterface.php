@@ -46,5 +46,5 @@ interface RolesInterface
     /**
      * @return array
      */
-    public function getRoles(): array;
+    public function getRoles();
 }
